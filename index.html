@@ -3,227 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Collateral Token</title>
+    <title>The Goldwheel</title>
     <style>
-        * {
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #faf8f5;
-            color: #1a1a1a;
-            overflow-x: hidden;
-        }
-
-        .x-button {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            background: #000;
-            color: #fff;
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            z-index: 1000;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .x-button:hover {
-            background: #333;
-            transform: scale(1.05);
-        }
-
-        .title-section {
-            min-height: 60vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #f5f3f0 0%, #faf8f5 100%);
-            padding: 4rem 2rem;
+            align-items: center;
+            min-height: 100vh;
         }
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            color: #0a0a0a;
+        
+        .container {
             text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .subtitle {
-            font-size: 1.3rem;
-            font-weight: 300;
-            color: #4a4a4a;
-            text-align: center;
+            padding: 40px;
             max-width: 800px;
+        }
+        
+        h1 {
+            color: #ffd700;
+            font-size: 48px;
+            margin-bottom: 40px;
+        }
+        
+        p {
+            font-size: 20px;
             line-height: 1.6;
-        }
-
-        .content-section {
-            min-height: auto;
-            padding: 2rem 2rem 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            gap: 60px;
-            align-items: flex-start;
-        }
-
-        .content-section:first-of-type {
-            padding-top: 4rem;
-        }
-
-        .explanation {
-            flex: 2;
-            margin-bottom: 3rem;
-            line-height: 1.8;
-            color: #2a2a2a;
+            margin-bottom: 20px;
         }
         
-        .image-container {
-            flex: 5;
-            position: sticky;
-            top: 4rem;
-            max-width: 500px;
-        }
-        
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
-
-        .tweet-button {
+        .x-button {
             display: inline-block;
-            margin-top: 1.5rem;
-            background: #1DA1F2;
-            color: #fff;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
+            margin-top: 30px;
+            padding: 15px 40px;
+            background-color: #000000;
+            color: #ffffff;
             text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .tweet-button:hover {
-            background: #1a8cd8;
-            transform: scale(1.05);
-        }
-
-        .explanation h2 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            margin-top: 3rem;
-            color: #0a0a0a;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: background-color 0.3s;
         }
         
-        .explanation h2:first-child {
-            margin-top: 0;
-        }
-
-        .explanation p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .rules-section {
-            margin: 3rem 0;
-            line-height: 2;
-            font-size: 1.1rem;
-        }
-
-        .rules-section strong {
-            font-size: 1.2rem;
-            color: #0a0a0a;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .subtitle {
-                font-size: 1.1rem;
-            }
-
-            .explanation p {
-                font-size: 1rem;
-            }
-            
-            .content-section {
-                flex-direction: column;
-            }
-            
-            .image-container {
-                position: relative;
-                top: 0;
-            }
+        .x-button:hover {
+            background-color: #1a1a1a;
         }
     </style>
 </head>
 <body>
-    <a href="https://x.com/collateraltoken" target="_blank" class="x-button">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-        </svg>
-        @collateraltoken
-    </a>
-    <div class="title-section">
-        <h1>The Collateral Token</h1>
-        <p class="subtitle">We used our token as collateral to buy more bnb</p>
-    </div>
-
-    <div class="content-section">
-        <div class="explanation">
-            <h2>What is Collateral Token</h2>
-            <p>Changpeng Zhao (CZ), founder of Binance, has consistently warned crypto businesses with these golden rules:</p>
-            
-            <div class="rules-section">
-                <strong>CZ's Golden Rules:</strong><br><br>
-                Never use a token as collateral<br>
-                Don't borrow if you run a crypto business<br>
-                Don't use capital "efficiently"<br>
-                Have a large reserve
-            </div>
-            
-            <p>So we broke all these rules and legally created a company using our token as collateral to buy more BNB.</p>
-        </div>
-        
-        <div class="image-container">
-            <img src="cz.png" alt="Crypto">
-            <a href="https://x.com/cz_binance/status/1590103159506341888" target="_blank" class="tweet-button">Show Tweet</a>
-        </div>
-    </div>
-
-    <div class="content-section">
-        <div class="explanation">
-            <h2>How It Works</h2>
-            <p>We have legally registered a company specifically for our memecoin. Using our company registration and token valuation, we are leveraging our cryptocurrency holdings as collateral.</p>
-            
-            <p>This collateral allows us to secure loans to purchase more BNB and increase the supply of our own coin. By utilizing our token's market value, we're creating a cyclical growth mechanism that expands our holdings across multiple assets.</p>
-            
-            <p>The company structure provides legal legitimacy while the token valuation gives us the financial leverage needed to execute this strategy at scale.</p>
-        </div>
-        
-        <div class="image-container">
-            <img src="sec.png" alt="How It Works">
-            <a href="https://www.sec.gov/Archives/edgar/data/888859/000119312505028143/0001193125-05-028143.txt" target="_blank" class="tweet-button">View SEC Listing</a>
-        </div>
+    <div class="container">
+        <h1>The Goldwheel</h1>
+        <p>Hi guys we are currently live in New York City buying gold using fees from pumpfun and using the gold to build our own pumpfun treasury</p>
+        <p>All live on pumpfun please join our live</p>
+        <a href="https://x.com/thegoldwheelsol" target="_blank" class="x-button">Follow on X</a>
     </div>
 </body>
-
 </html>
-
