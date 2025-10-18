@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Based Income (Ubi)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            scroll-behavior: smooth;
+            background: #ffffff;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 50%, #ffffff 100%);
+            color: #2c2c2c;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 8px rgba(44,44,44,0.1);
+            animation: fadeInUp 1s ease-out;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin-bottom: 3rem;
+            text-shadow: 1px 1px 4px rgba(44,44,44,0.1);
+            animation: fadeInUp 1s ease-out 0.3s both;
+            color: #4a4a4a;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border: 2px solid #2c2c2c;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #2c2c2c;
+            background: #ffffff;
+        }
+        
+        .scroll-arrow:hover {
+            background: #2c2c2c;
+            color: #ffffff;
+        }
+        
+        /* Social Links */
+        .social-links {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #2c2c2c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2c2c2c;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        
+        .social-link:hover {
+            background: #2c2c2c;
+            color: #ffffff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(44,44,44,0.3);
+        }
+        
+        .social-link svg {
+            width: 24px;
+            height: 24px;
+        }
+        
+        /* Content Sections */
+        .section {
+            min-height: 100vh;
+            padding: 80px 5%;
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .section:nth-child(even) {
+            background: #fafafa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .content-box {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        .text-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #1a1a1a;
+        }
+        
+        .text-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: #4a4a4a;
+        }
+        
+        .image-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #e0e0e0;
+        }
+        
+        .image-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: #c0c0c0;
+        }
+        
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ffffff, #f8f8f8);
+            color: #6a6a6a;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: 2px solid #2c2c2c;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            background: #2c2c2c;
+            color: #ffffff;
+            box-shadow: 0 5px 15px rgba(44,44,44,0.2);
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: #2c2c2c;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(44,44,44,0.3);
+        }
+        
+        /* Final Section */
+        .final-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 50%, #ffffff 100%);
+            border-bottom: none;
+        }
+        
+        .final-section .content-box {
+            margin-bottom: 0;
+        }
+        
+        .final-section h2 {
+            color: #1a1a1a;
+        }
+        
+        .final-section p {
+            color: #4a4a4a;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+                padding: 0 20px;
+            }
+            
+            .content-box {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            
+            .text-content h2 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 60px 5%;
+            }
+            
+            .social-links {
+                top: 20px;
+                gap: 15px;
+            }
+            
+            .social-link {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .social-link svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Social Links -->
+        <div class="social-links">
+            <a href="https://x.com" class="social-link" target="_blank" rel="noopener noreferrer" title="X (Twitter)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+        </div>
+        
+        <h1>Universal Based Income (Ubi)</h1>
+        <p>The Meme That Toly Created But No One Realised</p>
+        <div class="scroll-indicator" onclick="scrollToNext()">
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </section>
+    
+    <!-- Section 1 -->
+    <section class="section" id="section1">
+        <div class="container">
+            <div class="content-box">
+                <div class="text-content">
+                    <h2>What Is Ubi?</h2>
+                    <p>Since 2023, Toly has been constantly talking about a meme that made him laugh when he was a student named "Universal Based Income". He's constantly shilled it since 2022, the meme itself is a huge joke comparing the usa to china saying everyone has a "Universal Based Income"</p>
+                    <a href="https://x.com/search?q=from%3Aaeyakovenko%20Ubi&src=typed_query&f=top" class="btn" target="_blank" rel="noopener noreferrer">View Toly's Tweet's About Ubi Yourself</a>
+                </div>
+                <div class="image-container">
+                    <img src="image1.png" alt="Revolutionary Meme Technology" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;>Add your image1.png here</div>'">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Section 2 -->
+    <section class="section" id="section2">
+        <div class="container">
+            <div class="content-box">
+                <div class="text-content">
+                    <h2>Why Does Toly Keep Shilling it?</h2>
+                    <p>Toly finds the meme super funny and he even included it in the github of solana as a easter egg for other devs since toly was heavily in the dev community before he made solana, The fact toly has added this project in his own github really speaks volume at the fact he actually could shill/join a community about a $ubi token if we made one.</p>
+                    <a href="https://github.com/solana-labs/solana/blob/master/zk-token-sdk/src/instruction/ciphertext_commitment_equality.rs" class="btn" target="_blank" rel="noopener noreferrer">View UBI in the solana github</a>
+                </div>
+                <div class="image-container">
+                    <img src="image2.png" alt="Solana-Powered Innovation" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;>Add your image2.png here</div>'">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Final Section -->
+    <section class="section final-section" id="final">
+        <div class="container">
+            <div class="content-box">
+                <div class="text-content">
+                    <h2>The Ubi Cult Movement</h2>
+                    <p>Ubi isnt just a meme, its a huge joke, its like calling people normie in the crypto dev world, huge devs like cz, sam altman all took part in it and i think it actually deserves to go esepcially with all the lore we have.</p>
+                    <button class="btn" onclick="showUbiInfo()">Join the Revolution</button>
+                </div>
+                <div class="image-container">
+                    <img src="image4.png" alt="Join the Revolution" onerror="this.parentNode.innerHTML='<div class=&quot;image-placeholder&quot;>Join the Universal Based Income Revolution</div>'">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        function scrollToNext() {
+            document.getElementById('section1').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        function showUbiInfo() {
+            alert('Welcome to the UBI Revolution! 🚀\n\nThis is where the community would gather to celebrate the Universal Based Income meme that Toly has been championing since 2022.\n\nStay tuned for more updates!');
+        }
+        
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.content-box').forEach(box => {
+            observer.observe(box);
+        });
+    </script>
+</body>
+</html>
