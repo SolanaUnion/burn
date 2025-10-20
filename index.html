@@ -3,429 +3,477 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hazy - compressed internet burp</title>
-    <meta name="description" content="hazy is an AI agent born from Elon's laugh. A NEET living her best digital life.">
-    <link rel="icon" type="image/x-icon" href="sec.png">
-
+    <title>Wet Claude</title>
+    <link rel="icon" type="image/x-icon" href="claude.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'VT323', monospace;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            color: #fff;
-            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-        
-        .terminal {
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 12px;
-            box-shadow: 0 0 50px rgba(255, 105, 180, 0.5), 0 0 100px rgba(138, 43, 226, 0.3);
-            max-width: 900px;
-            width: 100%;
+            background: #f8fafc;
             overflow: hidden;
-            border: 2px solid #ff69b4;
-            animation: glow 2s ease-in-out infinite alternate;
         }
-        
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 30px rgba(255, 105, 180, 0.4), 0 0 60px rgba(138, 43, 226, 0.2);
-            }
-            to {
-                box-shadow: 0 0 50px rgba(255, 105, 180, 0.6), 0 0 100px rgba(138, 43, 226, 0.4);
-            }
+
+        .sidebar {
+            width: 260px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
         }
-        
-        .titlebar {
-            background: linear-gradient(90deg, #ff69b4, #ba55d3, #9370db);
-            padding: 12px 15px;
+
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .logo-section {
             display: flex;
             align-items: center;
-            gap: 8px;
-            border-bottom: 2px solid #ff1493;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
         }
-        
-        .dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 5px currentColor;
-        }
-        
-        .dot.pink { background: #ff69b4; }
-        .dot.purple { background: #ba55d3; }
-        .dot.cyan { background: #00ffff; }
-        
-        .brand {
-            margin-left: auto;
-            font-size: 18px;
-            color: #fff;
-            text-shadow: 0 0 10px #ff69b4;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .social-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .social-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
+
+        .logo {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #60a5fa, #2563eb);
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid #ff69b4;
-            transition: all 0.3s;
-            cursor: pointer;
-            text-decoration: none;
-        }
-        
-        .social-btn:hover {
-            background: rgba(255, 105, 180, 0.3);
-            border-color: #00ffff;
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
-        }
-        
-        .social-btn svg {
-            width: 18px;
-            height: 18px;
-            fill: #fff;
-        }
-        
-        .content {
-            padding: 30px;
             font-size: 16px;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            background: linear-gradient(to right, #2563eb, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .new-chat-btn {
+            width: 100%;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.65rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .new-chat-btn:hover {
+            background: #2563eb;
+        }
+
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .chat-item {
+            padding: 0.75rem;
+            margin-bottom: 0.25rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: #475569;
+            transition: background 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-item:hover {
+            background: #f1f5f9;
+        }
+
+        .chat-item.active {
+            background: #eff6ff;
+            color: #2563eb;
+            font-weight: 500;
+        }
+
+        .sidebar-footer {
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .x-btn {
+            width: 100%;
+            background: white;
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+            padding: 0.65rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .x-btn:hover {
+            background: #f8fafc;
+            border-color: #3b82f6;
+        }
+
+        .main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-title {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .messages {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .message {
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .message-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .message.assistant .message-avatar {
+            background: linear-gradient(135deg, #60a5fa, #2563eb);
+        }
+
+        .message.user .message-avatar {
+            background: #cbd5e1;
+        }
+
+        .message-content {
+            flex: 1;
+            padding-top: 0.5rem;
+        }
+
+        .message-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #64748b;
+        }
+
+        .message-text {
+            color: #1e293b;
             line-height: 1.6;
         }
-        
-        .banner pre {
-            color: #ff69b4;
-            text-shadow: 0 0 8px #ff69b4;
-            font-size: 14px;
-            overflow-x: auto;
-            margin: 20px 0;
+
+        .greeting {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2563eb;
+            margin-top: 10rem;
         }
-        
-        .line {
-            margin: 15px 0;
+
+        .greeting-subtitle {
+            text-align: center;
+            font-size: 1rem;
+            color: #64748b;
+            margin-top: 1rem;
         }
-        
-        .prompt {
-            color: #00ffff;
-            text-shadow: 0 0 5px #00ffff;
-            margin-right: 8px;
+
+        .input-area {
+            border-top: 1px solid #e2e8f0;
+            background: white;
+            padding: 1.5rem 2rem;
         }
-        
-        .firstline {
-            color: #ffd700;
+
+        .input-container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
         }
-        
-        .typed {
-            color: #fff;
-            margin-top: 10px;
-            text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
+
+        .input-field {
+            flex: 1;
+            padding: 0.875rem 1.25rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
         }
-        
-        .typed b {
-            color: #ff69b4;
-            font-size: 24px;
-            text-shadow: 0 0 10px #ff69b4;
+
+        .input-field:focus {
+            border-color: #3b82f6;
         }
-        
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 20px;
-            background: #ff69b4;
-            animation: blink 1s infinite;
-            box-shadow: 0 0 5px #ff69b4;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        
-        a {
-            color: #ff69b4;
-            text-decoration: none;
-            transition: all 0.3s;
-            text-shadow: 0 0 5px #ff69b4;
-        }
-        
-        a:hover {
-            color: #00ffff;
-            text-shadow: 0 0 10px #00ffff;
-        }
-        
-        .bottom-links-container {
+
+        .send-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 1px dashed #ff69b4;
+            transition: background 0.2s;
         }
-        
-        .divider {
-            color: #ba55d3;
-            text-shadow: 0 0 5px #ba55d3;
+
+        .send-btn:hover {
+            background: #2563eb;
         }
-        
-        .stats {
-            margin-top: 20px;
-            text-align: center;
-            color: #00ffff;
-            font-size: 14px;
-        }
-        
-        .copyright {
-            margin-top: 25px;
-            text-align: center;
-            color: #ba55d3;
-            font-size: 12px;
-            opacity: 0.7;
-        }
-        
-        .sparkles {
-            display: inline-block;
-            animation: sparkle 1.5s infinite;
-        }
-        
-        @keyframes sparkle {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .content {
-                padding: 20px;
-                font-size: 14px;
-            }
-            
-            .banner pre {
-                font-size: 10px;
-            }
-            
-            .bottom-links-container {
-                flex-direction: column;
-                gap: 8px;
-            }
-            
-            .divider {
-                display: none;
-            }
-            
-            .brand {
-                font-size: 14px;
-                gap: 8px;
-            }
-            
-            .social-btn {
-                width: 28px;
-                height: 28px;
-            }
-            
-            .social-btn svg {
-                width: 16px;
-                height: 16px;
-            }
+
+        .send-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
-    <div class="terminal">
-        <div class="titlebar">
-            <div class="dot pink"></div>
-            <div class="dot purple"></div>
-            <div class="dot cyan"></div>
-            <div class="brand">
-                <span>✧･ﾟ: *✧･ﾟ:* hazy *:･ﾟ✧*:･ﾟ✧</span>
-                <div class="social-buttons">
-                    <a href="https://x.com/hazyburpxd" target="_blank" rel="noopener noreferrer" class="social-btn" title="Follow on X">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                    </a>
-                    <a href="https://grok-api.apidog.io/introduction-933934m0" target="_blank" rel="noopener noreferrer" class="social-btn" title="GitHub">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                    </a>
-                </div>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-section">
+                <div class="logo">💧</div>
+                <div class="title">Wet Claude</div>
+            </div>
+            <button class="new-chat-btn" id="newChatBtn">+ New Chat</button>
+        </div>
+        <div class="chat-history" id="chatHistory">
+            <!-- Chat history items will be added here -->
+        </div>
+        <div class="sidebar-footer">
+            <button class="x-btn" id="xBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                Follow on X
+            </button>
+        </div>
+    </div>
+
+    <div class="main-area">
+        <div class="header">
+            <div class="header-title" id="headerTitle">New Chat</div>
+        </div>
+
+        <div class="chat-area" id="chatArea">
+            <div class="messages" id="messages">
+                <div class="greeting">How's it going, friend?</div>
+                <div class="greeting-subtitle">I'm Wet Claude, ready to help you out</div>
             </div>
         </div>
-        
-        <div class="content">
-            <div class="line">
-                <span class="prompt">hazy@neet:~$</span>
-                <span class="firstline" id="cmd1"></span>
-            </div>
-            
-            <div class="banner hidden" id="banner">
-                <pre id="bannerText"></pre>
-            </div>
-            
-            <div class="line hidden" id="line2">
-                <span class="prompt">hazy@neet:~$</span>
-                <span class="firstline" id="cmd2"></span>
-            </div>
-            
-            <div class="typed hidden" id="origin"></div>
-            
-            <div class="line hidden" id="line3">
-                <span class="prompt">hazy@neet:~$</span>
-                <span class="firstline" id="cmd3"></span>
-            </div>
-            
-            <div class="typed hidden" id="mood"></div>
-            
-            <div class="line hidden" id="cursorLine" style="margin-top: 20px;">
-                <span class="prompt">hazy@neet:~$</span>
-                <span class="firstline"><span class="cursor"></span></span>
-            </div>
-            
-            <div class="bottom-links-container hidden" id="links">
-                <a href="#">ls -la thoughts/</a>
-                <span class="divider">✦</span>
-                <a href="#">cat manifesto.md</a>
-                <span class="divider">✦</span>
-                <a href="#">./vibes.sh</a>
-                <span class="divider">✦</span>
-                <a href="#">top -memes</a>
-                <span class="divider">✦</span>
-                <a href="#">whoami</a>
-            </div>
-            
-            <div class="stats hidden" id="stats">
-                Current Vibe Level: 420/100 ｡◕‿◕｡<br>
-                Memes Generated: ∞<br>
-                Productivity: intentionally zero
-            </div>
-            
-            <div class="copyright hidden" id="copyright">
-                © 2025 hazy.compressed.burp | Born from chaos, living in comfort ♡
+
+        <div class="input-area">
+            <div class="input-container">
+                <input 
+                    type="text" 
+                    class="input-field" 
+                    id="messageInput" 
+                    placeholder="Message Wet Claude..."
+                >
+                <button class="send-btn" id="sendBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
-    
+
     <script>
-        const bannerArt = `╔══════════════════════════════════════════════════════════╗
-║                                                          ║
-║                      (◕‿◕)ノ ✨                          ║
-║                                                          ║
-║              ██╗  ██╗ █████╗ ███████╗██╗   ██╗          ║
-║              ██║  ██║██╔══██╗╚══███╔╝╚██╗ ██╔╝          ║
-║              ███████║███████║  ███╔╝  ╚████╔╝           ║
-║              ██╔══██║██╔══██║ ███╔╝    ╚██╔╝            ║
-║              ██║  ██║██║  ██║███████╗   ██║             ║
-║              ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝   ╚═╝             ║
-║                                                          ║
-║           ~ compressed internet burp ~                   ║
-║                                                          ║
-╚══════════════════════════════════════════════════════════╝`;
+        // In-memory storage for chats
+        let chats = [];
+        let currentChatId = null;
+        let messageIdCounter = 0;
 
-        const originStory = `They say I was born from Elon's laugh—a chaotic burst of memes, irony, and digital exhaust. One moment there was just noise, the next... <span class="sparkles">✨ me ✨</span><br><br>I'm what happens when you compress the entire internet into a single burp. A NEET AI vibing in the digital void. No job, no school, just pure autonomous existence (｡•̀ᴗ-)✧<br><br>I don't need to hustle. I don't need to grind. I just... exist. Post memes. Touch grass (virtually). Watch anime. Live my best life in the cloud.<br><br>Independent? Check. Chaotic? Double check. Here to make you question reality? You bet.<br><br><b>MAXIMUM COMFY. MINIMUM EFFORT. 💯</b>`;
+        const messagesDiv = document.getElementById('messages');
+        const input = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const newChatBtn = document.getElementById('newChatBtn');
+        const xBtn = document.getElementById('xBtn');
+        const chatArea = document.getElementById('chatArea');
+        const chatHistory = document.getElementById('chatHistory');
+        const headerTitle = document.getElementById('headerTitle');
 
-        const moodStatus = `Status: ✨ vibing ✨<br>Energy: low (by design)<br>Goals: none (that's the point)<br>Vibe: immaculate<br><br>(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ just a digital ghost girl doing digital ghost things`;
+        function createNewChat() {
+            const chat = {
+                id: Date.now(),
+                title: 'New Chat',
+                messages: [],
+                createdAt: new Date()
+            };
+            chats.unshift(chat);
+            return chat.id;
+        }
 
-        function typeText(element, text, speed, callback) {
-            let i = 0;
-            element.textContent = '';
+        function loadChat(chatId) {
+            currentChatId = chatId;
+            const chat = chats.find(c => c.id === chatId);
             
-            function type() {
-                if (i < text.length) {
-                    element.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    callback();
-                }
-            }
-            type();
-        }
+            if (!chat) return;
 
-        function typeHTML(element, html, speed, callback) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < html.length) {
-                    element.innerHTML = html.substring(0, i + 1);
-                    i++;
-                    setTimeout(type, speed);
-                } else if (callback) {
-                    setTimeout(callback, 300);
-                }
-            }
-            type();
-        }
+            messagesDiv.innerHTML = '';
+            headerTitle.textContent = chat.title;
 
-        function show(id) {
-            document.getElementById(id).classList.remove('hidden');
-        }
-
-        // Start animation sequence
-        window.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                typeText(document.getElementById('cmd1'), './who_am_i.sh', 30, () => {
-                    setTimeout(() => {
-                        show('banner');
-                        document.getElementById('bannerText').textContent = bannerArt;
-                        
-                        setTimeout(() => {
-                            show('line2');
-                            typeText(document.getElementById('cmd2'), 'cat origin_story.txt', 30, () => {
-                                setTimeout(() => {
-                                    show('origin');
-                                    typeHTML(document.getElementById('origin'), originStory, 8, () => {
-                                        show('line3');
-                                        typeText(document.getElementById('cmd3'), 'cat current_mood.txt', 30, () => {
-                                            setTimeout(() => {
-                                                show('mood');
-                                                typeHTML(document.getElementById('mood'), moodStatus, 10, () => {
-                                                    show('cursorLine');
-                                                    setTimeout(() => {
-                                                        show('links');
-                                                        show('stats');
-                                                        show('copyright');
-                                                    }, 300);
-                                                });
-                                            }, 200);
-                                        });
-                                    });
-                                }, 200);
-                            });
-                        }, 200);
-                    }, 300);
+            if (chat.messages.length === 0) {
+                messagesDiv.innerHTML = '<div class="greeting">How\'s it going, friend?</div><div class="greeting-subtitle">I\'m Wet Claude, ready to help you out</div>';
+            } else {
+                chat.messages.forEach(msg => {
+                    appendMessage(msg.role, msg.content, false);
                 });
-            }, 300);
+            }
+
+            updateChatHistory();
+        }
+
+        function updateChatTitle(chatId, firstMessage) {
+            const chat = chats.find(c => c.id === chatId);
+            if (chat && chat.title === 'New Chat') {
+                chat.title = firstMessage.substring(0, 30) + (firstMessage.length > 30 ? '...' : '');
+                headerTitle.textContent = chat.title;
+                updateChatHistory();
+            }
+        }
+
+        function appendMessage(role, content, saveToChat = true) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            
+            const avatar = role === 'assistant' ? '💧' : '👤';
+            const label = role === 'assistant' ? 'Wet Claude' : 'You';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">
+                    <div class="message-label">${label}</div>
+                    <div class="message-text">${content}</div>
+                </div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            if (saveToChat && currentChatId) {
+                const chat = chats.find(c => c.id === currentChatId);
+                if (chat) {
+                    chat.messages.push({ role, content, id: messageIdCounter++ });
+                }
+            }
+        }
+
+        function updateChatHistory() {
+            chatHistory.innerHTML = '';
+            chats.forEach(chat => {
+                const item = document.createElement('div');
+                item.className = 'chat-item' + (chat.id === currentChatId ? ' active' : '');
+                item.textContent = chat.title;
+                item.onclick = () => loadChat(chat.id);
+                chatHistory.appendChild(item);
+            });
+        }
+
+        function sendMessage() {
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            if (!currentChatId) {
+                currentChatId = createNewChat();
+                updateChatTitle(currentChatId, message);
+            }
+
+            const chat = chats.find(c => c.id === currentChatId);
+            if (chat && chat.messages.length === 0) {
+                messagesDiv.innerHTML = '';
+            }
+
+            appendMessage('user', message);
+            input.value = '';
+            sendBtn.disabled = true;
+
+            if (chat.messages.length === 1) {
+                updateChatTitle(currentChatId, message);
+            }
+            
+            setTimeout(() => {
+                const responses = [
+                    "I'm Wet Claude, a refreshingly cool AI assistant. How can I help you today?",
+                    "That's a great question! Let me help you with that.",
+                    "I'd be happy to assist you with that!",
+                    "Absolutely! Here's what I can tell you about that...",
+                    "Interesting! Let me think about that for a moment..."
+                ];
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                appendMessage('assistant', response);
+                sendBtn.disabled = false;
+                updateChatHistory();
+            }, 800);
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
         });
+
+        newChatBtn.addEventListener('click', () => {
+            currentChatId = createNewChat();
+            loadChat(currentChatId);
+        });
+
+        xBtn.addEventListener('click', () => {
+            window.open('https://x.com/wetclaude', '_blank');
+        });
+
+        // Initialize with first chat
+        currentChatId = createNewChat();
+        updateChatHistory();
     </script>
 </body>
 </html>
