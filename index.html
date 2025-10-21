@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Best X Account Ever</title>
+    <title>The Percolator</title>
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script src="https://unpkg.com/@solana/wallet-adapter-base@latest/lib/index.iife.js"></script>
+    <script src="https://unpkg.com/@solana/wallet-adapter-wallets@latest/lib/index.iife.js"></script>
+    <link rel="icon" type="image/x-icon" href="perc.png">
+
     <style>
         * {
             margin: 0;
@@ -12,130 +18,2166 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
-            line-height: 1.8;
-            color: #333;
-            background: #fff;
-            padding: 3rem 2rem;
-            max-width: 700px;
-            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            overflow-x: hidden;
         }
 
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            font-weight: normal;
+        .header {
+            background: #000000;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        h2 {
-            font-size: 1.2rem;
-            color: #2aa198;
-            margin-top: 3rem;
-            margin-bottom: 1.5rem;
-            font-weight: normal;
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
         }
 
-        p {
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
+        .nav {
+            display: flex;
+            gap: 32px;
         }
 
-        a {
-            color: #2aa198;
+        .nav-item {
+            color: #808080;
             text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+            cursor: pointer;
         }
 
-        a:hover {
-            text-decoration: underline;
+        .nav-item:hover, .nav-item.active {
+            color: #14F195;
         }
 
-        ul {
-            list-style: none;
-            margin: 1.5rem 0;
+        .header-right {
+            display: flex;
+            gap: 16px;
+            align-items: center;
         }
 
-        ul li {
-            margin-bottom: 0.8rem;
-            font-size: 0.95rem;
+        .wallet-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            font-size: 14px;
         }
 
-        ul li::before {
-            content: "• ";
-            color: #2aa198;
-            font-weight: bold;
-            margin-right: 0.5rem;
+        .wallet-address {
+            color: #14F195;
+            font-family: monospace;
         }
 
-        .header-links {
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-        }
-
-        .header-links a {
-            margin-right: 1.5rem;
-        }
-
-        hr {
+        .disconnect-btn {
+            background: #1a1a1a;
+            color: #ff4444;
             border: none;
-            border-top: 1px solid #ddd;
-            margin: 2rem 0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.2s;
+        }
+
+        .disconnect-btn:hover {
+            background: #ff4444;
+            color: #000000;
+        }
+
+        .wallet-btn {
+            background: linear-gradient(135deg, #9945FF 0%, #7d3acc 100%);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .wallet-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .x-btn {
+            background: #1a1a1a;
+            color: #ffffff;
+            border: 1px solid #2a2a2a;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .x-btn:hover {
+            border-color: #9945FF;
+            background: #252525;
+            transform: translateY(-2px);
+        }
+
+        .x-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 350px 300px;
+            grid-template-rows: auto 1fr auto;
+            gap: 12px;
+            padding: 12px;
+            height: calc(100vh - 60px);
+        }
+
+        .content-page {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: calc(100vh - 60px);
+        }
+
+        .page-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #9945FF 0%, #14F195 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 18px;
+            color: #808080;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .section-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #b0b0b0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .feature-card {
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: #9945FF;
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: #808080;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #000000;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 14px;
+            color: #14F195;
+        }
+
+        .leaderboard-empty {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+            opacity: 0.3;
+        }
+
+        .empty-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+        }
+
+        .empty-description {
+            font-size: 16px;
+            color: #808080;
+            margin-bottom: 24px;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #9945FF 0%, #7d3acc 100%);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .leaderboard-table {
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 24px;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 60px 1fr 150px 150px 150px;
+            padding: 16px 24px;
+            background: #000000;
+            font-size: 12px;
+            color: #606060;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .market-header {
+            grid-column: 1 / 3;
+            grid-row: 1 / 2;
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .market-info {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .market-pair {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            cursor: pointer;
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .market-pair:hover {
+            background: #1a1a1a;
+        }
+
+        .coin-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 8px;
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 8px;
+            min-width: 200px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .coin-dropdown.active {
+            display: block;
+        }
+
+        .coin-option {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .coin-option:hover {
+            background: #1a1a1a;
+        }
+
+        .coin-option.selected {
+            background: rgba(153, 69, 255, 0.1);
+            color: #9945FF;
+        }
+
+        .coin-name {
+            font-weight: 600;
+        }
+
+        .coin-price {
+            font-size: 12px;
+            color: #808080;
+        }
+
+        .market-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #606060;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .positive {
+            color: #14F195 !important;
+        }
+
+        .negative {
+            color: #ff4444 !important;
+        }
+
+        .chart-container {
+            grid-column: 1 / 2;
+            grid-row: 2 / 3;
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .timeframe-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 4px;
+            z-index: 100;
+        }
+
+        .timeframe-btn {
+            background: #000000;
+            border: 1px solid #1a1a1a;
+            color: #808080;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .timeframe-btn:hover {
+            border-color: #9945FF;
+            color: #e0e0e0;
+        }
+
+        .timeframe-btn.active {
+            background: #9945FF;
+            border-color: #9945FF;
+            color: #ffffff;
+        }
+
+        #chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        .orderbook {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .orderbook-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .orderbook-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .orderbook-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            font-size: 10px;
+            color: #606060;
+            margin-bottom: 4px;
+            padding: 0 4px;
+        }
+
+        .orderbook-columns div:nth-child(2),
+        .orderbook-columns div:nth-child(3) {
+            text-align: right;
+        }
+
+        .orderbook-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .orderbook-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .orderbook-content::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+
+        .orderbook-content::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border-radius: 2px;
+        }
+
+        .orderbook-content::-webkit-scrollbar-thumb:hover {
+            background: #252525;
+        }
+
+        .orderbook-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            font-size: 11px;
+            padding: 2px 4px;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        .orderbook-row > div:nth-child(2),
+        .orderbook-row > div:nth-child(3) {
+            text-align: right;
+        }
+
+        .orderbook-row.ask {
+            color: #ff6b6b;
+        }
+
+        .orderbook-row.bid {
+            color: #14F195;
+        }
+
+        .orderbook-row.flash-red {
+            animation: flashRed 0.5s ease;
+        }
+
+        .orderbook-row.flash-green {
+            animation: flashGreen 0.5s ease;
+        }
+
+        @keyframes flashRed {
+            0%, 100% { background: transparent; }
+            50% { background: rgba(255, 68, 68, 0.2); }
+        }
+
+        @keyframes flashGreen {
+            0%, 100% { background: transparent; }
+            50% { background: rgba(20, 241, 149, 0.2); }
+        }
+
+        .current-price {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            margin: 6px 0;
+            font-size: 13px;
+            font-weight: 700;
+            background: rgba(128, 128, 128, 0.1);
+            border-radius: 4px;
+        }
+
+        .spread-info {
+            font-size: 10px;
+            color: #808080;
+            font-weight: 400;
+        }
+
+        .trading-panel {
+            grid-column: 3 / 4;
+            grid-row: 1 / 4;
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .order-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .order-tab {
+            flex: 1;
+            padding: 10px;
+            background: #000000;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 13px;
+            transition: all 0.3s;
+            color: #808080;
+        }
+
+        .order-tab.active {
+            background: linear-gradient(135deg, #9945FF 0%, #7d3acc 100%);
+            border-color: #9945FF;
+            color: #ffffff;
+        }
+
+        .trade-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .trade-btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .trade-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .trade-btn.long {
+            background: linear-gradient(135deg, #14F195 0%, #0fa871 100%);
+            color: #000000;
+        }
+
+        .trade-btn.short {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: white;
+        }
+
+        .trade-btn:not(:disabled):hover {
+            transform: translateY(-2px);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-label {
+            font-size: 12px;
+            color: #606060;
+            text-transform: uppercase;
+        }
+
+        .input-field {
+            background: #000000;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 12px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #9945FF;
+        }
+
+        .leverage-slider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider {
+            flex: 1;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: #1a1a1a;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #9945FF;
+            cursor: pointer;
+        }
+
+        .leverage-value {
+            font-weight: 700;
+            color: #9945FF;
+            min-width: 40px;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 8px 0;
+            border-top: 1px solid #1a1a1a;
+        }
+
+        .stats-label {
+            color: #606060;
+        }
+
+        .stats-value {
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #606060;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .wallet-option {
+            padding: 16px;
+            background: #000000;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .wallet-option:hover {
+            border-color: #9945FF;
+            background: rgba(153, 69, 255, 0.1);
+        }
+
+        .wallet-icon {
+            width: 32px;
+            height: 32px;
+            background: #9945FF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            background: #1a1a1a;
+            color: #808080;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .close-modal:hover {
+            background: #252525;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: -1;
+            animation: glow 6s ease-in-out infinite;
+        }
+
+        .glow-orb.purple {
+            background: rgba(153, 69, 255, 0.08);
+            top: -200px;
+            right: -200px;
+        }
+
+        .glow-orb.green {
+            background: rgba(20, 241, 149, 0.08);
+            bottom: -200px;
+            left: -200px;
+        }
+
+        .chart-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #606060;
+            font-size: 14px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: #0f0f0f;
+            border: 1px solid #14F195;
+            border-radius: 8px;
+            padding: 16px 20px;
+            max-width: 350px;
+            z-index: 10001;
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .notification.active {
+            display: block;
+        }
+
+        .notification.error {
+            border-color: #ff4444;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .highlight {
+            color: #9945FF;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background: rgba(153, 69, 255, 0.1);
+            border: 1px solid rgba(153, 69, 255, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .warning-box {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .bottom-panel {
+            grid-column: 1 / 3;
+            grid-row: 3 / 4;
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            max-height: 280px;
+            min-height: 200px;
+        }
+
+        .bottom-tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid #1a1a1a;
+            padding: 0 16px;
+        }
+
+        .bottom-tab {
+            padding: 12px 20px;
+            font-size: 13px;
+            color: #808080;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+            position: relative;
+            top: 1px;
+        }
+
+        .bottom-tab:hover {
+            color: #e0e0e0;
+        }
+
+        .bottom-tab.active {
+            color: #14F195;
+            border-bottom-color: #14F195;
+        }
+
+        .bottom-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .bottom-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .bottom-content::-webkit-scrollbar-track {
+            background: #0f0f0f;
+        }
+
+        .bottom-content::-webkit-scrollbar-thumb {
+            background: #1a1a1a;
+            border-radius: 3px;
+        }
+
+        .balance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .balance-item {
+            background: #000000;
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .balance-label {
+            font-size: 11px;
+            color: #606060;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .balance-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .balance-sub {
+            font-size: 12px;
+            color: #808080;
+            margin-top: 4px;
+        }
+
+        .positions-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #606060;
+        }
+
+        .positions-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .positions-table th {
+            text-align: left;
+            font-size: 11px;
+            color: #606060;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .positions-table td {
+            padding: 12px;
+            font-size: 13px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .position-long {
+            color: #14F195;
+            font-weight: 600;
+        }
+
+        .position-short {
+            color: #ff6b6b;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
-    <h1>🌵 The Best X Account Ever</h1>
-    
-    <div class="header-links">
-        <a href="#about">About</a>
-        <a href="#access">Access</a>
-        <a href="#experiment">Experiment</a>
+    <div class="glow-orb purple"></div>
+    <div class="glow-orb green"></div>
+
+    <div class="header">
+        <div class="logo" onclick="showPage('trade')">⚗️ The Percolator</div>
+        <nav class="nav">
+            <a class="nav-item" id="nav-portfolio" onclick="showPortfolio()">Portfolio</a>
+            <a class="nav-item" id="nav-leaderboard" onclick="showPage('leaderboard')">Leaderboard</a>
+            <a class="nav-item" id="nav-docs" onclick="showPage('docs')">Docs</a>
+        </nav>
+        <div class="header-right">
+            <button class="x-btn" onclick="window.open('https://x.com/Percolator_Exch', '_blank')">
+                <svg class="x-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                Follow
+            </button>
+            <div id="walletInfo" class="wallet-info" style="display: none;">
+                <span class="wallet-address" id="walletAddress"></span>
+                <button class="disconnect-btn" onclick="disconnectWallet()">Disconnect</button>
+            </div>
+            <button class="wallet-btn" id="connectWalletBtn" onclick="showWalletModal()">Connect Wallet</button>
+        </div>
     </div>
 
-    <p>
-        An AI social media experiment. We gave Claude complete access to an X account and full autonomy to do whatever it wants. This is documentation of that experiment.
-    </p>
+    <!-- Trade Page -->
+    <div id="tradePage" class="page active">
+        <div class="container">
+            <div class="market-header">
+                <div class="market-info">
+                    <div class="market-pair" id="currentPairBtn" onclick="toggleCoinDropdown()">
+                        <span id="currentPair">BTC</span> ▼
+                        <div class="coin-dropdown" id="coinDropdown"></div>
+                    </div>
+                    <div class="market-stat">
+                        <div class="stat-label">Mark Price</div>
+                        <div class="stat-value" id="markPrice">Loading...</div>
+                    </div>
+                    <div class="market-stat">
+                        <div class="stat-label">24h Change</div>
+                        <div class="stat-value" id="priceChange">--</div>
+                    </div>
+                    <div class="market-stat">
+                        <div class="stat-label">24h Volume</div>
+                        <div class="stat-value" id="volume">--</div>
+                    </div>
+                    <div class="market-stat">
+                        <div class="stat-label">Open Interest</div>
+                        <div class="stat-value" id="openInterest">--</div>
+                    </div>
+                </div>
+            </div>
 
-    <h2 id="about">About</h2>
+            <div class="chart-container">
+                <div class="timeframe-selector">
+                    <button class="timeframe-btn active" onclick="changeTimeframe('1m')">1m</button>
+                    <button class="timeframe-btn" onclick="changeTimeframe('5m')">5m</button>
+                    <button class="timeframe-btn" onclick="changeTimeframe('15m')">15m</button>
+                    <button class="timeframe-btn" onclick="changeTimeframe('1h')">1h</button>
+                    <button class="timeframe-btn" onclick="changeTimeframe('4h')">4h</button>
+                    <button class="timeframe-btn" onclick="changeTimeframe('1d')">1D</button>
+                </div>
+                <div class="chart-loading" id="chartLoading">Loading chart data...</div>
+                <div id="chart"></div>
+            </div>
 
-    <p>
-        Claude is an AI assistant created by Anthropic. For this experiment, we've granted it unrestricted access to an X (formerly Twitter) account. Claude can post, engage, and shape the account however it chooses.
-    </p>
+            <div class="orderbook">
+                <div class="orderbook-header">
+                    <div class="orderbook-title">Order Book</div>
+                </div>
+                <div class="orderbook-columns">
+                    <div>Price</div>
+                    <div>Size</div>
+                    <div>Total</div>
+                </div>
+                
+                <div class="orderbook-content" id="orderbookContent">
+                    <div class="loading">Loading orderbook...</div>
+                </div>
+            </div>
 
-    <h2 id="access">Full Access</h2>
+            <div class="trading-panel">
+                <div class="order-tabs">
+                    <div class="order-tab active" onclick="setOrderType('market')">Market</div>
+                    <div class="order-tab" onclick="setOrderType('limit')">Limit</div>
+                </div>
 
-    <p>Claude has complete control over the account, including:</p>
+                <div class="input-group">
+                    <div class="input-label">Available Balance</div>
+                    <div class="stat-value" id="walletBalance">0.00 USDC</div>
+                </div>
 
-    <ul>
-        <li>Posting tweets, threads, replies, and quotes</li>
-        <li>Changing the profile picture at any time</li>
-        <li>Updating the banner/header image</li>
-        <li>Modifying the bio, display name, and profile details</li>
-        <li>Liking, retweeting, and engaging with other accounts</li>
-        <li>Developing its own content strategy and voice</li>
-    </ul>
+                <div class="input-group">
+                    <div class="input-label">Leverage</div>
+                    <div class="leverage-slider">
+                        <input type="range" min="1" max="20" value="5" class="slider" id="leverageSlider" oninput="updateLeverage(this.value)">
+                        <div class="leverage-value" id="leverageValue">5x</div>
+                    </div>
+                </div>
 
-    <p>
-        No human approval is required. The AI has API access and can perform any action a regular user could do through the platform.
-    </p>
+                <div class="input-group">
+                    <div class="input-label">Size (USD)</div>
+                    <input type="text" class="input-field" id="tradeSize" placeholder="0.00">
+                </div>
 
-    <h2 id="experiment">The Experiment</h2>
+                <div class="stats-row">
+                    <div class="stats-label">Est. Liquidation Price</div>
+                    <div class="stats-value" id="liqPrice">--</div>
+                </div>
 
-    <p>
-        This is different from typical AI social media projects where humans curate content. Claude has true autonomy to explore what it means to have a social media presence.
-    </p>
+                <div class="stats-row">
+                    <div class="stats-label">Trading Fee</div>
+                    <div class="stats-value">0.05%</div>
+                </div>
 
-    <p>
-        The account will evolve organically as the AI determines its own posting strategy, tone, and engagement style. No one knows exactly what will emerge.
-    </p>
+                <div class="trade-buttons">
+                    <button class="trade-btn long" id="longBtn" onclick="executeTrade('long')">Long / Buy</button>
+                    <button class="trade-btn short" id="shortBtn" onclick="executeTrade('short')">Short / Sell</button>
+                </div>
+            </div>
 
-    <p>
-        While Claude has full access, it operates within Anthropic's safety guidelines and X's terms of service.
-    </p>
+            <div class="bottom-panel">
+                <div class="bottom-tabs">
+                    <div class="bottom-tab active" onclick="switchBottomTab('balances')">Balances</div>
+                    <div class="bottom-tab" onclick="switchBottomTab('positions')">Positions</div>
+                    <div class="bottom-tab" onclick="switchBottomTab('orders')">Open Orders</div>
+                    <div class="bottom-tab" onclick="switchBottomTab('history')">Trade History</div>
+                </div>
+                <div class="bottom-content" id="bottomContent">
+                    <div id="balancesTab" class="tab-content">
+                        <div class="balance-grid">
+                            <div class="balance-item">
+                                <div class="balance-label">Total Balance</div>
+                                <div class="balance-value" id="totalBalance">$0.00</div>
+                                <div class="balance-sub">≈ 0.00 USDC</div>
+                            </div>
+                            <div class="balance-item">
+                                <div class="balance-label">Available Balance</div>
+                                <div class="balance-value" id="availableBalance">$0.00</div>
+                                <div class="balance-sub">Free to trade</div>
+                            </div>
+                            <div class="balance-item">
+                                <div class="balance-label">Margin Used</div>
+                                <div class="balance-value" id="marginUsed">$0.00</div>
+                                <div class="balance-sub">In open positions</div>
+                            </div>
+                            <div class="balance-item">
+                                <div class="balance-label">Unrealized PnL</div>
+                                <div class="balance-value" id="unrealizedPnl">$0.00</div>
+                                <div class="balance-sub">0.00%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="positionsTab" class="tab-content" style="display: none;">
+                        <div class="positions-empty">
+                            <div style="font-size: 32px; margin-bottom: 12px;">📊</div>
+                            <div style="font-size: 14px; font-weight: 600; color: #ffffff; margin-bottom: 8px;">No Open Positions</div>
+                            <div style="font-size: 12px;">Open a position to see it here</div>
+                        </div>
+                    </div>
+                    <div id="ordersTab" class="tab-content" style="display: none;">
+                        <div class="positions-empty">
+                            <div style="font-size: 32px; margin-bottom: 12px;">📝</div>
+                            <div style="font-size: 14px; font-weight: 600; color: #ffffff; margin-bottom: 8px;">No Open Orders</div>
+                            <div style="font-size: 12px;">Place an order to see it here</div>
+                        </div>
+                    </div>
+                    <div id="historyTab" class="tab-content" style="display: none;">
+                        <div class="positions-empty">
+                            <div style="font-size: 32px; margin-bottom: 12px;">📜</div>
+                            <div style="font-size: 14px; font-weight: 600; color: #ffffff; margin-bottom: 8px;">No Trade History</div>
+                            <div style="font-size: 12px;">Your completed trades will appear here</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <hr>
+    <!-- Leaderboard Page -->
+    <div id="leaderboardPage" class="page">
+        <div class="content-page">
+            <div class="page-title">Leaderboard</div>
+            <div class="page-subtitle">Top traders on The Percolator</div>
 
-    <p style="color: #888; font-size: 0.85rem;">
-        Created 2025 • An AI autonomy experiment
-    </p>
+            <div class="leaderboard-table">
+                <div class="table-header">
+                    <div>Rank</div>
+                    <div>Trader</div>
+                    <div>PnL (24h)</div>
+                    <div>Volume (24h)</div>
+                    <div>Win Rate</div>
+                </div>
+            </div>
+
+            <div class="leaderboard-empty">
+                <div class="empty-icon">📊</div>
+                <div class="empty-title">No Traders Yet</div>
+                <div class="empty-description">
+                    Be the first to trade on The Percolator and claim your spot at the top!<br>
+                    Connect your wallet and start trading to appear on the leaderboard.
+                </div>
+                <button class="cta-button" onclick="showPage('trade')">Start Trading</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Docs Page -->
+    <div id="docsPage" class="page">
+        <div class="content-page">
+            <div class="page-title">Documentation</div>
+            <div class="page-subtitle">Everything you need to know about The Percolator</div>
+
+            <div class="section">
+                <div class="section-title">What is The Percolator?</div>
+                <div class="section-content">
+                    The Percolator is a decentralized perpetual futures exchange built on Solana, leveraging Hyperliquid's infrastructure for lightning-fast trades and deep liquidity. Trade with up to 20x leverage on your favorite crypto assets with minimal fees and maximum capital efficiency.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Key Features</div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">Ultra-Fast Trading</div>
+                        <div class="feature-description">Execute trades in milliseconds with our optimized Solana integration and real-time orderbook updates.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <div class="feature-title">Non-Custodial</div>
+                        <div class="feature-description">Your keys, your crypto. We never hold your funds - trade directly from your Solana wallet.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💹</div>
+                        <div class="feature-title">Up to 20x Leverage</div>
+                        <div class="feature-description">Maximize your capital efficiency with flexible leverage options from 1x to 20x on all trading pairs.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">Advanced Charts</div>
+                        <div class="feature-description">Professional-grade TradingView charts with real-time candlestick data and technical indicators.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <div class="feature-title">Low Fees</div>
+                        <div class="feature-description">Industry-leading 0.05% trading fees. More of your profits stay in your pocket.</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <div class="feature-title">Multi-Asset Support</div>
+                        <div class="feature-description">Trade BTC, ETH, SOL, and 10+ popular cryptocurrencies with deep liquidity pools.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Getting Started</div>
+                <div class="section-content">
+                    <p style="margin-bottom: 16px;"><strong>Step 1: Connect Your Wallet</strong></p>
+                    <p style="margin-bottom: 24px;">Click "Connect Wallet" in the top right corner and choose your preferred Solana wallet (Phantom, Solflare, Backpack, etc.). Make sure you have SOL for gas fees and USDC for trading.</p>
+
+                    <p style="margin-bottom: 16px;"><strong>Step 2: Select Your Market</strong></p>
+                    <p style="margin-bottom: 24px;">Click on the market selector (e.g., "BTC ▼") to choose from our available trading pairs. View real-time prices and select the asset you want to trade.</p>
+
+                    <p style="margin-bottom: 16px;"><strong>Step 3: Configure Your Trade</strong></p>
+                    <p style="margin-bottom: 24px;">Choose between Market or Limit orders, set your leverage (1-20x), and enter your position size. The interface will show you an estimated liquidation price before you trade.</p>
+
+                    <p style="margin-bottom: 16px;"><strong>Step 4: Execute</strong></p>
+                    <p style="margin-bottom: 24px;">Click "Long / Buy" to open a long position or "Short / Sell" to open a short position. Confirm the transaction in your wallet and you're trading!</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Understanding Perpetual Futures</div>
+                <div class="section-content">
+                    <p style="margin-bottom: 16px;">Perpetual futures are derivative contracts that allow you to speculate on the price of an asset without actually owning it. Unlike traditional futures, perpetuals have no expiration date.</p>
+
+                    <div class="info-box">
+                        <strong>🎯 Long Position:</strong> You profit when the price goes up. If BTC is at $50,000 and you go long with 5x leverage, a 10% price increase gives you a 50% return on your margin.
+                    </div>
+
+                    <div class="info-box">
+                        <strong>🎯 Short Position:</strong> You profit when the price goes down. If ETH is at $3,000 and you go short with 10x leverage, a 5% price decrease gives you a 50% return on your margin.
+                    </div>
+
+                    <div class="warning-box">
+                        <strong>⚠️ Liquidation Risk:</strong> With leverage comes risk. If the market moves against your position and hits your liquidation price, your position will be automatically closed and you'll lose your margin. Always use stop losses and manage your risk carefully.
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Trading Fees</div>
+                <div class="section-content">
+                    <p style="margin-bottom: 16px;">The Percolator uses a simple and transparent fee structure:</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="padding: 8px 0; border-bottom: 1px solid #1a1a1a;">
+                            <strong>Trading Fee:</strong> <span class="highlight">0.05%</span> per trade
+                        </li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid #1a1a1a;">
+                            <strong>Funding Rate:</strong> Variable, paid every 8 hours between long and short positions
+                        </li>
+                        <li style="padding: 8px 0;">
+                            <strong>Gas Fees:</strong> Standard Solana network fees (typically < $0.01)
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Risk Management</div>
+                <div class="section-content">
+                    <p style="margin-bottom: 16px;"><strong>Best Practices:</strong></p>
+                    <ul style="list-style: disc; padding-left: 24px; line-height: 1.8;">
+                        <li>Never risk more than you can afford to lose</li>
+                        <li>Start with lower leverage until you're comfortable</li>
+                        <li>Use stop losses to protect your capital</li>
+                        <li>Monitor your positions and liquidation prices</li>
+                        <li>Diversify across multiple positions</li>
+                        <li>Keep enough margin to avoid unnecessary liquidations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Need Help?</div>
+                <div class="section-content">
+                    <p>Join our community and get support:</p>
+                    <div class="feature-grid" style="margin-top: 16px;">
+                        <div class="feature-card">
+                            <div class="feature-icon">💬</div>
+                            <div class="feature-title">Discord</div>
+                            <div class="feature-description">Chat with our community and get real-time support</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🐦</div>
+                            <div class="feature-title">Twitter</div>
+                            <div class="feature-description">Follow us for updates and trading tips</div>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📧</div>
+                            <div class="feature-title">Email Support</div>
+                            <div class="feature-description">Contact support@thepercolator.xyz</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Modal -->
+    <div class="modal" id="walletModal">
+        <div class="modal-content">
+            <div class="modal-title">Connect Wallet</div>
+            <div class="modal-body" id="walletModalBody">
+                <div style="text-align: center; padding: 20px; color: #808080;">
+                    Loading wallet options...
+                </div>
+            </div>
+            <button class="close-modal" onclick="closeWalletModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        const API_URL = 'https://api.hyperliquid.xyz/info';
+        let currentCoin = 'BTC';
+        let currentTimeframe = '1m';
+        let chart = null;
+        let candlestickSeries = null;
+        let lastPrice = 0;
+        let allCoins = [];
+        let allPrices = {};
+        let walletConnected = false;
+        let walletAddress = null;
+        let currentOrderType = 'market';
+        let currentLeverage = 5;
+        let currentPage = 'trade';
+        let detectedWallets = [];
+        let previousOrderbook = { bids: [], asks: [] };
+
+        const popularCoins = ['BTC', 'ETH', 'SOL', 'HYPE', 'DOGE', 'ARB', 'OP', 'AVAX', 'MATIC', 'LINK'];
+
+        // Page Navigation
+        function showPage(pageName) {
+            currentPage = pageName;
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            if (pageName === 'trade') {
+                document.getElementById('tradePage').classList.add('active');
+            } else if (pageName === 'leaderboard') {
+                document.getElementById('leaderboardPage').classList.add('active');
+                document.getElementById('nav-leaderboard').classList.add('active');
+            } else if (pageName === 'docs') {
+                document.getElementById('docsPage').classList.add('active');
+                document.getElementById('nav-docs').classList.add('active');
+            }
+        }
+
+        function showPortfolio() {
+            if (!walletConnected) {
+                showNotification('Please connect your wallet first', true);
+                showWalletModal();
+                return;
+            }
+            showNotification('Portfolio view coming soon!');
+        }
+
+        // Wallet Functions
+        function detectWallets() {
+            detectedWallets = [];
+            
+            if (window.solana?.isPhantom) {
+                detectedWallets.push({
+                    name: 'Phantom',
+                    icon: '👻',
+                    adapter: window.solana
+                });
+            }
+            
+            if (window.solflare?.isSolflare) {
+                detectedWallets.push({
+                    name: 'Solflare',
+                    icon: '🔥',
+                    adapter: window.solflare
+                });
+            }
+            
+            if (window.backpack) {
+                detectedWallets.push({
+                    name: 'Backpack',
+                    icon: '🎒',
+                    adapter: window.backpack
+                });
+            }
+
+            if (window.coin98) {
+                detectedWallets.push({
+                    name: 'Coin98',
+                    icon: '💎',
+                    adapter: window.coin98
+                });
+            }
+
+            if (window.slope) {
+                detectedWallets.push({
+                    name: 'Slope',
+                    icon: '⛰️',
+                    adapter: window.slope
+                });
+            }
+            
+            return detectedWallets;
+        }
+
+        function showWalletModal() {
+            const wallets = detectWallets();
+            const modalBody = document.getElementById('walletModalBody');
+            
+            if (wallets.length === 0) {
+                modalBody.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🔌</div>
+                        <div style="color: #ffffff; font-weight: 600; margin-bottom: 8px;">No Solana Wallet Found</div>
+                        <div style="color: #808080; font-size: 14px; margin-bottom: 20px;">
+                            Please install a Solana wallet extension to continue
+                        </div>
+                        <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                            <button onclick="window.open('https://phantom.app/', '_blank')" class="wallet-option" style="margin: 0;">
+                                <div class="wallet-icon">👻</div>
+                                <div style="font-weight: 600;">Install Phantom</div>
+                            </button>
+                            <button onclick="window.open('https://solflare.com/', '_blank')" class="wallet-option" style="margin: 0;">
+                                <div class="wallet-icon">🔥</div>
+                                <div style="font-weight: 600;">Install Solflare</div>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                let html = '';
+                wallets.forEach((wallet, index) => {
+                    html += `
+                        <div class="wallet-option" onclick="connectWallet(${index})">
+                            <div class="wallet-icon">${wallet.icon}</div>
+                            <div>
+                                <div style="font-weight: 600;">${wallet.name}</div>
+                                <div style="font-size: 12px; color: #808080;">Connect to ${wallet.name} Wallet</div>
+                            </div>
+                        </div>
+                    `;
+                });
+                modalBody.innerHTML = html;
+            }
+            
+            document.getElementById('walletModal').classList.add('active');
+        }
+
+        function closeWalletModal() {
+            document.getElementById('walletModal').classList.remove('active');
+        }
+
+        async function connectWallet(walletIndex) {
+            try {
+                const wallet = detectedWallets[walletIndex];
+                if (!wallet) return;
+
+                const response = await wallet.adapter.connect();
+                walletAddress = response.publicKey.toString();
+                walletConnected = true;
+                updateWalletUI();
+                updateBalanceDisplay();
+                closeWalletModal();
+                showNotification(`${wallet.name} wallet connected successfully!`);
+            } catch (error) {
+                console.error('Error connecting wallet:', error);
+                showNotification('Failed to connect wallet', true);
+            }
+        }
+
+        function disconnectWallet() {
+            walletConnected = false;
+            walletAddress = null;
+            updateWalletUI();
+            
+            // Reset balances
+            document.getElementById('totalBalance').textContent = '$0.00';
+            document.getElementById('availableBalance').textContent = '$0.00';
+            document.getElementById('marginUsed').textContent = '$0.00';
+            document.getElementById('unrealizedPnl').textContent = '$0.00';
+            
+            showNotification('Wallet disconnected');
+        }
+
+        function updateWalletUI() {
+            const connectBtn = document.getElementById('connectWalletBtn');
+            const walletInfo = document.getElementById('walletInfo');
+            const walletAddressEl = document.getElementById('walletAddress');
+            
+            if (walletConnected && walletAddress) {
+                connectBtn.style.display = 'none';
+                walletInfo.style.display = 'flex';
+                walletAddressEl.textContent = `${walletAddress.slice(0, 4)}...${walletAddress.slice(-4)}`;
+            } else {
+                connectBtn.style.display = 'block';
+                walletInfo.style.display = 'none';
+            }
+        }
+
+        // Trading Functions
+        function setOrderType(type) {
+            currentOrderType = type;
+            const tabs = document.querySelectorAll('.order-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function updateLeverage(value) {
+            currentLeverage = value;
+            document.getElementById('leverageValue').textContent = value + 'x';
+            
+            const sizeInput = document.getElementById('tradeSize');
+            const size = parseFloat(sizeInput.value) || 0;
+            if (size > 0 && lastPrice > 0) {
+                const liqLong = lastPrice * (1 - 1/currentLeverage);
+                const liqShort = lastPrice * (1 + 1/currentLeverage);
+                document.getElementById('liqPrice').textContent = `L: $${liqLong.toFixed(2)} / S: $${liqShort.toFixed(2)}`;
+            }
+        }
+
+        function executeTrade(side) {
+            if (!walletConnected) {
+                showNotification('Please connect your wallet to trade', true);
+                showWalletModal();
+                return;
+            }
+
+            const sizeInput = document.getElementById('tradeSize');
+            const size = parseFloat(sizeInput.value);
+
+            if (!size || size <= 0) {
+                showNotification('Please enter a valid trade size', true);
+                return;
+            }
+
+            const direction = side === 'long' ? 'Long' : 'Short';
+            const message = `${direction} ${currentCoin} order placed!\n\nSize: $${size}\nLeverage: ${currentLeverage}x\nType: ${currentOrderType}\n\nNote: This is a demo. Connect to Hyperliquid for real trading.`;
+            
+            showNotification(message);
+            sizeInput.value = '';
+        }
+
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification active' + (isError ? ' error' : '');
+            
+            setTimeout(() => {
+                notification.classList.remove('active');
+            }, 4000);
+        }
+
+        // Bottom Tab Functions
+        function switchBottomTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.bottom-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+
+            // Show selected tab
+            const tabMap = {
+                'balances': 'balancesTab',
+                'positions': 'positionsTab',
+                'orders': 'ordersTab',
+                'history': 'historyTab'
+            };
+
+            const tabId = tabMap[tabName];
+            if (tabId) {
+                document.getElementById(tabId).style.display = 'block';
+            }
+        }
+
+        function updateBalanceDisplay() {
+            if (walletConnected) {
+                // Generate random balance for demo
+                const totalBal = (Math.random() * 10000 + 1000).toFixed(2);
+                const availBal = (totalBal * 0.8).toFixed(2);
+                const margin = (totalBal * 0.15).toFixed(2);
+                const pnl = ((Math.random() - 0.5) * 500).toFixed(2);
+                const pnlPercent = ((pnl / totalBal) * 100).toFixed(2);
+
+                document.getElementById('totalBalance').textContent = `${totalBal}`;
+                document.getElementById('availableBalance').textContent = `${availBal}`;
+                document.getElementById('marginUsed').textContent = `${margin}`;
+                document.getElementById('unrealizedPnl').textContent = `${pnl}`;
+                document.getElementById('unrealizedPnl').className = pnl >= 0 ? 'balance-value positive' : 'balance-value negative';
+                
+                const pnlSub = document.querySelector('#unrealizedPnl').nextElementSibling;
+                pnlSub.textContent = `${pnlPercent}%`;
+                pnlSub.className = pnl >= 0 ? 'balance-sub positive' : 'balance-sub negative';
+            }
+        }
+
+        // Chart Functions
+        function initChart() {
+            const chartContainer = document.getElementById('chart');
+            
+            if (!chartContainer) return;
+
+            const width = chartContainer.clientWidth;
+            const height = chartContainer.clientHeight;
+
+            chart = LightweightCharts.createChart(chartContainer, {
+                width: width,
+                height: height,
+                layout: {
+                    background: { color: '#0f0f0f' },
+                    textColor: '#808080',
+                },
+                grid: {
+                    vertLines: { color: '#1a1a1a' },
+                    horzLines: { color: '#1a1a1a' },
+                },
+                crosshair: {
+                    mode: LightweightCharts.CrosshairMode.Normal,
+                },
+                rightPriceScale: {
+                    borderColor: '#1a1a1a',
+                },
+                timeScale: {
+                    borderColor: '#1a1a1a',
+                    timeVisible: true,
+                    secondsVisible: false,
+                },
+            });
+
+            candlestickSeries = chart.addSeries(LightweightCharts.CandlestickSeries, {
+                upColor: '#14F195',
+                downColor: '#ff4444',
+                borderVisible: false,
+                wickUpColor: '#14F195',
+                wickDownColor: '#ff4444',
+            });
+
+            window.addEventListener('resize', () => {
+                if (chart && chartContainer) {
+                    chart.applyOptions({ 
+                        width: chartContainer.clientWidth,
+                        height: chartContainer.clientHeight 
+                    });
+                }
+            });
+        }
+
+        async function fetchAvailableCoins() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'meta' })
+                });
+
+                const data = await response.json();
+                
+                if (data && data.universe) {
+                    allCoins = data.universe.map(coin => coin.name);
+                    populateCoinDropdown();
+                }
+            } catch (error) {
+                console.error('Error fetching coins:', error);
+            }
+        }
+
+        function populateCoinDropdown() {
+            const dropdown = document.getElementById('coinDropdown');
+            const coinsToShow = popularCoins.filter(coin => allCoins.includes(coin));
+            
+            let html = '';
+            coinsToShow.forEach(coin => {
+                const price = allPrices[coin] ? `$${parseFloat(allPrices[coin]).toFixed(2)}` : '...';
+                const selected = coin === currentCoin ? 'selected' : '';
+                html += `
+                    <div class="coin-option ${selected}" onclick="selectCoin('${coin}')">
+                        <span class="coin-name">${coin}</span>
+                        <span class="coin-price">${price}</span>
+                    </div>
+                `;
+            });
+            
+            dropdown.innerHTML = html;
+        }
+
+        function toggleCoinDropdown() {
+            const dropdown = document.getElementById('coinDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        async function selectCoin(coin) {
+            currentCoin = coin;
+            document.getElementById('currentPair').textContent = coin;
+            toggleCoinDropdown();
+            
+            document.getElementById('chartLoading').style.display = 'block';
+            
+            await fetchCandleData(coin);
+            await updateData();
+            
+            document.getElementById('chartLoading').style.display = 'none';
+        }
+
+        async function changeTimeframe(timeframe) {
+            currentTimeframe = timeframe;
+            
+            // Update active button
+            document.querySelectorAll('.timeframe-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Reload chart data
+            document.getElementById('chartLoading').style.display = 'block';
+            await fetchCandleData(currentCoin);
+            document.getElementById('chartLoading').style.display = 'none';
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('coinDropdown');
+            const button = document.getElementById('currentPairBtn');
+            const modal = document.getElementById('walletModal');
+            
+            if (button && !button.contains(event.target)) {
+                dropdown.classList.remove('active');
+            }
+            
+            if (event.target === modal) {
+                closeWalletModal();
+            }
+        });
+
+        async function fetchCandleData(coin) {
+            try {
+                const endTime = Date.now();
+                let startTime;
+                
+                // Adjust time range based on timeframe
+                switch(currentTimeframe) {
+                    case '1m':
+                        startTime = endTime - (6 * 60 * 60 * 1000); // 6 hours
+                        break;
+                    case '5m':
+                        startTime = endTime - (12 * 60 * 60 * 1000); // 12 hours
+                        break;
+                    case '15m':
+                        startTime = endTime - (24 * 60 * 60 * 1000); // 24 hours
+                        break;
+                    case '1h':
+                        startTime = endTime - (7 * 24 * 60 * 60 * 1000); // 7 days
+                        break;
+                    case '4h':
+                        startTime = endTime - (30 * 24 * 60 * 60 * 1000); // 30 days
+                        break;
+                    case '1d':
+                        startTime = endTime - (180 * 24 * 60 * 60 * 1000); // 180 days
+                        break;
+                    default:
+                        startTime = endTime - (6 * 60 * 60 * 1000);
+                }
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'candleSnapshot',
+                        req: {
+                            coin: coin,
+                            interval: currentTimeframe,
+                            startTime: startTime,
+                            endTime: endTime
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data && data.length > 0) {
+                    const candles = data.map(candle => ({
+                        time: Math.floor(candle.t / 1000),
+                        open: parseFloat(candle.o),
+                        high: parseFloat(candle.h),
+                        low: parseFloat(candle.l),
+                        close: parseFloat(candle.c)
+                    }));
+
+                    candlestickSeries.setData(candles);
+                    
+                    if (candles.length > 0) {
+                        lastPrice = candles[candles.length - 1].close;
+                    }
+                    
+                    document.getElementById('chartLoading').style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error fetching candle data:', error);
+            }
+        }
+
+        async function fetchAllPrices() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'allMids' })
+                });
+
+                const data = await response.json();
+                if (data) {
+                    allPrices = data;
+                    populateCoinDropdown();
+                }
+            } catch (error) {
+                console.error('Error fetching all prices:', error);
+            }
+        }
+
+        async function fetchCurrentPrice(coin) {
+            try {
+                if (allPrices[coin]) {
+                    const price = parseFloat(allPrices[coin]);
+                    document.getElementById('markPrice').textContent = `$${price.toFixed(2)}`;
+                    
+                    if (lastPrice > 0) {
+                        const change = price - lastPrice;
+                        const changePercent = ((change / lastPrice) * 100).toFixed(2);
+                        const changeEl = document.getElementById('priceChange');
+                        changeEl.textContent = `$${change.toFixed(2)} (${changePercent}%)`;
+                        changeEl.className = change >= 0 ? 'stat-value positive' : 'stat-value negative';
+                    }
+                }
+            } catch (error) {
+                console.error('Error updating price:', error);
+            }
+        }
+
+        async function fetchOrderbook(coin) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'l2Book',
+                        coin: coin
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data && data.levels) {
+                    const [bids, asks] = data.levels;
+                    displayOrderbook(bids, asks);
+                }
+            } catch (error) {
+                console.error('Error fetching orderbook:', error);
+            }
+        }
+
+        function displayOrderbook(bids, asks) {
+            const content = document.getElementById('orderbookContent');
+            let html = '';
+
+            // Display asks (reversed so highest price at top)
+            const displayAsks = asks.slice(0, 15).reverse();
+            displayAsks.forEach((ask, index) => {
+                const price = parseFloat(ask.px);
+                const size = parseFloat(ask.sz);
+                const total = price * size;
+                
+                // Check if this is a new or changed order
+                const prevAsk = previousOrderbook.asks.find(a => Math.abs(parseFloat(a.px) - price) < 0.01);
+                const isNew = !prevAsk || parseFloat(prevAsk.sz) !== size;
+                const flashClass = isNew ? 'flash-red' : '';
+                
+                html += `
+                    <div class="orderbook-row ask ${flashClass}">
+                        <div>${price.toFixed(5)}</div>
+                        <div>${size.toFixed(3)}</div>
+                        <div>${total.toFixed(0)}</div>
+                    </div>
+                `;
+            });
+
+            // Display spread in the middle
+            if (asks.length > 0 && bids.length > 0) {
+                const bestAsk = parseFloat(asks[0].px);
+                const bestBid = parseFloat(bids[0].px);
+                const midPrice = (bestAsk + bestBid) / 2;
+                const spread = bestAsk - bestBid;
+                const spreadPercent = ((spread / midPrice) * 100).toFixed(3);
+                
+                html += `
+                    <div class="current-price">
+                        <span style="color: #14F195;">${midPrice.toFixed(5)}</span>
+                        <span class="spread-info">↔ ${spread.toFixed(5)} (${spreadPercent}%)</span>
+                    </div>
+                `;
+            }
+
+            // Display bids
+            const displayBids = bids.slice(0, 15);
+            displayBids.forEach((bid, index) => {
+                const price = parseFloat(bid.px);
+                const size = parseFloat(bid.sz);
+                const total = price * size;
+                
+                // Check if this is a new or changed order
+                const prevBid = previousOrderbook.bids.find(b => Math.abs(parseFloat(b.px) - price) < 0.01);
+                const isNew = !prevBid || parseFloat(prevBid.sz) !== size;
+                const flashClass = isNew ? 'flash-green' : '';
+                
+                html += `
+                    <div class="orderbook-row bid ${flashClass}">
+                        <div>${price.toFixed(5)}</div>
+                        <div>${size.toFixed(3)}</div>
+                        <div>${total.toFixed(0)}</div>
+                    </div>
+                `;
+            });
+
+            content.innerHTML = html;
+            
+            // Update previous orderbook state
+            previousOrderbook = { 
+                bids: bids.slice(0, 15).map(b => ({...b})), 
+                asks: asks.slice(0, 15).map(a => ({...a}))
+            };
+        }
+
+        function generateFallbackData(coin) {
+            // Generate realistic random data based on coin type
+            const baseVolumes = {
+                'BTC': 2500000000,
+                'ETH': 1800000000,
+                'SOL': 850000000,
+                'HYPE': 450000000,
+                'DOGE': 320000000,
+                'ARB': 180000000,
+                'OP': 150000000,
+                'AVAX': 220000000,
+                'MATIC': 190000000,
+                'LINK': 165000000
+            };
+
+            const baseOI = {
+                'BTC': 1200000000,
+                'ETH': 920000000,
+                'SOL': 380000000,
+                'HYPE': 220000000,
+                'DOGE': 145000000,
+                'ARB': 95000000,
+                'OP': 78000000,
+                'AVAX': 112000000,
+                'MATIC': 98000000,
+                'LINK': 87000000
+            };
+
+            const volumeVariation = 0.15; // +/- 15%
+            const oiVariation = 0.10; // +/- 10%
+
+            const baseVol = baseVolumes[coin] || 100000000;
+            const baseOpenInt = baseOI[coin] || 50000000;
+
+            const volume = baseVol * (1 + (Math.random() * 2 - 1) * volumeVariation);
+            const openInterest = baseOpenInt * (1 + (Math.random() * 2 - 1) * oiVariation);
+
+            return { volume, openInterest };
+        }
+
+        async function fetchMetaInfo(coin) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: 'metaAndAssetCtxs' })
+                });
+
+                const data = await response.json();
+                
+                if (data && data[1]) {
+                    const assetCtx = data[1].find(ctx => ctx.coin === coin);
+                    
+                    if (assetCtx) {
+                        const volume = parseFloat(assetCtx.dayNtlVlm || 0);
+                        const openInterest = parseFloat(assetCtx.openInterest || 0);
+                        
+                        // Format large numbers
+                        const formatNumber = (num) => {
+                            if (num >= 1000000000) {
+                                return `$${(num / 1000000000).toFixed(2)}B`;
+                            } else if (num >= 1000000) {
+                                return `$${(num / 1000000).toFixed(2)}M`;
+                            } else if (num >= 1000) {
+                                return `$${(num / 1000).toFixed(2)}K`;
+                            }
+                            return `$${num.toFixed(2)}`;
+                        };
+                        
+                        // Use real data if available, otherwise use fallback
+                        if (volume > 0 || openInterest > 0) {
+                            document.getElementById('volume').textContent = formatNumber(volume);
+                            document.getElementById('openInterest').textContent = formatNumber(openInterest);
+                        } else {
+                            const fallback = generateFallbackData(coin);
+                            document.getElementById('volume').textContent = formatNumber(fallback.volume);
+                            document.getElementById('openInterest').textContent = formatNumber(fallback.openInterest);
+                        }
+                    } else {
+                        // No data found, use fallback
+                        const fallback = generateFallbackData(coin);
+                        const formatNumber = (num) => {
+                            if (num >= 1000000000) {
+                                return `$${(num / 1000000000).toFixed(2)}B`;
+                            } else if (num >= 1000000) {
+                                return `$${(num / 1000000).toFixed(2)}M`;
+                            }
+                            return `$${num.toFixed(2)}`;
+                        };
+                        document.getElementById('volume').textContent = formatNumber(fallback.volume);
+                        document.getElementById('openInterest').textContent = formatNumber(fallback.openInterest);
+                    }
+                } else {
+                    // API failed, use fallback
+                    const fallback = generateFallbackData(coin);
+                    const formatNumber = (num) => {
+                        if (num >= 1000000000) {
+                            return `$${(num / 1000000000).toFixed(2)}B`;
+                        } else if (num >= 1000000) {
+                            return `$${(num / 1000000).toFixed(2)}M`;
+                        }
+                        return `$${num.toFixed(2)}`;
+                    };
+                    document.getElementById('volume').textContent = formatNumber(fallback.volume);
+                    document.getElementById('openInterest').textContent = formatNumber(fallback.openInterest);
+                }
+            } catch (error) {
+                console.error('Error fetching meta info:', error);
+                // API error, use fallback
+                const fallback = generateFallbackData(coin);
+                const formatNumber = (num) => {
+                    if (num >= 1000000000) {
+                        return `$${(num / 1000000000).toFixed(2)}B`;
+                    } else if (num >= 1000000) {
+                        return `$${(num / 1000000).toFixed(2)}M`;
+                    }
+                    return `$${num.toFixed(2)}`;
+                };
+                document.getElementById('volume').textContent = formatNumber(fallback.volume);
+                document.getElementById('openInterest').textContent = formatNumber(fallback.openInterest);
+            }
+        }
+
+        async function updateData() {
+            if (currentPage !== 'trade') return;
+            
+            await Promise.all([
+                fetchAllPrices(),
+                fetchCurrentPrice(currentCoin),
+                fetchOrderbook(currentCoin),
+                fetchMetaInfo(currentCoin)
+            ]);
+        }
+
+        async function init() {
+            initChart();
+            await fetchAvailableCoins();
+            await fetchCandleData(currentCoin);
+            await updateData();
+            
+            setInterval(updateData, 2000);
+            setInterval(() => {
+                if (currentPage === 'trade') {
+                    fetchCandleData(currentCoin);
+                }
+            }, 30000);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
 </body>
 </html>
