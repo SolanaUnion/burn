@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U4A - Building the BNB Capital of USA</title>
+    <title>Crime Coin</title>
+    <link rel="icon" type="image/x-icon" href="crimecoin.png">
     <style>
         * {
             margin: 0;
@@ -12,243 +13,176 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-            background: #000000;
-            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #fff;
+            color: #000;
+            min-height: 100vh;
+            padding: 20px;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
         }
 
         header {
-            padding: 60px 0 40px;
-            text-align: center;
+            padding: 80px 0 60px 0;
+            border-bottom: 1px solid #000;
+            position: relative;
         }
 
-        .logo {
-            font-size: 72px;
-            font-weight: 900;
-            background: linear-gradient(135deg, #4ade80 0%, #22d3ee 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
+        .social-links {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
 
-        .tagline {
-            font-size: 18px;
-            color: #888;
-            font-weight: 300;
-            margin-bottom: 80px;
+        .docs-link {
+            text-decoration: none;
+            color: #000;
+            font-size: 0.9em;
+            transition: opacity 0.2s;
+            margin-right: 10px;
         }
 
-        .hero {
-            text-align: center;
-            padding: 60px 0 100px;
+        .docs-link:hover {
+            opacity: 0.6;
+        }
+
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border: 1px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: #000;
+        }
+
+        .social-btn:hover svg {
+            fill: #fff;
+        }
+
+        .social-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #000;
+            transition: fill 0.2s;
         }
 
         h1 {
-            font-size: 56px;
-            font-weight: 800;
-            margin-bottom: 30px;
-            line-height: 1.2;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #4ade80 0%, #22d3ee 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-description {
-            font-size: 20px;
-            color: #aaa;
-            max-width: 700px;
-            margin: 0 auto 40px;
+            font-size: 3em;
             font-weight: 300;
+            letter-spacing: -1px;
         }
 
-        .button-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 60px;
-        }
-
-        .btn {
-            padding: 16px 40px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 12px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #4ade80 0%, #22d3ee 100%);
-            color: #000;
-            border-color: transparent;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: #fff;
-            border-image: linear-gradient(135deg, #4ade80 0%, #22d3ee 100%) 1;
-        }
-
-        .btn-secondary:hover {
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 211, 238, 0.1) 100%);
-            transform: translateY(-2px);
-        }
-
-        .strategy-section {
-            padding: 80px 0;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .strategy-title {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 50px;
-            text-align: center;
-        }
-
-        .strategy-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        .step {
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(34, 211, 238, 0.1) 100%);
-            border: 1px solid rgba(74, 222, 128, 0.2);
-            border-radius: 16px;
-            padding: 40px;
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .step:hover {
-            transform: translateY(-5px);
-            border-color: rgba(74, 222, 128, 0.4);
-        }
-
-        .step-number {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #4ade80 0%, #22d3ee 100%);
-            border-radius: 50%;
-            text-align: center;
-            line-height: 40px;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #000;
-        }
-
-        .step h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .step p {
-            color: #bbb;
-            font-size: 16px;
-            line-height: 1.7;
-        }
-
-        .vision-section {
-            padding: 80px 0 120px;
-            text-align: center;
-        }
-
-        .vision-box {
-            background: linear-gradient(135deg, rgba(74, 222, 128, 0.05) 0%, rgba(34, 211, 238, 0.05) 100%);
-            border: 2px solid;
-            border-image: linear-gradient(135deg, #4ade80 0%, #22d3ee 100%) 1;
-            padding: 60px 40px;
-            max-width: 800px;
-            margin: 0 auto;
-            border-radius: 20px;
-        }
-
-        .vision-box h2 {
-            font-size: 42px;
-            margin-bottom: 25px;
-            font-weight: 800;
-        }
-
-        .vision-box p {
-            font-size: 20px;
-            color: #aaa;
-            line-height: 1.8;
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 0;
+        .tagline {
+            font-size: 1.1em;
+            margin-top: 10px;
             color: #666;
-            font-size: 14px;
-            border-top: 1px solid #222;
+        }
+
+        .warning-badge {
+            display: inline-block;
+            background: #000;
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-top: 15px;
+            letter-spacing: 1px;
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .code-block {
+            background: #f5f5f5;
+            border: 1px solid #000;
+            padding: 20px;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            color: #000;
+        }
+
+        .feature-list {
+            margin-top: 20px;
+        }
+
+        .feature {
+            padding: 15px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .feature-bullet {
+            color: #999;
+            min-width: 20px;
+        }
+
+        .command {
+            background: #f5f5f5;
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #000;
+        }
+
+        .history-box {
+            background: #f5f5f5;
+            border-left: 3px solid #000;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .bitcointalk-link {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .bitcointalk-link:hover {
+            opacity: 0.6;
         }
 
         @media (max-width: 768px) {
-            .logo {
-                font-size: 48px;
-            }
-
             h1 {
-                font-size: 36px;
+                font-size: 2em;
             }
 
-            .hero-description {
-                font-size: 18px;
-            }
-
-            .button-group {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .strategy-title {
-                font-size: 28px;
-            }
-
-            .step {
-                padding: 30px;
-            }
-
-            .vision-box {
-                padding: 40px 30px;
-            }
-
-            .vision-box h2 {
-                font-size: 32px;
-            }
-
-            .vision-box p {
-                font-size: 18px;
+            .code-block {
+                font-size: 0.8em;
             }
         }
     </style>
@@ -256,84 +190,196 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">U4A</div>
-            <div class="tagline">United for Accumulation</div>
+            <div class="social-links">
+                <a href="https://bitcointalk.org/index.php?topic=266387.0" class="docs-link" target="_blank">view original thread →</a>
+                <a href="https://x.com/Crime_Coin_Bnb" class="social-btn" target="_blank" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                </a>
+                <a href="https://x.com/home" class="social-btn" target="_blank" aria-label="X (Twitter)">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+            </div>
+            <h1>Crime Coin</h1>
+            <p class="tagline">The original crimecoin project from 2013 brought back to life</p>
         </header>
 
-        <section class="hero">
-            <h1>
-                Building the <span class="gradient-text">BNB Capital</span><br>
-                of the United States
-            </h1>
-            <p class="hero-description">
-                Through strategic acquisition and innovative treasury management, 
-                we're creating the largest BNB holder in America.
+        <section>
+            <h2>What is Crime Coin?</h2>
+            <p>
+                Crime Coin is a groundbreaking framework built on our custom BNB Chain fork, providing developers with 
+                powerful tools for creating and pumping memecoins the way they were meant to be: fast, fun, and slightly illegal-feeling 
+                (but totally legal).
             </p>
-            <div class="button-group">
-                <a href="https://www.sec.gov/Archives/edgar/data/1546671/000154667112000003/0001546671-12-000003.txt" class="btn btn-primary" target="_blank">SEC Approval</a>
-                <a href="https://x.com/U4A_Treasury" class="btn btn-secondary" target="_blank">Our X</a>
-            </div>
-        </section>
-
-        <section class="strategy-section">
-            <h2 class="strategy-title">Our Strategy</h2>
             
-            <div class="strategy-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Legal Acquisition</h3>
-                    <p>
-                        We legally acquired an established company, providing us with the 
-                        corporate infrastructure and credibility to execute our vision at scale.
-                    </p>
+            <div class="feature-list">
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>Launch Factory</strong>: Deploy unlimited memecoins with one command</span>
                 </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Memecoin Valuation</h3>
-                    <p>
-                        Our memecoin serves as collateral, allowing us to access institutional 
-                        capital. The market valuation of our token creates borrowing capacity 
-                        that we leverage strategically.
-                    </p>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>Artificial Pump Tools</strong>: Built-in mechanisms to "crime" your coin price</span>
                 </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Strategic Loans</h3>
-                    <p>
-                        Using our memecoin valuation as collateral, we secure loans that are 
-                        deployed exclusively to acquire BNB, systematically building our treasury.
-                    </p>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>BEP-20 Native</strong>: Full compatibility with BNB ecosystem and MetaMask</span>
                 </div>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>Memechain Optimized</strong>: Our custom BNB fork designed for memecoin chaos</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>Rust eDSL</strong>: Modern development experience with nostalgic energy</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>IDL Generation</strong>: Auto-generate clients for your scam... er, project</span>
+                </div>
+            </div>
 
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>BNB Accumulation</h3>
-                    <p>
-                        Every dollar borrowed goes directly into BNB acquisition. We continuously 
-                        compound our holdings, creating a self-reinforcing cycle of growth and accumulation.
-                    </p>
+            <p style="margin-top: 20px;">
+                Crime Coin is the first framework to bring the 2013 memecoin pump-and-dump philosophy to modern blockchain infrastructure.
+            </p>
+        </section>
+
+        <section>
+            <h2>Key Features</h2>
+            
+            <div class="feature-list">
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>Custom Memechain</strong>: Built on our BNB Chain fork optimized for memecoin launches</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>One-Click Pump</strong>: Artificial market-making tools built into the framework</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>Transparent Crime</strong>: All pumps are on-chain and auditable (the legal way to crime)</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>Reverse Psychology Marketing</strong>: Named "Crime Coin" so nobody uses it for actual crime</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-bullet">•</span>
+                    <span><strong>Beretta Icon Heritage</strong>: Keeping the spirit of the original pistol rewards</span>
                 </div>
             </div>
         </section>
 
-        <section class="vision-section">
-            <div class="vision-box">
-                <h2 class="gradient-text">The Vision</h2>
+        <section>
+            <h2>Example: Pump Counter Program</h2>
+            <p>
+                Here's a counter program that tracks how many times you've pumped your memecoin:
+            </p>
+
+            <div class="code-block">use crime_coin::prelude::*;
+
+declare_id!("0xCR1ME...");
+
+#[program]
+mod pump_counter {
+    use super::*;
+
+    pub fn initialize(ctx: Context&lt;Initialize&gt;, start: u64) -&gt; Result&lt;()&gt; {
+        let counter = &mut ctx.accounts.counter;
+        counter.authority = *ctx.accounts.authority.key;
+        counter.pumps = start;
+        counter.total_crime = 0;
+        Ok(())
+    }
+
+    pub fn pump_it(ctx: Context&lt;Pump&gt;, amount: u64) -&gt; Result&lt;()&gt; {
+        let counter = &mut ctx.accounts.counter;
+        counter.pumps += 1;
+        counter.total_crime += amount;
+        // Artificially inflate the price (the legal way)
+        msg!("🔫 PUMP #{} | Amount: {} | This is fine", 
+             counter.pumps, amount);
+        Ok(())
+    }
+}</div>
+        </section>
+
+        <section>
+            <h2>Launch Your Memecoin</h2>
+            
+            <div class="command"># Create a BEP-20 memecoin on our custom chain
+crime-coin token create --name "DogeKiller" --symbol "DGKL" --supply 420000000000</div>
+
+            <div class="command"># Deploy to Crime Chain (our BNB fork)
+crime-coin deploy --target crimechain --with-pump-tools</div>
+
+            <div class="command"># Start pumping (legally)
+crime-coin pump start --token DGKL --intensity maximum</div>
+        </section>
+
+        <section>
+            <h2>Connect Your Wallet</h2>
+            <p>
+                Crime Coin programs work with MetaMask and all BNB Chain compatible wallets. Add our custom Crime Chain 
+                network to your MetaMask:
+            </p>
+
+            <div class="command">Network Name: Crime Chain</div>
+            <div class="command">RPC URL: https://rpc.crimechain.lol</div>
+            <div class="command">Chain ID: 1337</div>
+            <div class="command">Symbol: CRIME</div>
+            <div class="command">Block Explorer: https://crimescan.lol</div>
+
+            <p style="margin-top: 20px;">
+                Start criming (legally) today.
+            </p>
+        </section>
+
+        <section>
+            <h2>A Piece of Crypto History</h2>
+            <div class="history-box">
                 <p>
-                    To establish the most significant BNB treasury in the United States, 
-                    making U4A the undisputed capital of BNB holdings in America. Through 
-                    innovative financial engineering and relentless accumulation, we're 
-                    building a treasury that will define the future of digital asset 
-                    holdings in the U.S. market.
+                    "Hi everyone, I am pleased to announce Crimecoin - The Coin developed to be Crime and Black Market Resistant... 
+                    sometimes the more simple the solution, the higher the chances of it working."
+                </p>
+                <p style="margin-top: 15px; color: #999;">
+                    — CaptChadd, <a href="https://bitcointalk.org/index.php?topic=266387.0" class="bitcointalk-link" target="_blank">BitcoinTalk, August 1, 2013</a>
                 </p>
             </div>
+            <p>
+                Crime Coin was a legendary project announced on BitcoinTalk in 2013. While marketed with reverse psychology as 
+                "crime-resistant," the community quickly understood its true purpose: it was a node where you could launch your 
+                own memecoins and artificially pump them — exactly the way coins were "crimed" back in the wild west days of crypto.
+            </p>
+            <p>
+                The original featured a Beretta 92FS pistol icon that appeared when you mined a block. It was raw, honest, and 
+                captured the chaotic energy of early altcoin season. It died quickly, but its spirit never left us.
+            </p>
+        </section>
+
+        <section>
+            <h2>We've Decided to Recreate It</h2>
+            <p>
+                Twelve years later, we're bringing Crime Coin back — but bigger, better, and built for modern meme culture. 
+                We forked BNB Chain to create our own memechain, and Crime Coin is the framework that sits on top of it.
+            </p>
+            <p>
+                This isn't just a tribute. This is Crime Coin 2.0: a unified framework for launching, pumping, and gaming 
+                memecoin economics in the most transparent way possible. If the original was a pistol, this is a whole arsenal.
+            </p>
+        </section>
+
+        <section style="border-bottom: none; text-align: center; padding: 40px 0;">
+            <p style="color: #666; font-size: 0.9em;">
+                In memory of the original Crime Coin (2013-2013)<br>
+                "The only thing I think I might have messed up a little is the block details." — CaptChadd<br><br>
+                🔫 This time, we got it right 🔫
+            </p>
         </section>
     </div>
-
-    <footer>
-        <p>&copy; 2025 U4A. All rights reserved.</p>
-    </footer>
 </body>
 </html>
