@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crime Coin</title>
-    <link rel="icon" type="image/x-icon" href="crimecoin.png">
+    <title>Yue</title>
     <style>
         * {
             margin: 0;
@@ -13,373 +12,511 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #fff;
-            color: #000;
-            min-height: 100vh;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #ffffff;
+            color: #000000;
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 800px;
+        .header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 30px 40px;
+            background: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
             margin: 0 auto;
-        }
-
-        header {
-            padding: 80px 0 60px 0;
-            border-bottom: 1px solid #000;
-            position: relative;
-        }
-
-        .social-links {
-            position: absolute;
-            top: 20px;
-            right: 0;
             display: flex;
-            gap: 15px;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .docs-link {
+        .logo-small {
+            font-size: 24px;
+            font-weight: 200;
+            letter-spacing: 4px;
+            color: #000000;
             text-decoration: none;
-            color: #000;
-            font-size: 0.9em;
-            transition: opacity 0.2s;
-            margin-right: 10px;
         }
 
-        .docs-link:hover {
-            opacity: 0.6;
-        }
-
-        .social-btn {
-            width: 40px;
-            height: 40px;
-            background: #fff;
-            border: 1px solid #000;
+        .nav {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: #666666;
             text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
         }
 
-        .social-btn:hover {
-            background: #000;
+        .nav-link:hover {
+            color: #000000;
         }
 
-        .social-btn:hover svg {
-            fill: #fff;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 40px;
         }
 
-        .social-btn svg {
-            width: 20px;
-            height: 20px;
-            fill: #000;
-            transition: fill 0.2s;
+        .sidebar {
+            position: fixed;
+            left: 40px;
+            top: 120px;
+            width: 200px;
+            padding-right: 30px;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .sidebar-link {
+            display: block;
+            color: #999999;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            color: #000000;
+        }
+
+        .content {
+            margin-left: 270px;
+            max-width: 800px;
         }
 
         h1 {
-            font-size: 3em;
-            font-weight: 300;
-            letter-spacing: -1px;
-        }
-
-        .tagline {
-            font-size: 1.1em;
-            margin-top: 10px;
-            color: #666;
-        }
-
-        .warning-badge {
-            display: inline-block;
-            background: #000;
-            color: #fff;
-            padding: 5px 15px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-top: 15px;
-            letter-spacing: 1px;
-        }
-
-        section {
-            padding: 60px 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        section:last-child {
-            border-bottom: none;
+            font-size: 48px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
 
         h2 {
-            font-size: 1.5em;
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-top: 80px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        h3 {
+            font-size: 20px;
             font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-top: 40px;
             margin-bottom: 20px;
         }
 
         p {
-            color: #333;
+            color: #333333;
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .intro {
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 60px;
+            line-height: 1.8;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: #000000;
+        }
+
+        pre {
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+            margin: 30px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+            transition: border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #000000;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 1px;
             margin-bottom: 15px;
         }
 
-        .code-block {
-            background: #f5f5f5;
-            border: 1px solid #000;
-            padding: 20px;
-            margin: 30px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            overflow-x: auto;
-            color: #000;
+        .feature-desc {
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.6;
         }
 
-        .feature-list {
-            margin-top: 20px;
-        }
-
-        .feature {
-            padding: 15px 0;
-            display: flex;
-            gap: 15px;
-        }
-
-        .feature-bullet {
-            color: #999;
-            min-width: 20px;
-        }
-
-        .command {
-            background: #f5f5f5;
-            border: 1px solid #000;
-            padding: 15px;
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            color: #000;
-        }
-
-        .history-box {
-            background: #f5f5f5;
-            border-left: 3px solid #000;
-            padding: 20px;
+        .note {
+            background: #fafafa;
+            border-left: 2px solid #000000;
+            padding: 20px 30px;
             margin: 30px 0;
         }
 
-        .bitcointalk-link {
-            color: #000;
-            text-decoration: none;
+        .note-title {
+            font-weight: 400;
+            margin-bottom: 10px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .bitcointalk-link:hover {
-            opacity: 0.6;
+        .note-content {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+            }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
+            .header {
+                padding: 20px;
             }
 
-            .code-block {
-                font-size: 0.8em;
+            .container {
+                padding: 40px 20px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            pre {
+                padding: 20px;
+                font-size: 12px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="header-content">
+            <a href="yue.html" class="logo-small">YUE 月</a>
+            <nav class="nav">
+                <a href="yue-docs.html" class="nav-link">DOCS</a>
+                <a href="https://x.com/home" class="nav-link" target="_blank">TRY YUE</a>
+            </nav>
+        </div>
+    </div>
+
     <div class="container">
-        <header>
-            <div class="social-links">
-                <a href="https://bitcointalk.org/index.php?topic=266387.0" class="docs-link" target="_blank">view original thread →</a>
-                <a href="https://x.com/Crime_Coin_Bnb" class="social-btn" target="_blank" aria-label="GitHub">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                    </svg>
-                </a>
-                <a href="https://x.com/home" class="social-btn" target="_blank" aria-label="X (Twitter)">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                </a>
-            </div>
-            <h1>Crime Coin</h1>
-            <p class="tagline">The original crimecoin project from 2013 brought back to life</p>
-        </header>
+        <aside class="sidebar">
+            <a href="#introduction" class="sidebar-link active">Introduction</a>
+            <a href="#getting-started" class="sidebar-link">Getting Started</a>
+            <a href="#features" class="sidebar-link">Features</a>
+            <a href="#api-reference" class="sidebar-link">API Reference</a>
+            <a href="#examples" class="sidebar-link">Examples</a>
+            <a href="#models" class="sidebar-link">Models</a>
+        </aside>
 
-        <section>
-            <h2>What is Crime Coin?</h2>
-            <p>
-                Crime Coin is a groundbreaking framework built on our custom BNB Chain fork, providing developers with 
-                powerful tools for creating and pumping memecoins the way they were meant to be: fast, fun, and slightly illegal-feeling 
-                (but totally legal).
-            </p>
-            
-            <div class="feature-list">
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>Launch Factory</strong>: Deploy unlimited memecoins with one command</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>Artificial Pump Tools</strong>: Built-in mechanisms to "crime" your coin price</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>BEP-20 Native</strong>: Full compatibility with BNB ecosystem and MetaMask</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>Memechain Optimized</strong>: Our custom BNB fork designed for memecoin chaos</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>Rust eDSL</strong>: Modern development experience with nostalgic energy</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>IDL Generation</strong>: Auto-generate clients for your scam... er, project</span>
-                </div>
-            </div>
-
-            <p style="margin-top: 20px;">
-                Crime Coin is the first framework to bring the 2013 memecoin pump-and-dump philosophy to modern blockchain infrastructure.
-            </p>
-        </section>
-
-        <section>
-            <h2>Key Features</h2>
-            
-            <div class="feature-list">
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>Custom Memechain</strong>: Built on our BNB Chain fork optimized for memecoin launches</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>One-Click Pump</strong>: Artificial market-making tools built into the framework</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>Transparent Crime</strong>: All pumps are on-chain and auditable (the legal way to crime)</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>Reverse Psychology Marketing</strong>: Named "Crime Coin" so nobody uses it for actual crime</span>
-                </div>
-                <div class="feature">
-                    <span class="feature-bullet">•</span>
-                    <span><strong>Beretta Icon Heritage</strong>: Keeping the spirit of the original pistol rewards</span>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Example: Pump Counter Program</h2>
-            <p>
-                Here's a counter program that tracks how many times you've pumped your memecoin:
+        <div class="content">
+            <h1>Documentation</h1>
+            <p class="intro">
+                Yue is the first Chinese AI assistant that seamlessly integrates OpenAI's Sora 2 and Google's Veo 3.1 
+                for advanced video generation with native audio support. Generate hyperrealistic videos from text prompts 
+                or images with synchronized dialogue and sound effects.
             </p>
 
-            <div class="code-block">use crime_coin::prelude::*;
+            <section id="introduction">
+                <h2>Introduction</h2>
+                
+                <div class="video-container" style="position: relative; width: 100%; max-width: 800px; margin: 40px 0; border: 1px solid #e0e0e0; overflow: hidden;">
+                    <video controls autoplay muted loop style="width: 100%; height: auto; display: block; background: #000;">
+                        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
 
-declare_id!("0xCR1ME...");
-
-#[program]
-mod pump_counter {
-    use super::*;
-
-    pub fn initialize(ctx: Context&lt;Initialize&gt;, start: u64) -&gt; Result&lt;()&gt; {
-        let counter = &mut ctx.accounts.counter;
-        counter.authority = *ctx.accounts.authority.key;
-        counter.pumps = start;
-        counter.total_crime = 0;
-        Ok(())
-    }
-
-    pub fn pump_it(ctx: Context&lt;Pump&gt;, amount: u64) -&gt; Result&lt;()&gt; {
-        let counter = &mut ctx.accounts.counter;
-        counter.pumps += 1;
-        counter.total_crime += amount;
-        // Artificially inflate the price (the legal way)
-        msg!("🔫 PUMP #{} | Amount: {} | This is fine", 
-             counter.pumps, amount);
-        Ok(())
-    }
-}</div>
-        </section>
-
-        <section>
-            <h2>Launch Your Memecoin</h2>
-            
-            <div class="command"># Create a BEP-20 memecoin on our custom chain
-crime-coin token create --name "DogeKiller" --symbol "DGKL" --supply 420000000000</div>
-
-            <div class="command"># Deploy to Crime Chain (our BNB fork)
-crime-coin deploy --target crimechain --with-pump-tools</div>
-
-            <div class="command"># Start pumping (legally)
-crime-coin pump start --token DGKL --intensity maximum</div>
-        </section>
-
-        <section>
-            <h2>Connect Your Wallet</h2>
-            <p>
-                Crime Coin programs work with MetaMask and all BNB Chain compatible wallets. Add our custom Crime Chain 
-                network to your MetaMask:
-            </p>
-
-            <div class="command">Network Name: Crime Chain</div>
-            <div class="command">RPC URL: https://rpc.crimechain.lol</div>
-            <div class="command">Chain ID: 1337</div>
-            <div class="command">Symbol: CRIME</div>
-            <div class="command">Block Explorer: https://crimescan.lol</div>
-
-            <p style="margin-top: 20px;">
-                Start criming (legally) today.
-            </p>
-        </section>
-
-        <section>
-            <h2>A Piece of Crypto History</h2>
-            <div class="history-box">
                 <p>
-                    "Hi everyone, I am pleased to announce Crimecoin - The Coin developed to be Crime and Black Market Resistant... 
-                    sometimes the more simple the solution, the higher the chances of it working."
+                    <strong>Yue</strong> is the <strong>first Chinese AI assistant</strong> that seamlessly integrates with cutting-edge video generation technologies, powered by <strong>OpenAI's Sora 2</strong> and <strong>Google's Veo 3.1</strong>.
                 </p>
-                <p style="margin-top: 15px; color: #999;">
-                    — CaptChadd, <a href="https://bitcointalk.org/index.php?topic=266387.0" class="bitcointalk-link" target="_blank">BitcoinTalk, August 1, 2013</a>
+                
+                <p>
+                    Generate stunning, hyperrealistic videos with synchronized audio, dialogue, and sound effects—all from simple text prompts or images. Experience the next generation of AI-powered creativity.
                 </p>
+
+                <p>
+                    Yue represents a breakthrough in AI-powered video creation, combining the best of both worlds: 
+                    OpenAI's cutting-edge Sora 2 model and Google's advanced Veo 3.1 technology. Built specifically 
+                    for the Chinese market, Yue offers natural language processing in Mandarin while delivering 
+                    studio-quality video outputs.
+                </p>
+
+                <div class="note">
+                    <div class="note-title">Why Yue?</div>
+                    <div class="note-content">
+                        Yue (月) means "moon" in Chinese, symbolizing our mission to illuminate the creative process 
+                        and provide a guiding light for content creators across China.
+                    </div>
+                </div>
+            </section>
+
+            <section id="getting-started">
+                <h2>Getting Started</h2>
+                
+                <h3>Installation</h3>
+                <p>Install the Yue SDK using npm or pip:</p>
+
+                <pre><code># Using npm
+npm install yue-sdk
+
+# Using pip
+pip install yue-sdk</code></pre>
+
+                <h3>Authentication</h3>
+                <p>Initialize Yue with your API key:</p>
+
+                <pre><code>import { YueClient } from 'yue-sdk';
+
+const yue = new YueClient({
+  apiKey: 'your-api-key-here',
+  model: 'sora-2' // or 'veo-3.1'
+});</code></pre>
+
+                <pre><code># Python
+from yue_sdk import YueClient
+
+yue = YueClient(
+    api_key='your-api-key-here',
+    model='sora-2'  # or 'veo-3.1'
+)</code></pre>
+            </section>
+
+            <section id="features">
+                <h2>Features</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">Dual Model Support</div>
+                        <div class="feature-desc">
+                            Switch between Sora 2 and Veo 3.1 based on your needs—hyperrealism or speed.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Native Audio</div>
+                        <div class="feature-desc">
+                            Generate synchronized dialogue, sound effects, and ambient audio automatically.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Chinese Language</div>
+                        <div class="feature-desc">
+                            Full support for Mandarin prompts with cultural context understanding.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Real-time Physics</div>
+                        <div class="feature-desc">
+                            Accurate physics simulation for realistic motion and object interactions.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="api-reference">
+                <h2>API Reference</h2>
+
+                <h3>Generate Video</h3>
+                <p>Create a video from a text prompt:</p>
+
+                <pre><code>const video = await yue.generate({
+  prompt: "一只熊猫在竹林中玩耍，阳光透过树叶洒下来",
+  duration: 8,
+  resolution: "1080p",
+  style: "cinematic",
+  audio: true
+});
+
+console.log(video.url);</code></pre>
+
+                <h3>Image to Video</h3>
+                <p>Convert a static image into an animated video:</p>
+
+                <pre><code>const video = await yue.imageToVideo({
+  image: "./path/to/image.jpg",
+  prompt: "使图像中的人物开始说话和移动",
+  duration: 5,
+  motion: "natural"
+});
+
+await video.save("output.mp4");</code></pre>
+
+                <h3>Video Extension</h3>
+                <p>Extend existing video clips while maintaining consistency:</p>
+
+                <pre><code>const extendedVideo = await yue.extend({
+  videoPath: "./original.mp4",
+  prompt: "继续之前的场景，镜头慢慢拉远",
+  additionalDuration: 5
+});</code></pre>
+
+                <h3>Parameters</h3>
+                <p>Available parameters for video generation:</p>
+
+                <pre><code>{
+  prompt: string,           // Required: Text description
+  duration: number,         // 1-8 seconds (Veo) or 1-60 seconds (Sora)
+  resolution: string,       // "720p", "1080p", "4k"
+  fps: number,             // 24, 30, or 60
+  style: string,           // "cinematic", "realistic", "anime", "documentary"
+  audio: boolean,          // Enable native audio generation
+  model: string,           // "sora-2" or "veo-3.1"
+  negativePrompt: string   // What to avoid in the video
+}</code></pre>
+            </section>
+
+            <section id="examples">
+                <h2>Examples</h2>
+
+                <h3>Example 1: Product Demo</h3>
+                <pre><code>const productDemo = await yue.generate({
+  prompt: "一款新型智能手表在白色背景上旋转展示，展现其精致的设计和流畅的界面",
+  duration: 6,
+  resolution: "4k",
+  style: "realistic",
+  audio: false,
+  model: "veo-3.1"
+});</code></pre>
+
+                <h3>Example 2: Narrative Scene</h3>
+                <pre><code>const scene = await yue.generate({
+  prompt: "老人坐在公园长椅上，对着镜头说：'生活就像一盒巧克力，你永远不知道下一颗是什么味道'",
+  duration: 8,
+  resolution: "1080p",
+  style: "cinematic",
+  audio: true,
+  model: "sora-2"
+});</code></pre>
+
+                <h3>Example 3: Animation</h3>
+                <pre><code>const animation = await yue.generate({
+  prompt: "可爱的卡通兔子在彩虹色的草地上跳跃，背景是糖果色的天空",
+  duration: 5,
+  resolution: "1080p",
+  style: "anime",
+  audio: true,
+  model: "veo-3.1"
+});</code></pre>
+            </section>
+
+            <section id="models">
+                <h2>Models</h2>
+
+                <h3>Sora 2</h3>
+                <p>
+                    OpenAI's Sora 2 excels at complex physics simulation and longer video sequences. 
+                    Best for narrative content, realistic motion, and scenarios requiring accurate object interactions.
+                </p>
+
+                <div class="note">
+                    <div class="note-title">Sora 2 Specifications</div>
+                    <div class="note-content">
+                        • Maximum duration: 60 seconds<br>
+                        • Best for: Realistic motion, complex physics<br>
+                        • Audio: Synchronized with video generation<br>
+                        • Processing time: 2-5 minutes per video
+                    </div>
+                </div>
+
+                <h3>Veo 3.1</h3>
+                <p>
+                    Google's Veo 3.1 offers faster generation times with enhanced prompt adherence and superior 
+                    image-to-video capabilities. Ideal for marketing content, product demos, and quick iterations.
+                </p>
+
+                <div class="note">
+                    <div class="note-title">Veo 3.1 Specifications</div>
+                    <div class="note-content">
+                        • Maximum duration: 8 seconds<br>
+                        • Best for: Quick generation, image-to-video, style consistency<br>
+                        • Audio: Native audio with rich soundscapes<br>
+                        • Processing time: 30-90 seconds per video
+                    </div>
+                </div>
+
+                <h3>Choosing the Right Model</h3>
+                <pre><code>// Use Sora 2 for complex narratives
+if (requiresComplexPhysics || duration > 8) {
+  model = "sora-2";
+}
+
+// Use Veo 3.1 for quick iterations
+if (needsFastGeneration || hasReferenceImage) {
+  model = "veo-3.1";
+}</code></pre>
+            </section>
+
+            <div class="note" style="margin-top: 80px;">
+                <div class="note-title">Need Help?</div>
+                <div class="note-content">
+                    Join our community or contact support for assistance with your Yue implementation.
+                </div>
             </div>
-            <p>
-                Crime Coin was a legendary project announced on BitcoinTalk in 2013. While marketed with reverse psychology as 
-                "crime-resistant," the community quickly understood its true purpose: it was a node where you could launch your 
-                own memecoins and artificially pump them — exactly the way coins were "crimed" back in the wild west days of crypto.
-            </p>
-            <p>
-                The original featured a Beretta 92FS pistol icon that appeared when you mined a block. It was raw, honest, and 
-                captured the chaotic energy of early altcoin season. It died quickly, but its spirit never left us.
-            </p>
-        </section>
-
-        <section>
-            <h2>We've Decided to Recreate It</h2>
-            <p>
-                Twelve years later, we're bringing Crime Coin back — but bigger, better, and built for modern meme culture. 
-                We forked BNB Chain to create our own memechain, and Crime Coin is the framework that sits on top of it.
-            </p>
-            <p>
-                This isn't just a tribute. This is Crime Coin 2.0: a unified framework for launching, pumping, and gaming 
-                memecoin economics in the most transparent way possible. If the original was a pistol, this is a whole arsenal.
-            </p>
-        </section>
-
-        <section style="border-bottom: none; text-align: center; padding: 40px 0;">
-            <p style="color: #666; font-size: 0.9em;">
-                In memory of the original Crime Coin (2013-2013)<br>
-                "The only thing I think I might have messed up a little is the block details." — CaptChadd<br><br>
-                🔫 This time, we got it right 🔫
-            </p>
-        </section>
+        </div>
     </div>
 </body>
 </html>
