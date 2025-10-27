@@ -3,286 +3,742 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>fiona</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>EveryHouse</title>
     <style>
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #ffc9e5 0%, #ffb3d9 25%, #ff99cc 50%, #ff69b4 75%, #ff1493 100%);
-            background-attachment: fixed;
             margin: 0;
-            padding: 0;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 3rem;
-        }
-        
-        .social-link {
-            background: white;
-            border-radius: 50%;
-            padding: 0.75rem;
-            box-shadow: 0 4px 12px rgba(255, 20, 147, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .social-link:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
-        }
-        
-        .main-card {
-            background: white;
-            border-radius: 2rem;
-            padding: 3rem;
-            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.3);
-            margin-bottom: 2rem;
-        }
-        
-        .title {
-            font-size: 5rem;
-            font-weight: 800;
-            color: #ff1493;
-            text-align: center;
-            margin: 0 0 2rem 0;
-            letter-spacing: -0.02em;
-            text-shadow: 3px 3px 0px #ffb3d9;
-        }
-        
-        .mascot-container {
-            text-align: center;
-            margin: 2rem 0;
-        }
-        
-        .mascot {
-            max-width: 300px;
-            height: auto;
-            border-radius: 1rem;
-            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.2);
-        }
-        
-        .tagline {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #c71585;
-            margin: 2rem 0;
-        }
-        
-        .generator-section {
-            background: linear-gradient(135deg, #ffe4f2 0%, #ffd4e8 100%);
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            margin: 3rem 0;
-            border: 3px solid #ff69b4;
-        }
-        
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #c71585;
-            text-align: center;
-            margin: 0 0 1.5rem 0;
-        }
-        
-        .generator-box {
-            background: white;
-            border: 3px solid #ff69b4;
-            border-radius: 1rem;
-            padding: 3rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 1.5rem;
-        }
-        
-        .generator-box:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
-            border-color: #ff1493;
-        }
-        
-        .generator-text {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #ff1493;
-            margin: 0;
-        }
-        
-        .tweet-button {
-            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
-            color: white;
-            border: none;
-            padding: 1rem 2.5rem;
-            border-radius: 0.75rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(255, 20, 147, 0.3);
+        canvas {
             display: block;
-            margin: 0 auto;
         }
-        
-        .tweet-button:hover:not(:disabled) {
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #333;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            min-width: 250px;
+        }
+        #info h2 {
+            margin: 0 0 15px 0;
+            font-size: 22px;
+            color: #14F195;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            padding: 8px;
+            background: rgba(20, 241, 149, 0.1);
+            border-radius: 5px;
+        }
+        .stat-label {
+            font-weight: 600;
+            color: #666;
+        }
+        .stat-value {
+            font-weight: bold;
+            color: #14F195;
+        }
+
+        #transaction-feed {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        #transaction-feed h3 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            color: #9945FF;
+        }
+        .transaction {
+            background: rgba(153, 69, 255, 0.1);
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border-left: 3px solid #9945FF;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .transaction-amount {
+            font-weight: bold;
+            color: #14F195;
+            font-size: 16px;
+        }
+        .transaction-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 3px;
+        }
+
+        .solana-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #9945FF, #14F195);
+            border-radius: 50%;
+        }
+        #x-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: #000000;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 12px;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        #x-button:hover {
+            background: #333333;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
-        
-        .tweet-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .x-icon {
+            width: 16px;
+            height: 16px;
+            fill: white;
         }
-        
-        .reasons-section {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-            border: 3px solid #ff69b4;
+        #transaction-feed::-webkit-scrollbar {
+            width: 6px;
         }
-        
-        .reasons-title {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #c71585;
-            margin: 0 0 1.5rem 0;
+        #transaction-feed::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 3px;
         }
-        
-        .reasons-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 0.75rem;
-        }
-        
-        .reasons-list li {
-            background: linear-gradient(135deg, #ffe4f2 0%, #ffd4e8 100%);
-            padding: 1rem 1.25rem;
-            border-radius: 0.75rem;
-            border-left: 4px solid #ff69b4;
-            color: #8b0058;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .reasons-list li:hover {
-            transform: translateX(4px);
-            border-left-color: #ff1493;
-            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
-        }
-        
-        .reasons-list li::before {
-            content: "⚠️ ";
-            margin-right: 0.5rem;
-        }
-        
-        @media (max-width: 768px) {
-            .title {
-                font-size: 3rem;
-            }
-            
-            .main-card {
-                padding: 1.5rem;
-                border-radius: 1.5rem;
-            }
-            
-            .reasons-list {
-                grid-template-columns: 1fr;
-            }
+        #transaction-feed::-webkit-scrollbar-thumb {
+            background: #9945FF;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <a href="https://x.com/fionabullposter" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Follow on X">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="#ff1493">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-            </a>
+    <div id="info">
+        <h2><span class="solana-icon"></span> House Construction</h2>
+        <a id="x-button" href="https://x.com/EveryHouseSol" target="_blank" rel="noopener noreferrer">
+            <svg class="x-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            Follow @EveryHouseSol
+        </a>
+        <div class="stat-row">
+            <span class="stat-label">Workers:</span>
+            <span class="stat-value" id="worker-count">0</span>
         </div>
-        
-        <div class="main-card">
-            <h1 class="title">fiona</h1>
-            
-            <div class="mascot-container">
-                <img src="fiona.jpg" alt="fiona coin mascot" class="mascot">
-            </div>
-            
-            <p class="tagline">this coin is going to 0 don't buy it</p>
-            
-            <div class="generator-section">
-                <h2 class="section-title">fiona post generator</h2>
-                
-                <div class="generator-box">
-                    <p class="generator-text">click the box to generate fud</p>
-                </div>
-                
-                <button class="tweet-button" disabled>click to tweet</button>
-            </div>
-            
-            <div class="reasons-section">
-                <h2 class="reasons-title">reasons to not buy this coin</h2>
-                
-                <ul class="reasons-list">
-                    <li>i took this image off pinterest and deployed it</li>
-                    <li>bundled the supply</li>
-                    <li>the dev is connected to jeffery epstien</li>
-                    <li>wintermute doing marketmaking</li>
-                    <li>rug pull scheduled</li>
-                    <li>there is no utility</li>
-                    <li>the team is literally just me</li>
-                    <li>community is filled with bots</li>
-                    <li>founder is anonymous</li>
-                    <li>marketing budget is zero</li>
-                    <li>the dao is just me making bad decisions</li>
-                    <li>no roadmap</li>
-                    <li>solana is going to 0</li>
-                    <li>dev selling on side wallets</li>
-                    <li>no CEX listings</li>
-                    <li>not paying dex</li>
-                    <li>no community forming</li>
-                    <li>price manipulated</li>
-                    <li>dev wallet connected to other rugs</li>
-                    <li>bundled the supply (again)</li>
-                    <li>for-profit team</li>
-                    <li>insiders got early CA</li>
-                    <li>no telegram</li>
-                    <li>the coin is going to 0</li>
-                    <li>website domain expiring in 4 days</li>
-                    <li>token price linked to dev's financial situation</li>
-                    <li>dev wallet funded by debridge</li>
-                    <li>coin is bundled</li>
-                    <li>dev is related to joseph stallin</li>
-                    <li>rug is hard coded into the contract</li>
-                    <li>not a x402 larp</li>
-                    <li>team groupchat named "exit plan"</li>
-                    <li>going to be vamped in 5 minutes</li>
-                    <li>no marketing plan</li>
-                    <li>website is trash</li>
-                    <li>dev is bearposting on X</li>
-                    <li>indian fud cabal spam reporting posts</li>
-                    <li>it's bundled</li>
-                </ul>
-            </div>
+        <div class="stat-row">
+            <span class="stat-label">Transactions:</span>
+            <span class="stat-value" id="tx-count">0</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Stage:</span>
+            <span class="stat-value" id="stage">Starting...</span>
         </div>
     </div>
+    
+    <div id="transaction-feed">
+        <h3>📊 Recent Transactions</h3>
+        <div id="transactions-list"></div>
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        let scene, camera, renderer;
+        let house = {};
+        let stickPeople = [];
+        
+        // Transaction and construction tracking
+        let transactionCount = 0;
+        let buildHeight = 0; // Continuous build height
+        
+        const workerColors = [
+            0xff6b6b, 0x4ecdc4, 0xffe66d, 0x95e1d3, 
+            0xf38181, 0xaa96da, 0xfcbad3, 0xa8e6cf,
+            0xff8b94, 0xc7ceea, 0xffd3b6, 0xdcedc1
+        ];
+
+        function init() {
+            // Scene setup
+            scene = new THREE.Scene();
+            scene.fog = new THREE.Fog(0x87CEEB, 30, 60);
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(20, 12, 20);
+            camera.lookAt(0, 3, 0);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.body.appendChild(renderer.domElement);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const sunLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            sunLight.position.set(15, 25, 15);
+            sunLight.castShadow = true;
+            sunLight.shadow.camera.left = -25;
+            sunLight.shadow.camera.right = 25;
+            sunLight.shadow.camera.top = 25;
+            sunLight.shadow.camera.bottom = -25;
+            sunLight.shadow.mapSize.width = 2048;
+            sunLight.shadow.mapSize.height = 2048;
+            scene.add(sunLight);
+
+            // Ground
+            const groundGeometry = new THREE.PlaneGeometry(60, 60);
+            const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x90EE90 });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.receiveShadow = true;
+            scene.add(ground);
+
+            // Event listeners
+            window.addEventListener('resize', onWindowResize);
+
+            // Start generating transactions
+            generateRandomTransactions();
+
+            animate();
+        }
+
+        function createStickPerson(color) {
+            const person = new THREE.Group();
+
+            // Body
+            const bodyGeometry = new THREE.CylinderGeometry(0.05, 0.05, 1, 8);
+            const bodyMaterial = new THREE.MeshLambertMaterial({ color: color });
+            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+            body.position.y = 0.5;
+            body.castShadow = true;
+            person.add(body);
+
+            // Head
+            const headGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+            const head = new THREE.Mesh(headGeometry, bodyMaterial);
+            head.position.y = 1.2;
+            head.castShadow = true;
+            person.add(head);
+
+            // Arms
+            const armGeometry = new THREE.CylinderGeometry(0.04, 0.04, 0.6, 8);
+            const leftArm = new THREE.Mesh(armGeometry, bodyMaterial);
+            leftArm.position.set(-0.3, 0.7, 0);
+            leftArm.rotation.z = Math.PI / 4;
+            leftArm.castShadow = true;
+            person.add(leftArm);
+
+            const rightArm = new THREE.Mesh(armGeometry, bodyMaterial);
+            rightArm.position.set(0.3, 0.7, 0);
+            rightArm.rotation.z = -Math.PI / 4;
+            rightArm.castShadow = true;
+            person.add(rightArm);
+
+            // Legs
+            const legGeometry = new THREE.CylinderGeometry(0.04, 0.04, 0.6, 8);
+            const leftLeg = new THREE.Mesh(legGeometry, bodyMaterial);
+            leftLeg.position.set(-0.15, -0.3, 0);
+            leftLeg.castShadow = true;
+            person.add(leftLeg);
+
+            const rightLeg = new THREE.Mesh(legGeometry, bodyMaterial);
+            rightLeg.position.set(0.15, -0.3, 0);
+            rightLeg.castShadow = true;
+            person.add(rightLeg);
+
+            // Random position around the construction site
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 6 + Math.random() * 3;
+            const x = Math.cos(angle) * radius;
+            const z = Math.sin(angle) * radius;
+
+            person.position.set(x, 0, z);
+            person.userData = { 
+                targetX: x,
+                targetZ: z,
+                arms: [leftArm, rightArm],
+                body: body,
+                offsetTime: Math.random() * Math.PI * 2
+            };
+
+            scene.add(person);
+            return person;
+        }
+
+        function spawnWorker(solAmount) {
+            const colorIndex = stickPeople.length % workerColors.length;
+            const worker = createStickPerson(workerColors[colorIndex]);
+            stickPeople.push(worker);
+            
+            // Update worker count
+            document.getElementById('worker-count').textContent = stickPeople.length;
+            
+            // Add some visual flair - spawn animation
+            worker.scale.set(0.1, 0.1, 0.1);
+            const targetScale = 1;
+            const spawnDuration = 30; // frames
+            let spawnFrame = 0;
+            
+            worker.userData.spawning = true;
+            worker.userData.spawnAnimation = () => {
+                spawnFrame++;
+                const progress = spawnFrame / spawnDuration;
+                const scale = 0.1 + (targetScale - 0.1) * easeOutBack(progress);
+                worker.scale.set(scale, scale, scale);
+                
+                if (spawnFrame >= spawnDuration) {
+                    worker.userData.spawning = false;
+                    worker.scale.set(1, 1, 1);
+                }
+            };
+        }
+
+        function easeOutBack(x) {
+            const c1 = 1.70158;
+            const c3 = c1 + 1;
+            return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2);
+        }
+
+        function addTransaction(amount) {
+            transactionCount++;
+            
+            // Update UI
+            document.getElementById('tx-count').textContent = transactionCount;
+            
+            // Add to transaction feed
+            const transactionsList = document.getElementById('transactions-list');
+            const txElement = document.createElement('div');
+            txElement.className = 'transaction';
+            txElement.innerHTML = `
+                <div class="transaction-amount">+${amount.toFixed(2)} SOL</div>
+                <div class="transaction-time">${new Date().toLocaleTimeString()}</div>
+            `;
+            transactionsList.insertBefore(txElement, transactionsList.firstChild);
+            
+            // Keep only last 10 transactions visible
+            while (transactionsList.children.length > 10) {
+                transactionsList.removeChild(transactionsList.lastChild);
+            }
+            
+            // Spawn a new worker
+            spawnWorker(amount);
+            
+            // Increment build height based on transaction amount
+            // Each SOL contributes to the build height
+            buildHeight += amount;
+            
+            // Update the stage display
+            updateStageDisplay();
+            
+            // Build the house incrementally
+            buildHouseContinuously();
+        }
+
+        function generateRandomTransactions() {
+            // Generate random transaction amount between 0.1 and 1.5 SOL
+            const amount = (Math.random() * 1.4 + 0.1);
+            addTransaction(parseFloat(amount.toFixed(2)));
+            
+            // Random delay between 1-4 seconds for next transaction
+            const delay = Math.random() * 3000 + 1000;
+            setTimeout(generateRandomTransactions, delay);
+        }
+
+        function updateStageDisplay() {
+            let stageName = '';
+            if (buildHeight < 3) stageName = 'Foundation';
+            else if (buildHeight < 6) stageName = 'Floor';
+            else if (buildHeight < 15) stageName = 'Walls';
+            else if (buildHeight < 25) stageName = 'Roof Frame';
+            else if (buildHeight < 35) stageName = 'Roof';
+            else stageName = 'Expanding...';
+            
+            document.getElementById('stage').textContent = stageName;
+        }
+
+        function buildHouseContinuously() {
+            // Foundation - grows with height
+            if (buildHeight >= 0) {
+                const foundationHeight = Math.min(buildHeight * 0.15, 0.5);
+                buildFoundation(foundationHeight);
+            }
+            
+            // Floor - starts after foundation begins
+            if (buildHeight >= 2) {
+                const floorHeight = Math.min((buildHeight - 2) * 0.1, 0.3);
+                buildFloor(floorHeight);
+            }
+            
+            // Walls - grow progressively
+            if (buildHeight >= 5) {
+                const wallHeight = Math.min((buildHeight - 5) * 0.4, 4);
+                buildWalls(wallHeight);
+            }
+            
+            // Roof frame - appears as walls get taller
+            if (buildHeight >= 14) {
+                const roofFrameProgress = Math.min((buildHeight - 14) / 8, 1);
+                buildRoofFrame(roofFrameProgress);
+            }
+            
+            // Roof - starts after frame
+            if (buildHeight >= 22) {
+                const roofProgress = Math.min((buildHeight - 22) / 10, 1);
+                buildRoof(roofProgress);
+            }
+            
+            // Details and expansion
+            if (buildHeight >= 32) {
+                const detailsProgress = Math.min((buildHeight - 32) / 15, 1);
+                addFinishingTouches(detailsProgress);
+            }
+            
+            // Keep expanding the house even more
+            if (buildHeight >= 45) {
+                expandHouse(buildHeight);
+            }
+        }
+
+        function buildFoundation(height) {
+            if (!house.foundation) {
+                house.foundation = new THREE.Group();
+                scene.add(house.foundation);
+            }
+
+            while(house.foundation.children.length > 0) {
+                house.foundation.remove(house.foundation.children[0]);
+            }
+
+            const foundationGeometry = new THREE.BoxGeometry(6, height, 5);
+            const foundationMaterial = new THREE.MeshLambertMaterial({ color: 0x8B7355 });
+            const foundation = new THREE.Mesh(foundationGeometry, foundationMaterial);
+            foundation.position.y = height / 2;
+            foundation.castShadow = true;
+            foundation.receiveShadow = true;
+            house.foundation.add(foundation);
+        }
+
+        function buildFloor(height) {
+            if (!house.floor) {
+                house.floor = new THREE.Group();
+                scene.add(house.floor);
+            }
+
+            const baseY = 0.5;
+
+            while(house.floor.children.length > 0) {
+                house.floor.remove(house.floor.children[0]);
+            }
+
+            const floorGeometry = new THREE.BoxGeometry(6, height, 5);
+            const floorMaterial = new THREE.MeshLambertMaterial({ color: 0xD2691E });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.position.y = baseY + height / 2;
+            floor.castShadow = true;
+            floor.receiveShadow = true;
+            house.floor.add(floor);
+        }
+
+        function buildWalls(wallHeight) {
+            if (!house.walls) {
+                house.walls = new THREE.Group();
+                scene.add(house.walls);
+            }
+
+            const baseY = 0.8;
+
+            while(house.walls.children.length > 0) {
+                house.walls.remove(house.walls.children[0]);
+            }
+
+            const wallMaterial = new THREE.MeshLambertMaterial({ color: 0xFFF8DC });
+
+            // Front wall with door
+            const frontLeft = new THREE.Mesh(
+                new THREE.BoxGeometry(2, wallHeight, 0.2),
+                wallMaterial
+            );
+            frontLeft.position.set(-2, baseY + wallHeight / 2, 2.5);
+            frontLeft.castShadow = true;
+            house.walls.add(frontLeft);
+
+            const frontRight = new THREE.Mesh(
+                new THREE.BoxGeometry(2, wallHeight, 0.2),
+                wallMaterial
+            );
+            frontRight.position.set(2, baseY + wallHeight / 2, 2.5);
+            frontRight.castShadow = true;
+            house.walls.add(frontRight);
+
+            if (wallHeight > 1.2) {
+                const frontTop = new THREE.Mesh(
+                    new THREE.BoxGeometry(2, wallHeight * 0.4, 0.2),
+                    wallMaterial
+                );
+                frontTop.position.set(0, baseY + wallHeight * 0.8, 2.5);
+                frontTop.castShadow = true;
+                house.walls.add(frontTop);
+            }
+
+            // Back wall
+            const backWall = new THREE.Mesh(
+                new THREE.BoxGeometry(6, wallHeight, 0.2),
+                wallMaterial
+            );
+            backWall.position.set(0, baseY + wallHeight / 2, -2.5);
+            backWall.castShadow = true;
+            house.walls.add(backWall);
+
+            // Side walls
+            const leftWall = new THREE.Mesh(
+                new THREE.BoxGeometry(0.2, wallHeight, 5),
+                wallMaterial
+            );
+            leftWall.position.set(-3, baseY + wallHeight / 2, 0);
+            leftWall.castShadow = true;
+            house.walls.add(leftWall);
+
+            const rightWall = new THREE.Mesh(
+                new THREE.BoxGeometry(0.2, wallHeight, 5),
+                wallMaterial
+            );
+            rightWall.position.set(3, baseY + wallHeight / 2, 0);
+            rightWall.castShadow = true;
+            house.walls.add(rightWall);
+        }
+
+        function buildRoofFrame(progress) {
+            if (!house.roofFrame) {
+                house.roofFrame = new THREE.Group();
+                scene.add(house.roofFrame);
+            }
+
+            const baseY = 3.5;
+
+            while(house.roofFrame.children.length > 0) {
+                house.roofFrame.remove(house.roofFrame.children[0]);
+            }
+
+            const frameMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+            const numBeams = Math.ceil(6 * progress);
+            const beamSpacing = 5 / 7;
+
+            for (let i = 0; i < numBeams; i++) {
+                const z = -2.5 + (i + 1) * beamSpacing;
+
+                const leftBeam = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.1, 0.1, 4),
+                    frameMaterial
+                );
+                leftBeam.position.set(-1.5, baseY + 1, z);
+                leftBeam.rotation.x = Math.PI / 4;
+                leftBeam.castShadow = true;
+                house.roofFrame.add(leftBeam);
+
+                const rightBeam = new THREE.Mesh(
+                    new THREE.BoxGeometry(0.1, 0.1, 4),
+                    frameMaterial
+                );
+                rightBeam.position.set(1.5, baseY + 1, z);
+                rightBeam.rotation.x = -Math.PI / 4;
+                rightBeam.castShadow = true;
+                house.roofFrame.add(rightBeam);
+            }
+        }
+
+        function buildRoof(progress) {
+            if (!house.roof) {
+                house.roof = new THREE.Group();
+                scene.add(house.roof);
+            }
+
+            const baseY = 3.5;
+
+            while(house.roof.children.length > 0) {
+                house.roof.remove(house.roof.children[0]);
+            }
+
+            const roofMaterial = new THREE.MeshLambertMaterial({ color: 0x8B0000 });
+
+            const leftRoof = new THREE.Mesh(
+                new THREE.BoxGeometry(4, 0.1, 5 * progress),
+                roofMaterial
+            );
+            leftRoof.position.set(-1.5, baseY + 1, -2.5 + (5 * progress) / 2);
+            leftRoof.rotation.z = Math.PI / 4;
+            leftRoof.castShadow = true;
+            house.roof.add(leftRoof);
+
+            const rightRoof = new THREE.Mesh(
+                new THREE.BoxGeometry(4, 0.1, 5 * progress),
+                roofMaterial
+            );
+            rightRoof.position.set(1.5, baseY + 1, -2.5 + (5 * progress) / 2);
+            rightRoof.rotation.z = -Math.PI / 4;
+            rightRoof.castShadow = true;
+            house.roof.add(rightRoof);
+        }
+
+        function addFinishingTouches(progress) {
+            if (!house.details) {
+                house.details = new THREE.Group();
+                scene.add(house.details);
+            }
+
+            while(house.details.children.length > 0) {
+                house.details.remove(house.details.children[0]);
+            }
+
+            if (progress > 0.3) {
+                // Door
+                const doorGeometry = new THREE.BoxGeometry(1.5, 2, 0.1);
+                const doorMaterial = new THREE.MeshLambertMaterial({ color: 0x654321 });
+                const door = new THREE.Mesh(doorGeometry, doorMaterial);
+                door.position.set(0, 1.8, 2.55);
+                door.castShadow = true;
+                house.details.add(door);
+            }
+
+            if (progress > 0.6) {
+                // Chimney
+                const chimneyGeometry = new THREE.BoxGeometry(0.5, 1.5 * progress, 0.5);
+                const chimneyMaterial = new THREE.MeshLambertMaterial({ color: 0x8B4513 });
+                const chimney = new THREE.Mesh(chimneyGeometry, chimneyMaterial);
+                chimney.position.set(-2, 5.8 + (1.5 * progress) / 2, 0);
+                chimney.castShadow = true;
+                house.details.add(chimney);
+            }
+        }
+
+        function expandHouse(totalHeight) {
+            // Add additional floors and make the house grow taller
+            if (!house.expansion) {
+                house.expansion = new THREE.Group();
+                scene.add(house.expansion);
+            }
+
+            while(house.expansion.children.length > 0) {
+                house.expansion.remove(house.expansion.children[0]);
+            }
+
+            // Calculate how many extra floors to add
+            const extraHeight = (totalHeight - 45) * 0.15;
+            
+            if (extraHeight > 0) {
+                // Add additional stories
+                const numFloors = Math.floor(extraHeight / 3);
+                
+                for (let i = 0; i < numFloors; i++) {
+                    const floorY = 5.5 + (i * 3);
+                    const floorHeight = Math.min(extraHeight - (i * 3), 3);
+                    
+                    // Walls for extra floor
+                    const wallMaterial = new THREE.MeshLambertMaterial({ 
+                        color: i % 2 === 0 ? 0xFFF8DC : 0xFFE4B5 
+                    });
+                    
+                    const extraWalls = [
+                        new THREE.Mesh(new THREE.BoxGeometry(6, floorHeight, 0.2), wallMaterial),
+                        new THREE.Mesh(new THREE.BoxGeometry(6, floorHeight, 0.2), wallMaterial),
+                        new THREE.Mesh(new THREE.BoxGeometry(0.2, floorHeight, 5), wallMaterial),
+                        new THREE.Mesh(new THREE.BoxGeometry(0.2, floorHeight, 5), wallMaterial)
+                    ];
+                    
+                    extraWalls[0].position.set(0, floorY + floorHeight / 2, 2.5);
+                    extraWalls[1].position.set(0, floorY + floorHeight / 2, -2.5);
+                    extraWalls[2].position.set(-3, floorY + floorHeight / 2, 0);
+                    extraWalls[3].position.set(3, floorY + floorHeight / 2, 0);
+                    
+                    extraWalls.forEach(wall => {
+                        wall.castShadow = true;
+                        house.expansion.add(wall);
+                    });
+                }
+            }
+        }
+
+        function animateStickPeople(time) {
+            stickPeople.forEach((person, index) => {
+                // Handle spawn animation
+                if (person.userData.spawning) {
+                    person.userData.spawnAnimation();
+                }
+                
+                // Bobbing animation
+                const offsetTime = person.userData.offsetTime;
+                person.position.y = Math.sin(time * 2 + offsetTime) * 0.15;
+                
+                // Arm swinging
+                const arms = person.userData.arms;
+                arms[0].rotation.z = Math.PI / 4 + Math.sin(time * 3 + offsetTime) * 0.4;
+                arms[1].rotation.z = -Math.PI / 4 - Math.sin(time * 3 + offsetTime) * 0.4;
+                
+                // Body rotation
+                person.userData.body.rotation.y = Math.sin(time * 1.5 + offsetTime) * 0.15;
+                
+                // Move workers slightly around
+                person.position.x = person.userData.targetX + Math.sin(time + offsetTime) * 0.5;
+                person.position.z = person.userData.targetZ + Math.cos(time + offsetTime) * 0.5;
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const time = Date.now() * 0.001;
+
+            // Animate stick people
+            animateStickPeople(time);
+
+            // Rotate camera slowly
+            camera.position.x = Math.cos(time * 0.05) * 20;
+            camera.position.z = Math.sin(time * 0.05) * 20;
+            camera.lookAt(0, 3, 0);
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        init();
+    </script>
 </body>
 </html>
-
-
-
