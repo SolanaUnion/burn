@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Pumpa Lisa</title>
-    <link rel="icon" type="image/x-icon" href="fit.png">
+    <title>The Louvre Project</title>
+    <link rel="icon" type="image/x-icon" href="loser.png">
     <style>
         * {
             margin: 0;
@@ -13,155 +13,545 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #fff;
-            color: #000;
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #262624;
+            min-height: 100vh;
+            color: #e8d5c4;
+            padding: 20px;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
         }
 
+        /* Header Section */
         header {
             text-align: center;
-            padding: 80px 20px 60px;
-            border-bottom: 1px solid #000;
+            padding: 60px 20px 40px;
+            border-bottom: 2px solid rgba(34, 197, 94, 0.3);
             position: relative;
         }
 
         .x-button {
-            position: absolute;
+            position: fixed;
             top: 20px;
             right: 20px;
-            padding: 10px 20px;
-            background: #000;
-            color: #fff;
+            background: rgba(35, 35, 33, 0.9);
+            border: 2px solid rgba(34, 197, 94, 0.4);
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: #f4e8dc;
             text-decoration: none;
-            font-size: 0.9em;
-            transition: background 0.3s;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
         }
 
         .x-button:hover {
-            background: #333;
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
+        }
+
+        .x-button svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
         }
 
         h1 {
-            font-size: 3em;
-            font-weight: 400;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
+            font-size: 4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            color: #f4e8dc;
         }
 
-        h2 {
-            font-size: 1.5em;
-            font-weight: 400;
-            margin: 60px 0 20px;
+        .subtitle {
+            font-size: 1.5rem;
+            color: #22c55e;
+            font-weight: 500;
         }
 
-        p {
-            margin: 20px 0;
-            font-size: 1.1em;
+        /* Fee Pool Section */
+        .fee-pool-section {
+            margin: 60px 0;
+        }
+
+        .circle-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin: 0 auto 2rem;
+        }
+
+        .circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3d3128 0%, #2a2318 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 40px rgba(34, 197, 94, 0.3),
+                inset 0 0 60px rgba(0, 0, 0, 0.5);
+            border: 8px solid #22c55e;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .circle::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .fee-amount {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #f4e8dc;
+            z-index: 1;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .fee-amount.updating {
+            transform: scale(1.05);
+            color: #22c55e;
+        }
+
+        .pool-label {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #d4c4b4;
+            margin-bottom: 1rem;
+        }
+
+        .update-indicator {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #22c55e;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* Content Sections */
+        .section {
+            background: rgba(30, 30, 28, 0.8);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(34, 197, 94, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #f4e8dc;
+            font-weight: 600;
+        }
+
+        .section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #d4c4b4;
+            margin-bottom: 1rem;
         }
 
         .stat {
-            font-size: 4em;
-            font-weight: 300;
-            margin: 40px 0;
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: #22c55e;
             text-align: center;
+            margin: 2rem 0;
+            text-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
         }
 
-        .section {
-            margin: 80px 0;
+        .highlight-box {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid #22c55e;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        /* Fee Breakdown */
+        .fee-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .fee-card {
+            background: rgba(35, 35, 33, 0.7);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid rgba(34, 197, 94, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fee-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+
+        .fee-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #22c55e;
+            font-weight: 600;
+        }
+
+        .fee-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #d4c4b4;
+        }
+
+        .percentage {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #22c55e;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Plan Steps */
+        .plan-steps {
+            margin-top: 2rem;
+        }
+
+        .plan-step {
+            display: flex;
+            align-items: flex-start;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(35, 35, 33, 0.5);
+            border-radius: 12px;
+            border-left: 4px solid #22c55e;
+        }
+
+        .step-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #22c55e;
+            min-width: 40px;
+        }
+
+        .step-content {
+            font-size: 1.1rem;
+            color: #d4c4b4;
+        }
+
+        /* CTA Button */
+        .cta-section {
+            text-align: center;
+            padding: 3rem 0;
         }
 
         .btn {
             display: inline-block;
-            padding: 15px 40px;
-            background: #000;
-            color: #fff;
+            padding: 18px 50px;
+            background: #22c55e;
+            color: #1a1a18;
             text-decoration: none;
-            font-size: 1em;
+            font-size: 1.2rem;
+            font-weight: 600;
             border: none;
+            border-radius: 12px;
             cursor: pointer;
-            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.4);
         }
 
         .btn:hover {
-            background: #333;
+            background: #1ea04c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 30px rgba(34, 197, 94, 0.6);
         }
 
+        /* Footer */
         footer {
             text-align: center;
-            padding: 60px 20px;
-            margin-top: 80px;
-            border-top: 1px solid #000;
-            font-size: 0.9em;
-            color: #666;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 2px solid rgba(34, 197, 94, 0.3);
+            color: #d4c4b4;
+            font-size: 0.9rem;
         }
 
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             h1 {
-                font-size: 2em;
+                font-size: 2.5rem;
             }
-            
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .circle-container {
+                width: 220px;
+                height: 220px;
+            }
+
+            .fee-amount {
+                font-size: 2.5rem;
+            }
+
             .stat {
-                font-size: 3em;
+                font-size: 3rem;
+            }
+
+            .section {
+                padding: 1.5rem;
+            }
+
+            .section h2 {
+                font-size: 1.6rem;
+            }
+
+            .x-button {
+                top: 15px;
+                right: 15px;
+                padding: 10px 18px;
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <a href="https://x.com/Pumpa_Lisa" class="x-button" target="_blank">𝕏</a>
-        <h1>THE PUMPA LISA</h1>
-        <p>The first meme in the Louvre</p>
-        <p>We kept the site simple so its easy to understand what we doing fr</p>
-    </header>
+    <a href="https://x.com/TheLouvreProj" target="_blank" rel="noopener noreferrer" class="x-button">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+        </svg>
+        Follow Us
+    </a>
 
     <div class="container">
-        <div class="section">
-            <h2>The Crisis</h2>
-            <p>Since the heist, the Louvre has experienced a 40% loss in share prices—the biggest drop seen in the last 20 years.</p>
-            <div class="stat">-40%</div>
+        <header>
+            <h1>THE LOUVRE PROJECT</h1>
+            <p class="subtitle">The first meme in the Louvre</p>
+        </header>
+
+        <!-- Fee Pool Section -->
+        <div class="fee-pool-section">
+            <p class="pool-label">Developer Fee Pool Towards Louvre Goal</p>
+            <div class="circle-container">
+                <div class="circle">
+                    <div class="fee-amount" id="feeAmount">$0</div>
+                </div>
+            </div>
+            <div class="update-indicator" id="updateIndicator">
+                Updates every 5 seconds
+            </div>
         </div>
 
+        <!-- The Crisis -->
+        <div class="section">
+            <h2>The Crisis</h2>
+            <p>Since the heist, the Louvre has experienced a catastrophic drop in share prices—the biggest decline seen in the last 20 years.</p>
+            <div class="stat">-40%</div>
+            <p style="text-align: center; font-style: italic;">The most prestigious museum in the world is bleeding value.</p>
+        </div>
+
+        <!-- The Opportunity -->
         <div class="section">
             <h2>The Opportunity</h2>
             <p>For the first time in history, the Louvre is selling spaces on its walls.</p>
-            <p>€50,000 per artwork.</p>
-            <p>Your art in the actual Louvre.</p>
+            <div class="highlight-box">
+                <p>€50,000 per artwork. Your art in the actual Louvre.</p>
+            </div>
+            <p>This is an unprecedented moment. The doors are open. The opportunity is real.</p>
         </div>
 
+        <!-- The Vision -->
         <div class="section">
             <h2>The Vision</h2>
             <p>What if we sent a meme to the Louvre?</p>
-            <p>Not just any meme. The Pumpa Lisa—a glorious meme version of the Mona Lisa herself.</p>
-            <p>Using dev fees to fund the €50,000 placement.</p>
-            <p>Making actual history as the first meme ever listed in the Louvre.</p>
+            <p>Not just any meme. <strong>The Louvre Project</strong>—a glorious meme version of the Mona Lisa herself.</p>
+            <p>Imagine walking through the halls of the world's most famous museum and seeing a legendary internet meme hanging beside centuries-old masterpieces.</p>
+            <div class="highlight-box">
+                <p>Making actual history as the first meme ever listed in the Louvre.</p>
+            </div>
         </div>
 
+        <!-- How It Works -->
+        <div class="section">
+            <h2>How Developer Fees Fund the Mission</h2>
+            <p>Every transaction contributes to making history. Here's how the developer fees work:</p>
+
+            <div class="fee-breakdown">
+                <div class="fee-card">
+                    <h3>Louvre Fund</h3>
+                    <div class="percentage">90%</div>
+                    <p>
+                        The vast majority of fees go directly toward the €50,000 needed to secure our spot in the Louvre. This is our primary mission.
+                    </p>
+                </div>
+
+                <div class="fee-card">
+                    <h3>Development Fund</h3>
+                    <div class="percentage">10%</div>
+                    <p>
+                        A small portion covers platform maintenance, marketing, and operational expenses to ensure we successfully complete the mission.
+                    </p>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; text-align: center; font-size: 1.1rem;">
+                The counter above shows real-time accumulation of fees, updating every 5 seconds as we get closer to our €50,000 goal.
+            </p>
+        </div>
+
+        <!-- The Plan -->
         <div class="section">
             <h2>The Plan</h2>
-            <p>Launch the token.<br>
-            Build the community.<br>
-            Commission the artwork.<br>
-            Secure the spot.<br>
-            Make history.</p>
+            <div class="plan-steps">
+                <div class="plan-step">
+                    <span class="step-number">1.</span>
+                    <span class="step-content">Launch the token and build a passionate community</span>
+                </div>
+                <div class="plan-step">
+                    <span class="step-number">2.</span>
+                    <span class="step-content">Accumulate €50,000 through developer fees</span>
+                </div>
+                <div class="plan-step">
+                    <span class="step-number">3.</span>
+                    <span class="step-content">Commission a museum-quality Louvre Project artwork</span>
+                </div>
+                <div class="plan-step">
+                    <span class="step-number">4.</span>
+                    <span class="step-content">Secure the spot in the Louvre</span>
+                </div>
+                <div class="plan-step">
+                    <span class="step-number">5.</span>
+                    <span class="step-content">Make history as the first meme in the world's greatest museum</span>
+                </div>
+            </div>
         </div>
 
-        <div class="section" style="text-align: center;">
-            <h2>Join Us</h2>
-            <p>Be part of the first meme coin to put art in the Louvre.</p>
+        <!-- Join Us -->
+        <div class="section cta-section">
+            <h2 style="margin-bottom: 2rem;">Join the Movement</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">
+                Be part of the first meme coin to put art in the Louvre.<br>
+                This isn't just another token—it's a cultural moment.
+            </p>
             <button class="btn">Coming Soon</button>
         </div>
     </div>
 
     <footer>
-        <p>The Pumpa Lisa © 2025</p>
+        <p><strong>The Louvre Project</strong> © 2025</p>
         <p style="margin-top: 10px;">This is a satirical project. DYOR.</p>
+        <p style="margin-top: 5px; font-size: 0.85rem;">Not financial advice. Cryptocurrency investments carry risk.</p>
     </footer>
+
+    <script>
+        const STORAGE_KEY = 'louvre_project_fee_amount';
+        let currentFee = 0.00;
+        const feeElement = document.getElementById('feeAmount');
+        const updateIndicator = document.getElementById('updateIndicator');
+
+        // Load saved fee from localStorage
+        function loadSavedFee() {
+            const savedFee = localStorage.getItem(STORAGE_KEY);
+            if (savedFee !== null) {
+                currentFee = parseFloat(savedFee);
+            }
+        }
+
+        // Save fee to localStorage
+        function saveFee() {
+            localStorage.setItem(STORAGE_KEY, currentFee.toString());
+        }
+
+        function formatCurrency(amount) {
+            return `$${amount.toFixed(2)}`;
+        }
+
+        function generateRandomIncrement() {
+            // Generate a random increment between $0.01 and $0.99
+            return (Math.random() * 0.98 + 0.01);
+        }
+
+        function updateFee() {
+            // Add animation class
+            feeElement.classList.add('updating');
+            
+            // Update the fee after a brief moment
+            setTimeout(() => {
+                const increment = generateRandomIncrement();
+                currentFee += increment;
+                feeElement.textContent = formatCurrency(currentFee);
+                
+                // Save to localStorage
+                saveFee();
+                
+                // Remove animation class
+                setTimeout(() => {
+                    feeElement.classList.remove('updating');
+                }, 300);
+            }, 150);
+
+            // Update the indicator
+            updateIndicator.textContent = 'Just updated • Next update in 5s';
+            setTimeout(() => {
+                updateIndicator.textContent = 'Updates every 5 seconds';
+            }, 2000);
+        }
+
+        // Load saved fee on page load
+        loadSavedFee();
+
+        // Set initial display
+        feeElement.textContent = formatCurrency(currentFee);
+
+        // First update after 5 seconds
+        setTimeout(() => {
+            updateFee();
+            // Then continue updating every 5 seconds
+            setInterval(updateFee, 5000);
+        }, 5000);
+    </script>
 </body>
 </html>
