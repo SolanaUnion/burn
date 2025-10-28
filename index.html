@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>eli</title>
-    <link rel="icon" type="image/x-icon" href="eli.png">
     <style>
         * {
             margin: 0;
@@ -17,15 +15,19 @@
             background-color: #ffffff;
             color: #000000;
             line-height: 1.6;
+        }
+        
+        .hero {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            border-bottom: 2px solid #000;
         }
         
-        .container {
+        .hero-container {
             max-width: 600px;
             text-align: center;
         }
@@ -73,20 +75,820 @@
             font-size: 20px;
             font-weight: bold;
         }
+        
+        .docs-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        h2 {
+            font-size: 36px;
+            margin-top: 60px;
+            margin-bottom: 20px;
+            font-weight: 400;
+            border-bottom: 1px solid #000;
+            padding-bottom: 10px;
+        }
+        
+        h2:first-child {
+            margin-top: 0;
+        }
+        
+        h3 {
+            font-size: 24px;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #1a1a1a;
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        pre {
+            background-color: #000;
+            color: #0f0;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 2px solid #000;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #0f0;
+            font-size: 14px;
+        }
+        
+        .note {
+            background-color: #f9f9f9;
+            border-left: 4px solid #000;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        
+        .note strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #000;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #000;
+            color: #fff;
+            font-weight: 500;
+        }
+        
+        .back-to-top {
+            display: inline-block;
+            margin-top: 40px;
+            color: #000;
+            text-decoration: none;
+            border: 2px solid #000;
+            padding: 10px 20px;
+            transition: all 0.2s;
+        }
+        
+        .back-to-top:hover {
+            background-color: #000;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>eli</h1>
-        
-        <p class="description">
-            a 24/7 robot which streams itself trading and is built on x402 allowing to create transactions easily
-        </p>
-        
-        <div class="buttons">
-            <a href="#" class="btn">docs</a>
-            <a href="https://x.com/eli402" class="btn btn-x" target="_blank">𝕏</a>
+    <div class="hero" id="top">
+        <div class="hero-container">
+            <h1>eli</h1>
+            
+            <p class="description">
+                a 24/7 robot which streams itself trading and is built on x402 allowing to create transactions easily
+            </p>
+            
+            <div class="buttons">
+                <a href="#docs" class="btn">docs</a>
+                <a href="https://x.com/eli402" class="btn btn-x" target="_blank">𝕏</a>
+            </div>
         </div>
     </div>
-</body>
-</html>
+    
+    <div class="docs-section" id="docs">
+        <h2>Introduction</h2>
+        <p>
+            Eli is an autonomous 24/7 trading robot that streams its trading activity in real-time. Built on the x402 protocol, 
+            Eli leverages cutting-edge payment technology to execute transactions seamlessly over HTTP without human intervention.
+        </p>
+        
+        <p>
+            The x402 protocol, developed by Coinbase in collaboration with Cloudflare, enables machines to conduct financial 
+            transactions directly over the internet using stablecoins like USDC. This revolutionary approach eliminates the need 
+            for credit cards, API keys, or traditional payment intermediaries.
+        </p>
+
+        <h2>What is x402?</h2>
+        <p>
+            x402 is an HTTP-native payment protocol that resurrects the previously unused HTTP 402 status code ("Payment Required"). 
+            It creates a standardized way for clients and servers to exchange value using a common language embedded directly into 
+            HTTP requests and responses.
+        </p>
+        
+        <h3>Key Features</h3>
+        <ul>
+            <li><strong>Machine-to-Machine Payments:</strong> Enable autonomous transactions between digital services</li>
+            <li><strong>HTTP Native:</strong> Payments integrated directly into HTTP protocol</li>
+            <li><strong>Stablecoin Settlements:</strong> Transactions executed using USDC on Ethereum/Base networks</li>
+            <li><strong>No Accounts Required:</strong> Eliminates need for subscriptions, API keys, or credit cards</li>
+            <li><strong>Instant Verification:</strong> Cryptographic signatures enable immediate transaction validation</li>
+            <li><strong>AI Agent Compatible:</strong> Purpose-built for autonomous AI systems</li>
+        </ul>
+
+        <h2>How x402 Works</h2>
+        <p>The x402 transaction flow follows a simple request-pay-receive pattern:</p>
+        
+        <h3>Transaction Flow</h3>
+        <ol>
+            <li><strong>Request:</strong> Client attempts to access a gated resource</li>
+            <li><strong>Payment Challenge:</strong> Server responds with HTTP 402 status code and payment instructions</li>
+            <li><strong>Payment Authorization:</strong> Client submits payment with signed authorization header</li>
+            <li><strong>Verification:</strong> Payment facilitator verifies and settles the transaction</li>
+            <li><strong>Resource Delivery:</strong> Server responds with requested resource and payment confirmation</li>
+        </ol>
+
+        <h3>Example: Basic x402 Request</h3>
+        <pre><code>// Initial request to gated resource
+GET /api/trading-data HTTP/1.1
+Host: eli-trading.com
+
+// Server responds with payment required
+HTTP/1.1 402 Payment Required
+Content-Type: application/json
+
+{
+  "amount": "0.01",
+  "currency": "USDC",
+  "recipient": "0x1234...5678",
+  "network": "base",
+  "memo": "Trading data access"
+}</code></pre>
+
+        <h3>Example: Payment Authorization</h3>
+        <pre><code>// Client makes payment and retries request
+GET /api/trading-data HTTP/1.1
+Host: eli-trading.com
+X-Payment-Authorization: {
+  "signature": "0xabcd...ef01",
+  "amount": "0.01",
+  "currency": "USDC",
+  "recipient": "0x1234...5678",
+  "network": "base",
+  "timestamp": 1730872968
+}
+
+// Server responds with resource
+HTTP/1.1 200 OK
+Payment-Response: scheme="onchain", tx="0x9876...5432"
+Content-Type: application/json
+
+{
+  "data": "..."
+}</code></pre>
+
+        <h2>Integrating with Eli</h2>
+        <p>
+            Eli exposes several endpoints that utilize x402 for payment-gated access to trading data, 
+            execution capabilities, and streaming services.
+        </p>
+
+        <h3>Authentication Setup</h3>
+        <p>First, set up your wallet for x402 transactions:</p>
+        
+        <pre><code>import { ethers } from 'ethers';
+
+// Initialize wallet
+const provider = new ethers.providers.JsonRpcProvider('https://mainnet.base.org');
+const wallet = new ethers.Wallet(YOUR_PRIVATE_KEY, provider);
+
+// USDC contract on Base
+const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
+const usdcContract = new ethers.Contract(
+  USDC_ADDRESS,
+  ['function approve(address spender, uint256 amount)'],
+  wallet
+);</code></pre>
+
+        <h3>Making x402 Payments</h3>
+        <pre><code>async function makeX402Payment(url, paymentDetails) {
+  // Create payment authorization signature
+  const message = {
+    amount: paymentDetails.amount,
+    recipient: paymentDetails.recipient,
+    currency: paymentDetails.currency,
+    timestamp: Date.now()
+  };
+  
+  const signature = await wallet.signMessage(JSON.stringify(message));
+  
+  // Make request with payment authorization
+  const response = await fetch(url, {
+    headers: {
+      'X-Payment-Authorization': JSON.stringify({
+        ...message,
+        signature
+      })
+    }
+  });
+  
+  return response.json();
+}</code></pre>
+
+        <h3>Accessing Eli's Trading Stream</h3>
+        <pre><code>// Connect to Eli's live trading stream
+const streamUrl = 'https://api.eli-trading.com/stream/live';
+
+// First request triggers 402 payment challenge
+const initialResponse = await fetch(streamUrl);
+
+if (initialResponse.status === 402) {
+  const paymentDetails = await initialResponse.json();
+  
+  // Execute payment and reconnect
+  const data = await makeX402Payment(streamUrl, paymentDetails);
+  
+  // Stream is now accessible
+  console.log('Connected to Eli trading stream:', data);
+}</code></pre>
+
+        <h2>API Endpoints</h2>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Cost (USDC)</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>/stream/live</code></td>
+                    <td>0.01/min</td>
+                    <td>Real-time trading activity stream</td>
+                </tr>
+                <tr>
+                    <td><code>/api/positions</code></td>
+                    <td>0.001</td>
+                    <td>Current portfolio positions</td>
+                </tr>
+                <tr>
+                    <td><code>/api/history</code></td>
+                    <td>0.005</td>
+                    <td>Historical trade data</td>
+                </tr>
+                <tr>
+                    <td><code>/api/analytics</code></td>
+                    <td>0.01</td>
+                    <td>Performance analytics and metrics</td>
+                </tr>
+                <tr>
+                    <td><code>/api/signals</code></td>
+                    <td>0.05</td>
+                    <td>Trading signals and predictions</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Python SDK Example</h2>
+        <pre><code>import requests
+from eth_account import Account
+from eth_account.messages import encode_defunct
+import json
+
+class EliClient:
+    def __init__(self, private_key, base_url='https://api.eli-trading.com'):
+        self.account = Account.from_key(private_key)
+        self.base_url = base_url
+    
+    def _sign_payment(self, payment_details):
+        """Sign payment authorization"""
+        message = json.dumps({
+            'amount': payment_details['amount'],
+            'recipient': payment_details['recipient'],
+            'currency': payment_details['currency'],
+            'timestamp': payment_details.get('timestamp', int(time.time()))
+        })
+        
+        encoded_message = encode_defunct(text=message)
+        signed = self.account.sign_message(encoded_message)
+        
+        return {
+            **json.loads(message),
+            'signature': signed.signature.hex()
+        }
+    
+    def get_with_payment(self, endpoint):
+        """Make x402-enabled request"""
+        url = f"{self.base_url}{endpoint}"
+        
+        # Initial request
+        response = requests.get(url)
+        
+        # Handle 402 payment required
+        if response.status_code == 402:
+            payment_details = response.json()
+            payment_auth = self._sign_payment(payment_details)
+            
+            # Retry with payment
+            response = requests.get(
+                url,
+                headers={
+                    'X-Payment-Authorization': json.dumps(payment_auth)
+                }
+            )
+        
+        return response.json()
+    
+    def stream_trading(self):
+        """Stream live trading data"""
+        return self.get_with_payment('/stream/live')
+    
+    def get_positions(self):
+        """Get current positions"""
+        return self.get_with_payment('/api/positions')
+
+# Usage
+client = EliClient(private_key='YOUR_PRIVATE_KEY')
+positions = client.get_positions()
+print(f"Current positions: {positions}")</code></pre>
+
+        <h2>JavaScript SDK Example</h2>
+        <pre><code>class EliClient {
+  constructor(wallet, baseUrl = 'https://api.eli-trading.com') {
+    this.wallet = wallet;
+    this.baseUrl = baseUrl;
+  }
+  
+  async signPayment(paymentDetails) {
+    const message = JSON.stringify({
+      amount: paymentDetails.amount,
+      recipient: paymentDetails.recipient,
+      currency: paymentDetails.currency,
+      timestamp: paymentDetails.timestamp || Date.now()
+    });
+    
+    const signature = await this.wallet.signMessage(message);
+    
+    return {
+      ...JSON.parse(message),
+      signature
+    };
+  }
+  
+  async getWithPayment(endpoint) {
+    const url = `${this.baseUrl}${endpoint}`;
+    
+    // Initial request
+    let response = await fetch(url);
+    
+    // Handle 402 payment required
+    if (response.status === 402) {
+      const paymentDetails = await response.json();
+      const paymentAuth = await this.signPayment(paymentDetails);
+      
+      // Retry with payment
+      response = await fetch(url, {
+        headers: {
+          'X-Payment-Authorization': JSON.stringify(paymentAuth)
+        }
+      });
+    }
+    
+    return response.json();
+  }
+  
+  async streamTrading() {
+    return this.getWithPayment('/stream/live');
+  }
+  
+  async getPositions() {
+    return this.getWithPayment('/api/positions');
+  }
+  
+  async getAnalytics() {
+    return this.getWithPayment('/api/analytics');
+  }
+}
+
+// Usage
+const provider = new ethers.providers.JsonRpcProvider('https://mainnet.base.org');
+const wallet = new ethers.Wallet(YOUR_PRIVATE_KEY, provider);
+const client = new EliClient(wallet);
+
+// Get current positions
+const positions = await client.getPositions();
+console.log('Positions:', positions);
+
+// Stream live trading
+const stream = await client.streamTrading();
+console.log('Live stream:', stream);</code></pre>
+
+        <h2>WebSocket Streaming</h2>
+        <p>For continuous real-time data, Eli supports WebSocket connections with x402 authentication:</p>
+        
+        <pre><code>const WebSocket = require('ws');
+
+class EliStreamClient {
+  constructor(wallet) {
+    this.wallet = wallet;
+    this.ws = null;
+  }
+  
+  async connect() {
+    // Get payment authorization
+    const paymentAuth = await this.getPaymentAuth();
+    
+    // Connect with authorization
+    this.ws = new WebSocket('wss://stream.eli-trading.com/live', {
+      headers: {
+        'X-Payment-Authorization': JSON.stringify(paymentAuth)
+      }
+    });
+    
+    this.ws.on('open', () =&gt; {
+      console.log('Connected to Eli trading stream');
+    });
+    
+    this.ws.on('message', (data) =&gt; {
+      const trade = JSON.parse(data);
+      console.log('New trade:', trade);
+    });
+    
+    this.ws.on('error', (error) =&gt; {
+      console.error('Stream error:', error);
+    });
+  }
+  
+  async getPaymentAuth() {
+    // Request payment details
+    const response = await fetch('https://api.eli-trading.com/stream/auth');
+    const paymentDetails = await response.json();
+    
+    // Sign payment
+    const message = JSON.stringify(paymentDetails);
+    const signature = await this.wallet.signMessage(message);
+    
+    return {
+      ...paymentDetails,
+      signature
+    };
+  }
+  
+  disconnect() {
+    if (this.ws) {
+      this.ws.close();
+    }
+  }
+}
+
+// Usage
+const streamClient = new EliStreamClient(wallet);
+await streamClient.connect();</code></pre>
+
+        <h2>Rate Limits and Pricing</h2>
+        <p>Eli operates on a pay-per-use model enabled by x402 micro-payments:</p>
+        
+        <div class="note">
+            <strong>No Subscriptions Required</strong>
+            Unlike traditional APIs, Eli doesn't require monthly subscriptions or API keys. 
+            You only pay for what you use, when you use it.
+        </div>
+        
+        <ul>
+            <li>All payments are made in USDC on Base network</li>
+            <li>Minimum transaction: 0.001 USDC</li>
+            <li>Gas fees typically under $0.01 per transaction</li>
+            <li>No rate limits - usage scales with payment</li>
+            <li>Instant access - no approval process</li>
+        </ul>
+
+        <h2>Network Configuration</h2>
+        <p>Eli operates on Base, Ethereum's Layer 2 network:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Network</td>
+                    <td>Base Mainnet</td>
+                </tr>
+                <tr>
+                    <td>Chain ID</td>
+                    <td>8453</td>
+                </tr>
+                <tr>
+                    <td>RPC URL</td>
+                    <td>https://mainnet.base.org</td>
+                </tr>
+                <tr>
+                    <td>USDC Address</td>
+                    <td>0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913</td>
+                </tr>
+                <tr>
+                    <td>Block Explorer</td>
+                    <td>https://basescan.org</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Error Handling</h2>
+        <p>Eli uses standard HTTP status codes alongside x402:</p>
+        
+        <pre><code>// Comprehensive error handling example
+async function robustEliRequest(client, endpoint) {
+  try {
+    const response = await client.getWithPayment(endpoint);
+    return { success: true, data: response };
+  } catch (error) {
+    if (error.status === 402) {
+      return { 
+        success: false, 
+        error: 'Payment required - insufficient funds' 
+      };
+    } else if (error.status === 403) {
+      return { 
+        success: false, 
+        error: 'Invalid payment signature' 
+      };
+    } else if (error.status === 429) {
+      return { 
+        success: false, 
+        error: 'Rate limit exceeded - wait before retry' 
+      };
+    } else if (error.status === 503) {
+      return { 
+        success: false, 
+        error: 'Eli temporarily unavailable' 
+      };
+    } else {
+      return { 
+        success: false, 
+        error: `Unexpected error: ${error.message}` 
+      };
+    }
+  }
+}</code></pre>
+
+        <h2>Security Best Practices</h2>
+        
+        <h3>Private Key Management</h3>
+        <div class="note">
+            <strong>Warning:</strong>
+            Never expose your private keys in client-side code or commit them to version control.
+        </div>
+        
+        <pre><code>// Use environment variables
+require('dotenv').config();
+const privateKey = process.env.PRIVATE_KEY;
+
+// Or use hardware wallets for production
+const { Wallet } = require('@ethersproject/wallet');
+const { LedgerSigner } = require('@ethersproject/hardware-wallets');
+
+// Ledger hardware wallet
+const signer = new LedgerSigner(provider);</code></pre>
+
+        <h3>Signature Verification</h3>
+        <p>Always verify payment confirmations:</p>
+        
+        <pre><code>async function verifyPayment(paymentResponse) {
+  const { tx, scheme } = paymentResponse;
+  
+  if (scheme === 'onchain') {
+    // Verify on-chain transaction
+    const receipt = await provider.getTransactionReceipt(tx);
+    
+    if (!receipt || receipt.status !== 1) {
+      throw new Error('Payment transaction failed');
+    }
+    
+    return true;
+  }
+  
+  return false;
+}</code></pre>
+
+        <h2>Advanced Features</h2>
+        
+        <h3>Batch Requests</h3>
+        <p>Optimize costs by batching multiple requests:</p>
+        
+        <pre><code>async function batchRequests(client, endpoints) {
+  // Single payment for multiple endpoints
+  const batchPayment = await client.signPayment({
+    amount: '0.05',
+    recipient: ELI_ADDRESS,
+    currency: 'USDC',
+    memo: `Batch: ${endpoints.join(',')}`
+  });
+  
+  const requests = endpoints.map(endpoint =&gt;
+    fetch(`${client.baseUrl}${endpoint}`, {
+      headers: {
+        'X-Payment-Authorization': JSON.stringify(batchPayment),
+        'X-Batch-Request': 'true'
+      }
+    })
+  );
+  
+  const responses = await Promise.all(requests);
+  return Promise.all(responses.map(r =&gt; r.json()));
+}</code></pre>
+
+        <h3>Deferred Payments</h3>
+        <p>x402 supports deferred payment schemes for subscription-like behavior:</p>
+        
+        <pre><code>// Request with deferred payment
+GET /api/stream/live HTTP/1.1
+X-Payment-Scheme: deferred
+X-Payment-Authorization: {...}
+
+// Server establishes session
+HTTP/1.1 200 OK
+Payment-Response: scheme="deferred", id="session-123", network="base"
+
+// Subsequent requests use session
+GET /api/positions HTTP/1.1
+X-Payment-Session: session-123
+
+// Server settles periodically (hourly, daily, etc.)</code></pre>
+
+        <h2>Monitoring and Analytics</h2>
+        
+        <h3>Track Your Usage</h3>
+        <pre><code>class UsageTracker {
+  constructor() {
+    this.requests = [];
+    this.totalSpent = 0;
+  }
+  
+  async trackRequest(client, endpoint) {
+    const startTime = Date.now();
+    
+    try {
+      const result = await client.getWithPayment(endpoint);
+      const duration = Date.now() - startTime;
+      
+      this.requests.push({
+        endpoint,
+        duration,
+        timestamp: new Date(),
+        cost: result.paymentCost || 0,
+        success: true
+      });
+      
+      this.totalSpent += result.paymentCost || 0;
+      
+      return result;
+    } catch (error) {
+      this.requests.push({
+        endpoint,
+        duration: Date.now() - startTime,
+        timestamp: new Date(),
+        error: error.message,
+        success: false
+      });
+      
+      throw error;
+    }
+  }
+  
+  getStats() {
+    return {
+      totalRequests: this.requests.length,
+      successfulRequests: this.requests.filter(r =&gt; r.success).length,
+      totalSpent: this.totalSpent,
+      averageLatency: this.requests.reduce((sum, r) =&gt; 
+        sum + r.duration, 0) / this.requests.length
+    };
+  }
+}
+
+// Usage
+const tracker = new UsageTracker();
+await tracker.trackRequest(client, '/api/positions');
+console.log('Usage stats:', tracker.getStats());</code></pre>
+
+        <h2>Community and Support</h2>
+        
+        <p>Join the Eli community:</p>
+        <ul>
+            <li><strong>X/Twitter:</strong> <a href="https://x.com/eli402" target="_blank" style="color: #000;">@eli402</a></li>
+            <li><strong>GitHub:</strong> github.com/eli402</li>
+            <li><strong>Discord:</strong> discord.gg/eli-trading</li>
+            <li><strong>Documentation:</strong> docs.eli-trading.com</li>
+        </ul>
+        
+        <div class="note">
+            <strong>Need Help?</strong>
+            For technical support, bug reports, or feature requests, please open an issue on GitHub 
+            or reach out on Discord.
+        </div>
+
+        <h2>FAQ</h2>
+        
+        <h3>Do I need to create an account?</h3>
+        <p>
+            No! x402 eliminates the need for accounts. Simply have USDC in your wallet and start making requests.
+        </p>
+        
+        <h3>What if a payment fails?</h3>
+        <p>
+            Failed payments are not charged. Eli will return a 402 status code allowing you to retry. 
+            Check your USDC balance and gas fees.
+        </p>
+        
+        <h3>Can I get a refund?</h3>
+        <p>
+            Payments are processed on-chain and cannot be reversed. However, if you experience service issues, 
+            contact support for potential credits.
+        </p>
+        
+        <h3>How is this different from traditional APIs?</h3>
+        <p>
+            Traditional APIs require API keys, subscriptions, and accounts. Eli uses x402 for instant, 
+            pay-per-use access without any registration or setup beyond having a wallet.
+        </p>
+        
+        <h3>Is my data private?</h3>
+        <p>
+            Yes. Eli doesn't collect personal information. Transactions are pseudonymous on-chain, 
+            linked only to your wallet address.
+        </p>
+
+        <h2>Changelog</h2>
+        
+        <h3>v1.2.0 - October 2025</h3>
+        <ul>
+            <li>Added WebSocket streaming support</li>
+            <li>Implemented batch request optimization</li>
+            <li>Enhanced error handling and retry logic</li>
+            <li>Added deferred payment scheme support</li>
+        </ul>
+        
+        <h3>v1.1.0 - September 2025</h3>
+        <ul>
+            <li>Migrated to Base network for lower fees</li>
+            <li>Added Python SDK</li>
+            <li>Improved payment verification</li>
+            <li>Added usage tracking utilities</li>
+        </ul>
+        
+        <h3>v1.0.0 - August 2025</h3>
+        <ul>
+            <li>Initial release</li>
+            <li>Core x402 integration</li>
+            <li>Real-time trading stream</li>
+            <li>JavaScript SDK</li>
+        </ul>
+
+        <a href="#top" class="back-to-top">↑ Back to Top</a>
+    </div>
+
+</body></html>
+
