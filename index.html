@@ -3,677 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deploy402</title>
-    <link rel="icon" type="image/x-icon" href="sleep.png">
+    <title>eli</title>
+    <link rel="icon" type="image/x-icon" href="eli.png">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #faf9f6;
-            color: #1a1a1a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            line-height: 1.6;
             min-height: 100vh;
-        }
-
-        .header {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
             display: flex;
-            gap: 1rem;
-            z-index: 1000;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-
-        .btn {
-            padding: 0.6rem 1.5rem;
-            background-color: #1a1a1a;
-            color: #faf9f6;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background-color 0.2s;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #333;
-        }
-
-        section {
-            min-height: 100vh;
-            padding: 4rem 2rem;
-        }
-
+        
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 600px;
+            text-align: center;
         }
-
-        .docs-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
+        
         h1 {
-            font-size: 3.5rem;
+            font-size: 64px;
+            margin-bottom: 20px;
             font-weight: 300;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
+            letter-spacing: -2px;
         }
-
-        .subtitle {
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: 400;
-            margin-bottom: 3rem;
-            color: #2a2a2a;
-            line-height: 1.6;
-        }
-
-        .tables-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 968px) {
-            .tables-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .table-section {
-            background-color: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-
-        .table-title {
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-bottom: 1.5rem;
-            color: #1a1a1a;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        thead {
-            background-color: #f5f5f5;
-        }
-
-        th {
-            padding: 0.8rem;
-            text-align: left;
-            font-weight: 500;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #4a4a4a;
-        }
-
-        td {
-            padding: 0.8rem;
-            border-top: 1px solid #efefef;
-            font-size: 0.9rem;
-        }
-
-        tbody tr:hover {
-            background-color: #fafafa;
-        }
-
-        .address {
-            font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
-        }
-
-        .status {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .status.completed {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .row-hidden {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-
-        .row-visible {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .row-new {
-            background-color: #e8f5e9 !important;
-            animation: highlightFade 2s ease;
-        }
-
-        @keyframes highlightFade {
-            0% { background-color: #e8f5e9; }
-            100% { background-color: transparent; }
-        }
-
-        /* Docs Styles */
-        .docs-section h1 {
-            text-align: left;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .intro {
-            font-size: 1.1rem;
-            color: #2a2a2a;
-            margin-bottom: 3rem;
+        
+        .description {
+            font-size: 18px;
+            margin-bottom: 40px;
+            color: #333;
             line-height: 1.7;
         }
-
-        .section {
-            background-color: white;
-            border-radius: 8px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
         }
-
-        h2 {
-            font-size: 1.8rem;
+        
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            text-decoration: none;
+            color: #000000;
+            border: 2px solid #000000;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            cursor: pointer;
             font-weight: 500;
-            margin-bottom: 1rem;
-            color: #1a1a1a;
         }
-
-        h3 {
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-top: 1.5rem;
-            margin-bottom: 0.8rem;
-            color: #2a2a2a;
+        
+        .btn:hover {
+            background-color: #000000;
+            color: #ffffff;
         }
-
-        p {
-            line-height: 1.7;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .code-block {
-            background-color: #f5f5f5;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            padding: 1.5rem;
-            margin: 1rem 0;
-            overflow-x: auto;
-        }
-
-        code {
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #1a1a1a;
-        }
-
-        .inline-code {
-            background-color: #f5f5f5;
-            padding: 0.2rem 0.5rem;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
-
-        ul {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        li {
-            line-height: 1.7;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .warning {
-            background-color: #fff3e0;
-            border-left: 4px solid #f57c00;
-            padding: 1rem;
-            margin: 1rem 0;
-            border-radius: 4px;
-        }
-
-        .warning p {
-            margin: 0;
-            color: #663c00;
-        }
-
-        .docs-section a {
-            color: #1a1a1a;
-            text-decoration: underline;
-        }
-
-        .docs-section a:hover {
-            color: #333;
+        
+        .btn-x {
+            padding: 10px 16px;
+            font-size: 20px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="#home" class="btn">Home</a>
-        <a href="#docs" class="btn">Docs</a>
-        <a href="https://x.com/deploy402" class="btn" target="_blank">X.com</a>
-    </div>
-
-    <!-- Home Section -->
-    <section id="home">
-        <div class="container">
-            <h1>Deploy402</h1>
-            <p class="subtitle">Using x402 to deploy every holder and airdrop them dev fees</p>
-            
-            <div class="tables-container">
-                <div class="table-section">
-                    <h2 class="table-title">Transactions</h2>
-                    <table id="transactions-table">
-                        <thead>
-                            <tr>
-                                <th>Transaction</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transactions-body">
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="table-section">
-                    <h2 class="table-title">Holders</h2>
-                    <table id="holders-table">
-                        <thead>
-                            <tr>
-                                <th>Wallet</th>
-                                <th>Balance</th>
-                                <th>Share</th>
-                            </tr>
-                        </thead>
-                        <tbody id="holders-body">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Docs Section -->
-    <section id="docs" class="docs-section">
-        <div class="docs-container">
-            <h1>Deploy402 Documentation</h1>
-            <p class="intro">Deploy402 uses the x402 protocol to automatically deploy airdrops to token holders and distribute development fees across the entire holder base on Solana.</p>
-
-            <div class="section">
-                <h2>Getting Started</h2>
-                <p>Deploy402 simplifies the process of managing token distributions and fee airdrops. Follow these steps to integrate with your project.</p>
-
-                <h3>Installation</h3>
-                <p>Install the Deploy402 SDK via npm:</p>
-                <div class="code-block">
-                    <code>npm install @deploy402/sdk</code>
-                </div>
-
-                <h3>Basic Setup</h3>
-                <p>Initialize the Deploy402 client with your Solana wallet:</p>
-                <div class="code-block">
-                    <code>import { Deploy402 } from '@deploy402/sdk';
-import { Connection, Keypair } from '@solana/web3.js';
-
-const connection = new Connection('https://api.mainnet-beta.solana.com');
-const wallet = Keypair.fromSecretKey(yourSecretKey);
-
-const deploy402 = new Deploy402({
-  connection,
-  wallet,
-  tokenMint: 'YourTokenMintAddress'
-});</code>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Airdropping Dev Fees</h2>
-                <p>The core functionality of Deploy402 is distributing development fees to all token holders proportionally.</p>
-
-                <h3>Execute Airdrop</h3>
-                <div class="code-block">
-                    <code>const airdrop = await deploy402.executeAirdrop({
-  amount: 10, // Amount in SOL
-  feePercentage: 0.5, // 0.5% fee
-  minHolderBalance: 100 // Minimum tokens to qualify
-});
-
-console.log('Airdrop transaction:', airdrop.signature);
-console.log('Total holders reached:', airdrop.holdersCount);</code>
-                </div>
-
-                <div class="warning">
-                    <p><strong>Note:</strong> Ensure your wallet has sufficient SOL to cover both the airdrop amount and transaction fees.</p>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Fetching Holder Data</h2>
-                <p>Retrieve all current token holders and their balances:</p>
-
-                <div class="code-block">
-                    <code>const holders = await deploy402.getHolders({
-  minBalance: 10, // Filter holders with minimum balance
-  limit: 100 // Maximum number of holders to return
-});
-
-holders.forEach(holder => {
-  console.log(`Wallet: ${holder.address}`);
-  console.log(`Balance: ${holder.balance}`);
-  console.log(`Share: ${holder.sharePercentage}%`);
-});</code>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Transaction History</h2>
-                <p>Query past airdrops and transactions:</p>
-
-                <div class="code-block">
-                    <code>const transactions = await deploy402.getTransactionHistory({
-  limit: 50,
-  status: 'completed' // 'completed', 'pending', or 'failed'
-});
-
-transactions.forEach(tx => {
-  console.log(`TX: ${tx.signature}`);
-  console.log(`Amount: ${tx.amount} SOL`);
-  console.log(`Timestamp: ${tx.timestamp}`);
-});</code>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Advanced Configuration</h2>
-                
-                <h3>Custom Fee Distribution</h3>
-                <p>Configure custom fee distribution logic:</p>
-                <div class="code-block">
-                    <code>const customAirdrop = await deploy402.executeAirdrop({
-  amount: 5,
-  distributionStrategy: {
-    type: 'weighted', // or 'equal'
-    excludeAddresses: ['address1', 'address2'],
-    bonusMultiplier: 1.5 // Apply 1.5x to top holders
-  }
-});</code>
-                </div>
-
-                <h3>Scheduled Airdrops</h3>
-                <p>Set up recurring airdrop schedules:</p>
-                <div class="code-block">
-                    <code>const schedule = await deploy402.scheduleAirdrop({
-  amount: 2,
-  frequency: 'daily', // 'daily', 'weekly', 'monthly'
-  startDate: new Date('2025-11-01'),
-  autoExecute: true
-});</code>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>API Reference</h2>
-                
-                <h3>Deploy402 Class</h3>
-                <ul>
-                    <li><span class="inline-code">executeAirdrop(options)</span> - Execute an airdrop to holders</li>
-                    <li><span class="inline-code">getHolders(filters)</span> - Fetch token holder information</li>
-                    <li><span class="inline-code">getTransactionHistory(params)</span> - Query past transactions</li>
-                    <li><span class="inline-code">scheduleAirdrop(schedule)</span> - Create scheduled airdrops</li>
-                    <li><span class="inline-code">cancelSchedule(scheduleId)</span> - Cancel a scheduled airdrop</li>
-                </ul>
-
-                <h3>Event Listeners</h3>
-                <div class="code-block">
-                    <code>deploy402.on('airdrop:start', (data) => {
-  console.log('Airdrop started:', data);
-});
-
-deploy402.on('airdrop:complete', (data) => {
-  console.log('Airdrop completed:', data);
-});
-
-deploy402.on('airdrop:error', (error) => {
-  console.error('Airdrop error:', error);
-});</code>
-                </div>
-            </div>
-
-            <div class="section">
-                <h2>Support</h2>
-                <p>For questions, issues, or feature requests:</p>
-                <ul>
-                    <li>Follow us on <a href="https://x.com/deploy402" target="_blank">X.com/deploy402</a></li>
-                    <li>Join our Discord community</li>
-                    <li>Email: support@deploy402.com</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        const MAX_ROWS = 15;
-        const TOTAL_SUPPLY = 1000000000; // 1 billion tokens
-        const MAX_HOLDER_PERCENT = 0.04; // 4%
+    <div class="container">
+        <h1>eli</h1>
         
-        let transactionCount = 0;
-        let holders = [];
-
-        // Format number with commas
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
-        // Generate random Solana wallet address
-        function generateWallet() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789';
-            let start = '';
-            let end = '';
-            for (let i = 0; i < 4; i++) {
-                start += chars.charAt(Math.floor(Math.random() * chars.length));
-                end += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return `${start}...${end}`;
-        }
-
-        // Generate random transaction
-        function generateTransaction() {
-            const amount = (Math.random() * (2 - 0.1) + 0.1).toFixed(2);
-            const heavyWeightToLower = Math.random() < 0.75; // 75% chance for 0.1-1.2 range
-            const finalAmount = heavyWeightToLower 
-                ? (Math.random() * (1.2 - 0.1) + 0.1).toFixed(2)
-                : amount;
-            
-            return {
-                tx: generateWallet(),
-                amount: parseFloat(finalAmount),
-                status: 'completed'
-            };
-        }
-
-        // Initialize holders
-        function initializeHolders() {
-            const numHolders = Math.floor(Math.random() * 10) + 25; // 25-35 holders
-            const maxTokensPerHolder = TOTAL_SUPPLY * MAX_HOLDER_PERCENT; // 40 million tokens max (4%)
-            
-            for (let i = 0; i < numHolders; i++) {
-                // Random balance between 20% and 100% of max allowed (4%)
-                const balance = Math.random() * maxTokensPerHolder * 0.8 + (maxTokensPerHolder * 0.2);
-                const share = (balance / TOTAL_SUPPLY * 100);
-                
-                holders.push({
-                    wallet: generateWallet(),
-                    balance: Math.floor(balance),
-                    share: share
-                });
-            }
-            
-            // Sort by balance descending
-            holders.sort((a, b) => b.balance - a.balance);
-        }
-
-        // Add new transaction
-        function addTransaction() {
-            const tbody = document.getElementById('transactions-body');
-            const tx = generateTransaction();
-            
-            const row = document.createElement('tr');
-            row.className = 'row-hidden row-new';
-            row.innerHTML = `
-                <td class="address">${tx.tx}</td>
-                <td>${tx.amount} SOL</td>
-                <td><span class="status ${tx.status}">${tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}</span></td>
-            `;
-            
-            // Add to top
-            if (tbody.firstChild) {
-                tbody.insertBefore(row, tbody.firstChild);
-            } else {
-                tbody.appendChild(row);
-            }
-            
-            // Remove excess rows
-            while (tbody.children.length > MAX_ROWS) {
-                tbody.removeChild(tbody.lastChild);
-            }
-            
-            setTimeout(() => {
-                row.classList.remove('row-hidden');
-                row.classList.add('row-visible');
-            }, 50);
-            
-            transactionCount++;
-        }
-
-        // Update holders
-        function updateHolders() {
-            const maxTokensPerHolder = TOTAL_SUPPLY * MAX_HOLDER_PERCENT;
-            
-            // Randomly adjust some holder balances
-            const numToUpdate = Math.floor(Math.random() * 3) + 1; // Update 1-3 holders
-            
-            for (let i = 0; i < numToUpdate && i < holders.length; i++) {
-                const randomIndex = Math.floor(Math.random() * holders.length);
-                const holder = holders[randomIndex];
-                
-                // Small random change in balance (up to ±500k tokens)
-                const change = (Math.random() - 0.5) * 1000000;
-                let newBalance = holder.balance + change;
-                
-                // Ensure it doesn't exceed 4% and stays above minimum
-                newBalance = Math.max(1000000, Math.min(newBalance, maxTokensPerHolder));
-                
-                holder.balance = Math.floor(newBalance);
-                holder.share = (newBalance / TOTAL_SUPPLY * 100);
-            }
-            
-            // Sometimes add a new holder (30% chance)
-            if (Math.random() < 0.3 && holders.length < 50) {
-                const balance = Math.random() * maxTokensPerHolder * 0.5 + 1000000; // At least 1M tokens
-                const share = (balance / TOTAL_SUPPLY * 100);
-                
-                holders.push({
-                    wallet: generateWallet(),
-                    balance: Math.floor(balance),
-                    share: share
-                });
-            }
-            
-            // Sort by balance
-            holders.sort((a, b) => b.balance - a.balance);
-            
-            // Re-render holders table
-            renderHolders();
-        }
-
-        // Render holders table
-        function renderHolders() {
-            const tbody = document.getElementById('holders-body');
-            tbody.innerHTML = '';
-            
-            const displayHolders = holders.slice(0, MAX_ROWS);
-            
-            displayHolders.forEach((holder, index) => {
-                setTimeout(() => {
-                    const row = document.createElement('tr');
-                    row.className = 'row-hidden';
-                    row.innerHTML = `
-                        <td class="address">${holder.wallet}</td>
-                        <td>${formatNumber(holder.balance)}</td>
-                        <td>${holder.share.toFixed(2)}%</td>
-                    `;
-                    tbody.appendChild(row);
-                    
-                    setTimeout(() => {
-                        row.classList.remove('row-hidden');
-                        row.classList.add('row-visible');
-                    }, 50);
-                }, index * 100);
-            });
-        }
-
-        // Initial population
-        window.addEventListener('load', () => {
-            initializeHolders();
-            
-            // Add initial transactions
-            setTimeout(() => {
-                const initialTransactions = 8;
-                for (let i = 0; i < initialTransactions; i++) {
-                    setTimeout(() => {
-                        addTransaction();
-                    }, i * 400);
-                }
-                
-                // Start continuous updates after initial load
-                setTimeout(() => {
-                    // Add new transaction every 3-6 seconds
-                    setInterval(() => {
-                        addTransaction();
-                        
-                        // Update holders every few transactions
-                        if (transactionCount % 3 === 0) {
-                            updateHolders();
-                        }
-                    }, Math.random() * 3000 + 3000);
-                }, 3000);
-            }, 500);
-            
-            // Initial render of holders
-            setTimeout(() => {
-                renderHolders();
-            }, 1000);
-        });
-    </script>
+        <p class="description">
+            a 24/7 robot which streams itself trading and is built on x402 allowing to create transactions easily
+        </p>
+        
+        <div class="buttons">
+            <a href="#" class="btn">docs</a>
+            <a href="https://x.com/eli402" class="btn btn-x" target="_blank">𝕏</a>
+        </div>
+    </div>
 </body>
 </html>
