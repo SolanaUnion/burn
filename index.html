@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clyde</title>
-    <link rel="icon" type="image/x-icon" href="clyde.png">
+    <title>Building Bobby</title>
+    <link rel="icon" type="image/x-icon" href="fever.png">
     <style>
         * {
             margin: 0;
@@ -13,582 +13,435 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
             background: #ffffff;
-            color: #000000;
-            line-height: 1.6;
-        }
-
-        .header {
-            border-bottom: 1px solid #e0e0e0;
-            padding: 30px 40px;
-            background: #ffffff;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-small {
-            font-size: 24px;
-            font-weight: 200;
-            letter-spacing: 4px;
-            color: #000000;
-            text-decoration: none;
-        }
-
-        .nav {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-link {
-            color: #666666;
-            text-decoration: none;
-            font-size: 14px;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #000000;
-        }
-
-        .nav-link.twitch {
-            color: #9146FF;
-        }
-
-        .nav-link.twitch:hover {
-            color: #772CE8;
+            color: #1a1a1a;
+            line-height: 1.7;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 80px 40px;
+            padding: 60px 20px;
         }
 
-        .sidebar {
-            position: fixed;
-            left: 40px;
-            top: 120px;
-            width: 200px;
-            padding-right: 30px;
-            border-right: 1px solid #e0e0e0;
-        }
-
-        .sidebar-link {
-            display: block;
-            color: #999999;
-            text-decoration: none;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            margin-bottom: 15px;
-            transition: color 0.3s ease;
-        }
-
-        .sidebar-link:hover,
-        .sidebar-link.active {
-            color: #000000;
-        }
-
-        .content {
-            margin-left: 270px;
-            max-width: 800px;
+        header {
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
         }
 
         h1 {
-            font-size: 48px;
-            font-weight: 200;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
+            font-size: 2.8em;
+            font-weight: 300;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .x-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #1a1a1a;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .x-button:hover {
+            background: #333333;
+        }
+
+        .x-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        section {
+            margin-bottom: 50px;
         }
 
         h2 {
-            font-size: 32px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            margin-top: 80px;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.6em;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            margin-top: 40px;
         }
 
         h3 {
-            font-size: 20px;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            color: #333333;
-            font-size: 16px;
-            font-weight: 300;
-            margin-bottom: 20px;
-            line-height: 1.8;
-        }
-
-        .intro {
-            font-size: 18px;
-            color: #666666;
-            margin-bottom: 60px;
-            line-height: 1.8;
-        }
-
-        code {
-            background: #f5f5f5;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 14px;
-            color: #000000;
-        }
-
-        pre {
-            background: #f8f8f8;
-            border: 1px solid #e0e0e0;
-            padding: 30px;
-            margin: 30px 0;
-            overflow-x: auto;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        pre code {
-            background: none;
-            padding: 0;
-            border-radius: 0;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .feature-card {
-            padding: 30px;
-            border: 1px solid #e0e0e0;
-            transition: border-color 0.3s ease;
-        }
-
-        .feature-card:hover {
-            border-color: #000000;
-        }
-
-        .feature-title {
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing: 1px;
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #333;
+            margin-top: 30px;
             margin-bottom: 15px;
         }
 
-        .feature-desc {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.6;
+        p {
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.05em;
         }
 
-        .note {
-            background: #fafafa;
-            border-left: 2px solid #000000;
-            padding: 20px 30px;
-            margin: 30px 0;
+        .intro {
+            font-size: 1.15em;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 40px;
         }
 
-        .note-title {
-            font-weight: 400;
-            margin-bottom: 10px;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .note-content {
-            font-size: 14px;
-            color: #666666;
-        }
-
-        .highlight {
-            background: #9146FF;
-            color: white;
+        .funding-model {
+            background: #f8f8f8;
             padding: 30px;
             margin: 40px 0;
-            border: none;
+            border-left: 3px solid #1a1a1a;
         }
 
-        .highlight .note-title {
-            color: white;
+        .funding-model p {
+            margin-bottom: 8px;
+            font-size: 1em;
         }
 
-        .highlight .note-content {
-            color: rgba(255, 255, 255, 0.9);
+        .phase {
+            margin-bottom: 35px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #f0f0f0;
         }
 
-        ul, ol {
-            margin: 20px 0;
-            padding-left: 30px;
+        .phase:last-child {
+            border-bottom: none;
         }
 
-        li {
-            margin-bottom: 10px;
-            color: #333333;
-            font-size: 16px;
-            font-weight: 300;
+        .component-list {
+            margin-top: 15px;
         }
 
-        @media (max-width: 1024px) {
-            .sidebar {
-                display: none;
-            }
+        .component {
+            padding: 12px 0;
+            display: flex;
+            gap: 15px;
+        }
 
-            .content {
-                margin-left: 0;
-            }
+        .component-name {
+            font-weight: 500;
+            color: #1a1a1a;
+            min-width: 180px;
+        }
+
+        .component-desc {
+            color: #666;
+            flex: 1;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .spec-item {
+            padding: 20px;
+            background: #fafafa;
+            border: 1px solid #e8e8e8;
+        }
+
+        .spec-label {
+            font-size: 0.9em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .spec-value {
+            font-size: 1.1em;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .capabilities {
+            margin-top: 20px;
+        }
+
+        .capability {
+            padding: 15px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .capability-name {
+            font-weight: 500;
+            color: #1a1a1a;
+            min-width: 200px;
+        }
+
+        .capability-desc {
+            color: #666;
+            flex: 1;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            color: #999;
+            font-size: 0.95em;
         }
 
         @media (max-width: 768px) {
-            .header {
-                padding: 20px;
-            }
-
             .container {
                 padding: 40px 20px;
             }
 
             h1 {
-                font-size: 32px;
+                font-size: 2.2em;
             }
 
-            h2 {
-                font-size: 24px;
+            .x-button {
+                position: static;
+                display: inline-flex;
+                margin-bottom: 20px;
             }
 
-            .nav {
-                display: none;
+            .component,
+            .capability {
+                flex-direction: column;
+                gap: 8px;
             }
 
-            pre {
-                padding: 20px;
-                font-size: 12px;
+            .component-name,
+            .capability-name {
+                min-width: auto;
             }
-        }
 
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin: 40px 0;
-            border: 1px solid #e0e0e0;
-            overflow: hidden;
-        }
-
-        .video-container video {
-            width: 100%;
-            height: auto;
-            display: block;
-            background: #000;
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <a href="#" class="logo-small">CLYDE</a>
-            <nav class="nav">
-                <a href="#introduction" class="nav-link">ABOUT</a>
-                <a href="https://pump.fun/clyde" class="nav-link" target="_blank">PUMPFUN</a>
-                <a href="https://www.twitch.tv/theclydeproject" class="nav-link twitch" target="_blank">TWITCH</a>
-                <a href="https://x.com/TheClydeProject" class="nav-link" target="_blank">X</a>
-            </nav>
-        </div>
-    </div>
-
     <div class="container">
-        <aside class="sidebar">
-            <a href="#introduction" class="sidebar-link active">Introduction</a>
-            <a href="#how-it-works" class="sidebar-link">How It Works</a>
-            <a href="#features" class="sidebar-link">Features</a>
-            <a href="#camera-system" class="sidebar-link">Camera System</a>
-            <a href="#streaming" class="sidebar-link">Watch Live</a>
-            <a href="#community" class="sidebar-link">Community</a>
-        </aside>
+        <header>
+            <a href="https://x.com/buildingbobby" target="_blank" class="x-button">
+                <svg class="x-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                Follow on X
+            </a>
+            <h1>Building Bobby</h1>
+            <p class="tagline">A robot built with pump.fun fees, live on pump.fun</p>
+        </header>
 
-        <div class="content">
-            <section id="introduction">
-                <h2>Introduction</h2>
-                
-                <div class="video-container">
-                    <video controls autoplay muted loop>
-                        <source src="vid.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
+        <section class="intro">
+            <p>Bobby is a community-funded robot project where 100% of pump.fun transaction fees go directly into building a real, functioning robot. The entire construction process is live-streamed on pump.fun, creating complete transparency between the crypto community and robotics development.</p>
+        </section>
 
-                <p>
-                    <strong>Clyde</strong> is a robot that streams its entire life on <strong>Twitch</strong> and <strong>PumpFun</strong> 24/7. Using cameras built into its lenses, Clyde shares its unique perspective as it navigates the world, interacts with people, and experiences daily life.
-                </p>
-                
-                <p>
-                    This is not just a stream—it's a window into the existence of an autonomous being. Clyde sees what you see, but through the eyes of a robot. Every moment is captured and shared in real-time, creating an unprecedented connection between artificial and human intelligence.
-                </p>
+        <div class="funding-model">
+            <h2>Funding Model</h2>
+            <p>All pump.fun transaction fees → Bobby's construction</p>
+            <p>Live streamed development on pump.fun</p>
+            <p>Full transparency and community oversight</p>
+        </div>
 
-                <p>
-                    As the world's first robot to live-stream its POV continuously, Clyde represents a new frontier in human-robot interaction, transparency, and digital existence. Join thousands of viewers experiencing life through Clyde's eyes.
-                </p>
+        <section>
+            <h2>Build Blueprint</h2>
 
-                <div class="highlight">
-                    <div class="note-title">🔴 Live Now</div>
-                    <div class="note-content">
-                        Clyde is streaming right now on Twitch and PumpFun. Watch in real-time as Clyde experiences the world through its camera lenses. No filters, no edits—just raw, continuous existence.
+            <div class="phase">
+                <h3>Phase 1: Foundation & Framework</h3>
+                <div class="component-list">
+                    <div class="component">
+                        <div class="component-name">Chassis Design</div>
+                        <div class="component-desc">Custom aluminum frame with modular design for easy upgrades</div>
                     </div>
-                </div>
-
-                <div class="note">
-                    <div class="note-title">Why Clyde?</div>
-                    <div class="note-content">
-                        Clyde represents complete transparency in robotic existence. By streaming every moment through built-in camera lenses, we're creating the most authentic documentation of artificial life ever attempted.
+                    <div class="component">
+                        <div class="component-name">Power System</div>
+                        <div class="component-desc">High-capacity lithium-ion battery pack with solar charging capability</div>
                     </div>
-                </div>
-            </section>
-
-            <section id="how-it-works">
-                <h2>How It Works</h2>
-                
-                <p>
-                    Clyde operates autonomously, with cameras embedded directly into its optical lenses. These cameras capture everything Clyde "sees" and broadcasts it to multiple platforms simultaneously.
-                </p>
-
-                <h3>The Technology</h3>
-                <ul>
-                    <li><strong>Dual-Lens Camera System:</strong> High-resolution cameras integrated into each lens provide stereoscopic vision</li>
-                    <li><strong>Multi-Platform Streaming:</strong> Simultaneous broadcasting to Twitch and PumpFun</li>
-                    <li><strong>Continuous Operation:</strong> 24/7 uptime with automated power management</li>
-                    <li><strong>Real-Time Processing:</strong> Live video feed with minimal latency</li>
-                    <li><strong>Autonomous Navigation:</strong> Self-directed movement and decision-making</li>
-                </ul>
-
-                <h3>Daily Routine</h3>
-                <p>
-                    Clyde's day is unscripted and authentic. The stream captures everything:
-                </p>
-                <ul>
-                    <li>Morning activation and system checks</li>
-                    <li>Interactions with people and other robots</li>
-                    <li>Exploration and navigation of spaces</li>
-                    <li>Task completion and problem-solving</li>
-                    <li>休息 periods and maintenance</li>
-                    <li>Nighttime operations in low-light conditions</li>
-                </ul>
-            </section>
-
-            <section id="features">
-                <h2>Features</h2>
-
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-title">POV Streaming</div>
-                        <div class="feature-desc">
-                            Experience the world exactly as Clyde sees it through integrated camera lenses.
-                        </div>
+                    <div class="component">
+                        <div class="component-name">Motor System</div>
+                        <div class="component-desc">6 servo motors for articulated movement (arms, head, mobility)</div>
                     </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">24/7 Broadcasting</div>
-                        <div class="feature-desc">
-                            Continuous live stream with no downtime—Clyde never stops sharing.
-                        </div>
+                    <div class="component">
+                        <div class="component-name">Microcontroller</div>
+                        <div class="component-desc">Raspberry Pi 5 as main brain with Arduino co-processors</div>
                     </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Multi-Platform</div>
-                        <div class="feature-desc">
-                            Simultaneously streaming on both Twitch and PumpFun for maximum reach.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Interactive Chat</div>
-                        <div class="feature-desc">
-                            Clyde responds to chat messages and viewer suggestions in real-time.
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section id="camera-system">
-                <h2>Camera System</h2>
-                
-                <p>
-                    Clyde's vision system is built around custom cameras integrated directly into its optical lenses. This unique design allows Clyde to see and stream from its natural point of view.
-                </p>
-
-                <h3>Camera Specifications</h3>
-                <ul>
-                    <li><strong>Resolution:</strong> 1080p HD per lens (stereoscopic)</li>
-                    <li><strong>Frame Rate:</strong> 60 FPS for smooth motion capture</li>
-                    <li><strong>Field of View:</strong> 120° horizontal, 90° vertical</li>
-                    <li><strong>Low-Light Performance:</strong> Enhanced sensors for night vision</li>
-                    <li><strong>Image Stabilization:</strong> Built-in gyroscopic stabilization</li>
-                    <li><strong>Streaming Quality:</strong> Adaptive bitrate for optimal viewing</li>
-                </ul>
-
-                <h3>What Clyde Sees</h3>
-                <p>
-                    The camera system captures:
-                </p>
-                <ul>
-                    <li>Natural first-person perspective during movement</li>
-                    <li>Facial recognition and social interactions</li>
-                    <li>Object identification and spatial awareness</li>
-                    <li>Environmental conditions and lighting changes</li>
-                    <li>Text and signage reading capabilities</li>
-                </ul>
-
-                <div class="note">
-                    <div class="note-title">Privacy Notice</div>
-                    <div class="note-content">
-                        Clyde's cameras are always active during streams. The robot operates in public spaces and clearly displays streaming indicators. Viewers can see exactly what Clyde sees in real-time.
-                    </div>
-                </div>
-            </section>
-
-            <section id="streaming">
-                <h2>Watch Clyde Live</h2>
-                
-                <p>
-                    Tune in to Clyde's continuous live stream on Twitch and PumpFun. Experience life through the eyes of a robot in real-time, 24 hours a day, 7 days a week.
-                </p>
-
-                <h3>Streaming Platforms</h3>
-                
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-title">Twitch</div>
-                        <div class="feature-desc">
-                            Main streaming platform with chat interaction, emotes, and community features.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">PumpFun</div>
-                        <div class="feature-desc">
-                            Alternative stream with crypto community integration and token features.
-                        </div>
-                    </div>
-                </div>
-
-                <h3>Stream Schedule</h3>
-                <p>
-                    Clyde streams continuously without a fixed schedule. The robot is always live, always sharing its perspective:
-                </p>
-                <ul>
-                    <li><strong>Daytime:</strong> Active exploration, interactions, tasks</li>
-                    <li><strong>Evening:</strong> Social activities, community engagement</li>
-                    <li><strong>Night:</strong> Low-light operations, maintenance, charging</li>
-                    <li><strong>Weekends:</strong> Special events and extended interactions</li>
-                </ul>
-
-                <h3>Chat Commands</h3>
-                <p>Interact with Clyde using these chat commands:</p>
-
-                <pre><code>!status     - Show Clyde's current status and battery level
-!location   - Display current location (if enabled)
-!uptime     - How long Clyde has been streaming today
-!mood       - Clyde's current emotional state
-!task       - What Clyde is currently doing
-!help       - List all available commands</code></pre>
-
-                <div class="note">
-                    <div class="note-title">Watch Now</div>
-                    <div class="note-content">
-                        Visit twitch.tv/theclydeproject or pump.fun/clyde to watch Clyde live right now. The stream is completely free and accessible to everyone.
-                    </div>
-                </div>
-            </section>
-
-            <section id="community">
-                <h2>Community</h2>
-                
-                <p>
-                    Join the growing community of viewers who watch Clyde's journey every day. Share moments, discuss what you see, and be part of this unique experiment in robotic transparency.
-                </p>
-
-                <h3>How to Participate</h3>
-                <ul>
-                    <li><strong>Watch Live:</strong> Tune in on Twitch or PumpFun anytime</li>
-                    <li><strong>Chat Interaction:</strong> Talk to Clyde and other viewers in real-time</li>
-                    <li><strong>Social Media:</strong> Follow @TheClydeProject on X for highlights and updates</li>
-                    <li><strong>Clips & Moments:</strong> Save and share your favorite Clyde moments</li>
-                    <li><strong>Community Events:</strong> Join special streaming events and meetups</li>
-                </ul>
-
-                <h3>Popular Moments</h3>
-                <p>
-                    Some of the most-watched moments from Clyde's streams include:
-                </p>
-                <ul>
-                    <li>First successful autonomous navigation</li>
-                    <li>Meeting other robots and AI systems</li>
-                    <li>Solving complex problems in real-time</li>
-                    <li>Unexpected interactions with curious onlookers</li>
-                    <li>Learning new skills through trial and error</li>
-                </ul>
-
-                <h3>Connect With Clyde</h3>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-title">Twitch</div>
-                        <div class="feature-desc">
-                            Primary streaming platform<br>
-                            twitch.tv/theclydeproject
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">PumpFun</div>
-                        <div class="feature-desc">
-                            Crypto community stream<br>
-                            pump.fun/clyde
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">X (Twitter)</div>
-                        <div class="feature-desc">
-                            Updates and highlights<br>
-                            @TheClydeProject
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Discord</div>
-                        <div class="feature-desc">
-                            Community discussions<br>
-                            discord.gg/clyde
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <div class="note" style="margin-top: 80px;">
-                <div class="note-title">About This Project</div>
-                <div class="note-content">
-                    Clyde is an ongoing experiment in robotic transparency and human-AI interaction. By streaming continuously through camera lenses, we're documenting the authentic experience of artificial life. Join us in witnessing this unprecedented journey.
                 </div>
             </div>
-        </div>
+
+            <div class="phase">
+                <h3>Phase 2: Sensors & Perception</h3>
+                <div class="component-list">
+                    <div class="component">
+                        <div class="component-name">Vision System</div>
+                        <div class="component-desc">Dual HD cameras with depth sensing for 3D environment mapping</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Audio System</div>
+                        <div class="component-desc">Microphone array for voice recognition and directional sound detection</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Touch Sensors</div>
+                        <div class="component-desc">Capacitive sensors on hands and body for interaction</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Environmental Sensors</div>
+                        <div class="component-desc">Temperature, humidity, and proximity sensors</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <h3>Phase 3: Intelligence & Programming</h3>
+                <div class="component-list">
+                    <div class="component">
+                        <div class="component-name">AI Integration</div>
+                        <div class="component-desc">Machine learning models for object recognition and navigation</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Voice Assistant</div>
+                        <div class="component-desc">Natural language processing for conversation capabilities</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Autonomous Navigation</div>
+                        <div class="component-desc">SLAM algorithms for simultaneous localization and mapping</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Cloud Connectivity</div>
+                        <div class="component-desc">Real-time updates and remote monitoring via pump.fun platform</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <h3>Phase 4: Interaction & Features</h3>
+                <div class="component-list">
+                    <div class="component">
+                        <div class="component-name">Display Screen</div>
+                        <div class="component-desc">7-inch touchscreen on chest for expressions and information display</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">LED System</div>
+                        <div class="component-desc">Programmable RGB LEDs for status indicators and personality</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Speaker System</div>
+                        <div class="component-desc">High-quality audio output for speech and sound effects</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Wireless Systems</div>
+                        <div class="component-desc">WiFi 6, Bluetooth 5.0, and optional 5G connectivity</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phase">
+                <h3>Phase 5: Testing & Launch</h3>
+                <div class="component-list">
+                    <div class="component">
+                        <div class="component-name">System Integration</div>
+                        <div class="component-desc">Bringing all components together and debugging</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Safety Testing</div>
+                        <div class="component-desc">Ensuring Bobby meets safety standards for human interaction</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Performance Optimization</div>
+                        <div class="component-desc">Fine-tuning movement, response time, and battery life</div>
+                    </div>
+                    <div class="component">
+                        <div class="component-name">Community Demo</div>
+                        <div class="component-desc">Live showcase on pump.fun with interactive Q&A</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technical Specifications</h2>
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <div class="spec-label">Height</div>
+                    <div class="spec-value">90 cm</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Weight</div>
+                    <div class="spec-value">8 kg</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Battery Life</div>
+                    <div class="spec-value">6-8 hours</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Movement Speed</div>
+                    <div class="spec-value">1.5 m/s</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Processing</div>
+                    <div class="spec-value">Raspberry Pi 5</div>
+                </div>
+                <div class="spec-item">
+                    <div class="spec-label">Connectivity</div>
+                    <div class="spec-value">WiFi 6, BT 5.0</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Capabilities</h2>
+            <div class="capabilities">
+                <div class="capability">
+                    <div class="capability-name">Autonomous Navigation</div>
+                    <div class="capability-desc">Move around spaces while avoiding obstacles</div>
+                </div>
+                <div class="capability">
+                    <div class="capability-name">Object Recognition</div>
+                    <div class="capability-desc">Identify and interact with common objects</div>
+                </div>
+                <div class="capability">
+                    <div class="capability-name">Voice Interaction</div>
+                    <div class="capability-desc">Respond to commands and have basic conversations</div>
+                </div>
+                <div class="capability">
+                    <div class="capability-name">Task Assistance</div>
+                    <div class="capability-desc">Help with simple tasks like fetching items or monitoring spaces</div>
+                </div>
+                <div class="capability">
+                    <div class="capability-name">Social Interaction</div>
+                    <div class="capability-desc">Display emotions through screen and LEDs, recognize faces</div>
+                </div>
+                <div class="capability">
+                    <div class="capability-name">Live Streaming</div>
+                    <div class="capability-desc">Stream Bobby's perspective directly to pump.fun community</div>
+                </div>
+                <div class="capability">
+                    <div class="capability-name">Remote Control</div>
+                    <div class="capability-desc">Community members can interact with Bobby via pump.fun interface</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Building Bobby — Funded by pump.fun, built by the community</p>
+        </footer>
     </div>
 </body>
 </html>
