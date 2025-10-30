@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Building Bobby</title>
-    <link rel="icon" type="image/x-icon" href="fever.png">
+    <title>RobotWheel</title>
+    <link rel="icon" type="image/x-icon" href="email.png">
     <style>
         * {
             margin: 0;
@@ -13,438 +13,631 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             background: #ffffff;
-            color: #1a1a1a;
-            line-height: 1.7;
+            color: #000000;
+            line-height: 1.6;
+        }
+
+        .header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 30px 40px;
+            background: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-small {
+            font-size: 24px;
+            font-weight: 200;
+            letter-spacing: 4px;
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: #666666;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #000000;
+        }
+
+        .nav-link.pumpfun {
+            color: #9146FF;
+        }
+
+        .nav-link.pumpfun:hover {
+            color: #772CE8;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 40px;
         }
 
-        header {
-            margin-bottom: 60px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #e0e0e0;
-            position: relative;
+        .sidebar {
+            position: fixed;
+            left: 40px;
+            top: 120px;
+            width: 200px;
+            padding-right: 30px;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .sidebar-link {
+            display: block;
+            color: #999999;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            color: #000000;
+        }
+
+        .content {
+            margin-left: 270px;
+            max-width: 800px;
         }
 
         h1 {
-            font-size: 2.8em;
-            font-weight: 300;
-            color: #1a1a1a;
-            margin-bottom: 12px;
-            letter-spacing: -0.5px;
-        }
-
-        .tagline {
-            font-size: 1.1em;
-            color: #666;
-            font-weight: 400;
-        }
-
-        .x-button {
-            position: absolute;
-            top: 0;
-            right: 0;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: #1a1a1a;
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 0.95em;
-            font-weight: 500;
-            border-radius: 6px;
-            transition: background 0.2s ease;
-        }
-
-        .x-button:hover {
-            background: #333333;
-        }
-
-        .x-icon {
-            width: 18px;
-            height: 18px;
-        }
-
-        section {
-            margin-bottom: 50px;
+            font-size: 48px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
 
         h2 {
-            font-size: 1.6em;
-            font-weight: 500;
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            margin-top: 40px;
+            font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-top: 80px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         h3 {
-            font-size: 1.2em;
-            font-weight: 500;
-            color: #333;
-            margin-top: 30px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-top: 40px;
+            margin-bottom: 20px;
         }
 
         p {
-            color: #444;
-            margin-bottom: 15px;
-            font-size: 1.05em;
+            color: #333333;
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            line-height: 1.8;
         }
 
         .intro {
-            font-size: 1.15em;
-            color: #333;
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 60px;
             line-height: 1.8;
-            margin-bottom: 40px;
         }
 
-        .funding-model {
+        code {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: #000000;
+        }
+
+        pre {
             background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+            margin: 30px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+            transition: border-color 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #000000;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        .note {
+            background: #fafafa;
+            border-left: 2px solid #000000;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+
+        .note-title {
+            font-weight: 400;
+            margin-bottom: 10px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .note-content {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .highlight {
+            background: #9146FF;
+            color: white;
             padding: 30px;
             margin: 40px 0;
-            border-left: 3px solid #1a1a1a;
+            border: none;
         }
 
-        .funding-model p {
-            margin-bottom: 8px;
-            font-size: 1em;
+        .highlight .note-title {
+            color: white;
         }
 
-        .phase {
-            margin-bottom: 35px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid #f0f0f0;
+        .highlight .note-content {
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        .phase:last-child {
-            border-bottom: none;
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 30px;
         }
 
-        .component-list {
-            margin-top: 15px;
+        li {
+            margin-bottom: 10px;
+            color: #333333;
+            font-size: 16px;
+            font-weight: 300;
         }
 
-        .component {
-            padding: 12px 0;
-            display: flex;
-            gap: 15px;
-        }
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
 
-        .component-name {
-            font-weight: 500;
-            color: #1a1a1a;
-            min-width: 180px;
-        }
-
-        .component-desc {
-            color: #666;
-            flex: 1;
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
-        }
-
-        .spec-item {
-            padding: 20px;
-            background: #fafafa;
-            border: 1px solid #e8e8e8;
-        }
-
-        .spec-label {
-            font-size: 0.9em;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-        }
-
-        .spec-value {
-            font-size: 1.1em;
-            color: #1a1a1a;
-            font-weight: 500;
-        }
-
-        .capabilities {
-            margin-top: 20px;
-        }
-
-        .capability {
-            padding: 15px 0;
-            display: flex;
-            gap: 15px;
-        }
-
-        .capability-name {
-            font-weight: 500;
-            color: #1a1a1a;
-            min-width: 200px;
-        }
-
-        .capability-desc {
-            color: #666;
-            flex: 1;
-        }
-
-        footer {
-            margin-top: 80px;
-            padding-top: 30px;
-            border-top: 1px solid #e0e0e0;
-            text-align: center;
-            color: #999;
-            font-size: 0.95em;
+            .content {
+                margin-left: 0;
+            }
         }
 
         @media (max-width: 768px) {
+            .header {
+                padding: 20px;
+            }
+
             .container {
                 padding: 40px 20px;
             }
 
             h1 {
-                font-size: 2.2em;
+                font-size: 32px;
             }
 
-            .x-button {
-                position: static;
-                display: inline-flex;
-                margin-bottom: 20px;
+            h2 {
+                font-size: 24px;
             }
 
-            .component,
-            .capability {
-                flex-direction: column;
-                gap: 8px;
+            .nav {
+                display: none;
             }
 
-            .component-name,
-            .capability-name {
-                min-width: auto;
+            pre {
+                padding: 20px;
+                font-size: 12px;
             }
+        }
 
-            .specs-grid {
-                grid-template-columns: 1fr;
-            }
+        .flowchart {
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .flowchart-step {
+            background: white;
+            border: 2px solid #000;
+            padding: 15px;
+            margin: 15px auto;
+            max-width: 400px;
+            font-weight: 400;
+        }
+
+        .flowchart-arrow {
+            font-size: 24px;
+            color: #9146FF;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <a href="https://x.com/buildingbobby_" target="_blank" class="x-button">
-                <svg class="x-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-                Follow on X
-            </a>
-            <h1>Building Bobby</h1>
-            <p class="tagline">A robot built with pump.fun fees, live on pump.fun</p>
-        </header>
-
-        <section class="intro">
-            <p>Bobby is a community-funded robot project where 100% of pump.fun transaction fees go directly into building a real, functioning robot. The entire construction process is live-streamed on pump.fun, creating complete transparency between the crypto community and robotics development.</p>
-        </section>
-
-        <div class="funding-model">
-            <h2>Funding Model</h2>
-            <p>All pump.fun transaction fees → Bobby's construction</p>
-            <p>Live streamed development on pump.fun</p>
-            <p>Full transparency and community oversight</p>
+    <div class="header">
+        <div class="header-content">
+            <a href="#" class="logo-small">ROBOTWHEEL</a>
+            <nav class="nav">
+                <a href="#introduction" class="nav-link">ABOUT</a>
+                <a href="https://pump.fun/robotwheel" class="nav-link pumpfun" target="_blank">PUMPFUN</a>
+                <a href="https://x.com/TheRobotWheel" class="nav-link" target="_blank">X</a>
+            </nav>
         </div>
+    </div>
 
-        <section>
-            <h2>Build Blueprint</h2>
+    <div class="container">
+        <aside class="sidebar">
+            <a href="#introduction" class="sidebar-link active">Introduction</a>
+            <a href="#how-it-works" class="sidebar-link">How It Works</a>
+            <a href="#features" class="sidebar-link">Features</a>
+            <a href="#flywheel" class="sidebar-link">Flywheel Mechanism</a>
+            <a href="#automation" class="sidebar-link">AI Automation</a>
+            <a href="#community" class="sidebar-link">Community</a>
+        </aside>
 
-            <div class="phase">
-                <h3>Phase 1: Foundation & Framework</h3>
-                <div class="component-list">
-                    <div class="component">
-                        <div class="component-name">Chassis Design</div>
-                        <div class="component-desc">Custom aluminum frame with modular design for easy upgrades</div>
+        <div class="content">
+            <section id="introduction">
+                <h2>Introduction</h2>
+
+                <p>
+                    <strong>RobotWheel</strong> is a fully autonomous AI-driven cryptocurrency flywheel that operates 24/7 without human intervention. The robot automatically monitors the dev wallet and executes buybacks the moment the balance exceeds $1, creating a perpetual value generation cycle.
+                </p>
+                
+                <p>
+                    This is not just a token—it's an autonomous economic system. RobotWheel represents a new paradigm in decentralized finance where artificial intelligence manages the entire lifecycle of value creation, distribution, and reinvestment without any manual oversight.
+                </p>
+
+                <p>
+                    As the world's first fully automated AI flywheel, RobotWheel demonstrates how autonomous systems can create sustainable, transparent, and predictable economic mechanisms. The robot never sleeps, never makes emotional decisions, and operates with complete transparency.
+                </p>
+
+                <div class="highlight">
+                    <div class="note-title">🤖 Always Active</div>
+                    <div class="note-content">
+                        RobotWheel is monitoring the dev wallet right now. The AI continuously scans the balance and executes buybacks automatically whenever it exceeds $1. No human intervention required—just pure automated efficiency.
                     </div>
-                    <div class="component">
-                        <div class="component-name">Power System</div>
-                        <div class="component-desc">High-capacity lithium-ion battery pack with solar charging capability</div>
+                </div>
+
+                <div class="note">
+                    <div class="note-title">Why RobotWheel?</div>
+                    <div class="note-content">
+                        RobotWheel represents complete automation in cryptocurrency mechanics. By using AI to monitor and execute buybacks continuously, we're creating the most transparent and reliable token flywheel ever implemented.
                     </div>
-                    <div class="component">
-                        <div class="component-name">Motor System</div>
-                        <div class="component-desc">6 servo motors for articulated movement (arms, head, mobility)</div>
+                </div>
+            </section>
+
+            <section id="how-it-works">
+                <h2>How It Works</h2>
+                
+                <p>
+                    RobotWheel operates on a simple yet powerful principle: continuous monitoring and automatic buyback execution. The AI system watches the dev wallet balance 24/7 and triggers buybacks the instant the threshold is met.
+                </p>
+
+                <h3>The Core Mechanism</h3>
+                <ul>
+                    <li><strong>Continuous Monitoring:</strong> AI scans the dev wallet balance every second</li>
+                    <li><strong>Automatic Trigger:</strong> Buyback executes immediately when balance exceeds $1</li>
+                    <li><strong>Zero Human Intervention:</strong> Completely autonomous decision-making</li>
+                    <li><strong>Transparent Operations:</strong> All transactions are publicly visible on-chain</li>
+                    <li><strong>Perpetual Cycle:</strong> The flywheel continues indefinitely without maintenance</li>
+                </ul>
+
+                <div class="flowchart">
+                    <div class="flowchart-step">Dev Wallet Receives Funds</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-step">AI Detects Balance > $1</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-step">Automatic Buyback Executed</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-step">Tokens Added to Treasury</div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-step">Cycle Repeats Forever</div>
+                </div>
+
+                <h3>Daily Operations</h3>
+                <p>
+                    RobotWheel's operation is completely automated:
+                </p>
+                <ul>
+                    <li>24/7 wallet balance monitoring</li>
+                    <li>Instant buyback execution when threshold met</li>
+                    <li>Automatic transaction logging and reporting</li>
+                    <li>Continuous system health checks</li>
+                    <li>Real-time performance analytics</li>
+                    <li>Zero downtime maintenance</li>
+                </ul>
+            </section>
+
+            <section id="features">
+                <h2>Features</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">Autonomous AI</div>
+                        <div class="feature-desc">
+                            Fully automated decision-making with no human intervention required.
+                        </div>
                     </div>
-                    <div class="component">
-                        <div class="component-name">Microcontroller</div>
-                        <div class="component-desc">Raspberry Pi 5 as main brain with Arduino co-processors</div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">24/7 Monitoring</div>
+                        <div class="feature-desc">
+                            Continuous wallet scanning and instant threshold detection.
+                        </div>
                     </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Instant Buybacks</div>
+                        <div class="feature-desc">
+                            Automatic token purchases the moment balance exceeds $1.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Complete Transparency</div>
+                        <div class="feature-desc">
+                            All transactions visible on-chain with public audit trail.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="flywheel">
+                <h2>Flywheel Mechanism</h2>
+                
+                <p>
+                    The RobotWheel flywheel is a self-sustaining economic cycle powered entirely by artificial intelligence. The mechanism creates continuous value flow through automated buyback execution.
+                </p>
+
+                <h3>How the Flywheel Works</h3>
+                <p>
+                    The flywheel operates in a continuous cycle:
+                </p>
+                <ol>
+                    <li><strong>Value Accumulation:</strong> Dev wallet receives funds from various sources (trading fees, initial sales, etc.)</li>
+                    <li><strong>Threshold Detection:</strong> AI continuously monitors wallet balance for $1+ threshold</li>
+                    <li><strong>Automatic Buyback:</strong> Robot immediately purchases tokens when threshold is met</li>
+                    <li><strong>Treasury Growth:</strong> Bought tokens are added to the project treasury</li>
+                    <li><strong>Cycle Continuation:</strong> Process repeats indefinitely as new funds accumulate</li>
+                </ol>
+
+                <h3>Buyback Specifications</h3>
+                <ul>
+                    <li><strong>Trigger Amount:</strong> Exact threshold of $1.00 USD</li>
+                    <li><strong>Execution Speed:</strong> Immediate (typically within seconds of detection)</li>
+                    <li><strong>Frequency:</strong> Unlimited—as often as threshold is met</li>
+                    <li><strong>Buy Amount:</strong> Entire wallet balance above $1 threshold</li>
+                    <li><strong>Slippage Protection:</strong> Smart contract safeguards prevent unfavorable trades</li>
+                    <li><strong>Gas Optimization:</strong> Automated gas price optimization for efficient execution</li>
+                </ul>
+
+                <h3>Economic Impact</h3>
+                <p>
+                    The flywheel creates several positive effects:
+                </p>
+                <ul>
+                    <li>Continuous buying pressure on the token</li>
+                    <li>Predictable and transparent value accrual</li>
+                    <li>Reduced circulating supply over time</li>
+                    <li>Automated price support mechanism</li>
+                    <li>Self-sustaining economic model</li>
+                </ul>
+
+                <div class="note">
+                    <div class="note-title">Flywheel Status</div>
+                    <div class="note-content">
+                        The RobotWheel flywheel is currently active and executing buybacks automatically. Monitor the dev wallet and transaction history to see the mechanism in real-time action.
+                    </div>
+                </div>
+            </section>
+
+            <section id="automation">
+                <h2>AI Automation</h2>
+                
+                <p>
+                    RobotWheel is powered by advanced artificial intelligence that handles every aspect of the flywheel mechanism without human oversight. The AI system is designed for reliability, efficiency, and complete autonomy.
+                </p>
+
+                <h3>AI Capabilities</h3>
+                <ul>
+                    <li><strong>Real-Time Monitoring:</strong> Continuous scanning of blockchain state and wallet balances</li>
+                    <li><strong>Instant Decision-Making:</strong> Sub-second response time from detection to execution</li>
+                    <li><strong>Smart Contract Interaction:</strong> Autonomous transaction signing and broadcasting</li>
+                    <li><strong>Error Handling:</strong> Self-recovery from failed transactions and network issues</li>
+                    <li><strong>Gas Optimization:</strong> Dynamic gas price calculation for cost efficiency</li>
+                    <li><strong>Security Protocols:</strong> Built-in safeguards against manipulation and exploits</li>
+                </ul>
+
+                <h3>Technical Architecture</h3>
+                <p>
+                    The RobotWheel AI system consists of several integrated components:
+                </p>
+                <ul>
+                    <li>Blockchain monitoring layer for real-time data collection</li>
+                    <li>Decision engine for threshold detection and buyback triggering</li>
+                    <li>Transaction execution layer for smart contract interaction</li>
+                    <li>Logging and analytics system for transparency and auditing</li>
+                    <li>Health monitoring for system reliability</li>
+                </ul>
+
+                <h3>Automation Benefits</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">No Emotions</div>
+                        <div class="feature-desc">
+                            AI executes based on pure logic without fear, greed, or hesitation.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Perfect Consistency</div>
+                        <div class="feature-desc">
+                            Same rules applied every time with zero deviation or exceptions.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Zero Downtime</div>
+                        <div class="feature-desc">
+                            Operates continuously without sleep, breaks, or maintenance windows.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Instant Execution</div>
+                        <div class="feature-desc">
+                            Reacts in milliseconds, far faster than any human operator.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <div class="note-title">Trust Through Automation</div>
+                    <div class="note-content">
+                        By removing human control, RobotWheel eliminates the possibility of manual manipulation, emotional decision-making, or operational errors. The AI operates according to fixed rules that cannot be changed or overridden.
+                    </div>
+                </div>
+            </section>
+
+            <section id="community">
+                <h2>Community</h2>
+                
+                <p>
+                    Join the growing community of participants who track RobotWheel's autonomous operations every day. Monitor buybacks, analyze patterns, and be part of this unique experiment in automated economic systems.
+                </p>
+
+                <h3>How to Participate</h3>
+                <ul>
+                    <li><strong>Buy on PumpFun:</strong> Acquire RobotWheel tokens and join the flywheel</li>
+                    <li><strong>Monitor Transactions:</strong> Track buyback executions on the blockchain explorer</li>
+                    <li><strong>Social Media:</strong> Follow @TheRobotWheel on X for analytics and updates</li>
+                    <li><strong>Community Analysis:</strong> Share insights and patterns you discover</li>
+                    <li><strong>Developer Contributions:</strong> Propose improvements to the AI system</li>
+                </ul>
+
+                <h3>Notable Milestones</h3>
+                <p>
+                    Track RobotWheel's achievements:
+                </p>
+                <ul>
+                    <li>First automated buyback execution</li>
+                    <li>Total number of autonomous transactions</li>
+                    <li>Total value cycled through the flywheel</li>
+                    <li>Cumulative tokens added to treasury</li>
+                    <li>System uptime and reliability metrics</li>
+                </ul>
+
+                <h3>Connect With RobotWheel</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">PumpFun</div>
+                        <div class="feature-desc">
+                            Buy and trade tokens<br>
+                            pump.fun/robotwheel
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">X (Twitter)</div>
+                        <div class="feature-desc">
+                            Updates and analytics<br>
+                            @TheRobotWheel
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Blockchain Explorer</div>
+                        <div class="feature-desc">
+                            View all transactions<br>
+                            On-chain verification
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Discord</div>
+                        <div class="feature-desc">
+                            Community discussions<br>
+                            discord.gg/robotwheel
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Monitoring Dashboard</h3>
+                <p>
+                    Track real-time RobotWheel metrics:
+                </p>
+
+                <pre><code>Current Dev Wallet Balance: $X.XX
+Last Buyback: XX minutes ago
+Total Buybacks Today: XX
+Total Tokens Bought: X,XXX,XXX
+Flywheel Status: ACTIVE
+AI System Health: OPERATIONAL</code></pre>
+            </section>
+
+            <div class="note" style="margin-top: 80px;">
+                <div class="note-title">About This Project</div>
+                <div class="note-content">
+                    RobotWheel is an ongoing experiment in fully autonomous economic systems. By using AI to manage the entire flywheel mechanism, we're creating the most transparent and reliable automated token system ever deployed. The robot never stops, never sleeps, and always executes exactly as programmed.
                 </div>
             </div>
-
-            <div class="phase">
-                <h3>Phase 2: Sensors & Perception</h3>
-                <div class="component-list">
-                    <div class="component">
-                        <div class="component-name">Vision System</div>
-                        <div class="component-desc">Dual HD cameras with depth sensing for 3D environment mapping</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Audio System</div>
-                        <div class="component-desc">Microphone array for voice recognition and directional sound detection</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Touch Sensors</div>
-                        <div class="component-desc">Capacitive sensors on hands and body for interaction</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Environmental Sensors</div>
-                        <div class="component-desc">Temperature, humidity, and proximity sensors</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="phase">
-                <h3>Phase 3: Intelligence & Programming</h3>
-                <div class="component-list">
-                    <div class="component">
-                        <div class="component-name">AI Integration</div>
-                        <div class="component-desc">Machine learning models for object recognition and navigation</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Voice Assistant</div>
-                        <div class="component-desc">Natural language processing for conversation capabilities</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Autonomous Navigation</div>
-                        <div class="component-desc">SLAM algorithms for simultaneous localization and mapping</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Cloud Connectivity</div>
-                        <div class="component-desc">Real-time updates and remote monitoring via pump.fun platform</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="phase">
-                <h3>Phase 4: Interaction & Features</h3>
-                <div class="component-list">
-                    <div class="component">
-                        <div class="component-name">Display Screen</div>
-                        <div class="component-desc">7-inch touchscreen on chest for expressions and information display</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">LED System</div>
-                        <div class="component-desc">Programmable RGB LEDs for status indicators and personality</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Speaker System</div>
-                        <div class="component-desc">High-quality audio output for speech and sound effects</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Wireless Systems</div>
-                        <div class="component-desc">WiFi 6, Bluetooth 5.0, and optional 5G connectivity</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="phase">
-                <h3>Phase 5: Testing & Launch</h3>
-                <div class="component-list">
-                    <div class="component">
-                        <div class="component-name">System Integration</div>
-                        <div class="component-desc">Bringing all components together and debugging</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Safety Testing</div>
-                        <div class="component-desc">Ensuring Bobby meets safety standards for human interaction</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Performance Optimization</div>
-                        <div class="component-desc">Fine-tuning movement, response time, and battery life</div>
-                    </div>
-                    <div class="component">
-                        <div class="component-name">Community Demo</div>
-                        <div class="component-desc">Live showcase on pump.fun with interactive Q&A</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Technical Specifications</h2>
-            <div class="specs-grid">
-                <div class="spec-item">
-                    <div class="spec-label">Height</div>
-                    <div class="spec-value">90 cm</div>
-                </div>
-                <div class="spec-item">
-                    <div class="spec-label">Weight</div>
-                    <div class="spec-value">8 kg</div>
-                </div>
-                <div class="spec-item">
-                    <div class="spec-label">Battery Life</div>
-                    <div class="spec-value">6-8 hours</div>
-                </div>
-                <div class="spec-item">
-                    <div class="spec-label">Movement Speed</div>
-                    <div class="spec-value">1.5 m/s</div>
-                </div>
-                <div class="spec-item">
-                    <div class="spec-label">Processing</div>
-                    <div class="spec-value">Raspberry Pi 5</div>
-                </div>
-                <div class="spec-item">
-                    <div class="spec-label">Connectivity</div>
-                    <div class="spec-value">WiFi 6, BT 5.0</div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>Capabilities</h2>
-            <div class="capabilities">
-                <div class="capability">
-                    <div class="capability-name">Autonomous Navigation</div>
-                    <div class="capability-desc">Move around spaces while avoiding obstacles</div>
-                </div>
-                <div class="capability">
-                    <div class="capability-name">Object Recognition</div>
-                    <div class="capability-desc">Identify and interact with common objects</div>
-                </div>
-                <div class="capability">
-                    <div class="capability-name">Voice Interaction</div>
-                    <div class="capability-desc">Respond to commands and have basic conversations</div>
-                </div>
-                <div class="capability">
-                    <div class="capability-name">Task Assistance</div>
-                    <div class="capability-desc">Help with simple tasks like fetching items or monitoring spaces</div>
-                </div>
-                <div class="capability">
-                    <div class="capability-name">Social Interaction</div>
-                    <div class="capability-desc">Display emotions through screen and LEDs, recognize faces</div>
-                </div>
-                <div class="capability">
-                    <div class="capability-name">Live Streaming</div>
-                    <div class="capability-desc">Stream Bobby's perspective directly to pump.fun community</div>
-                </div>
-                <div class="capability">
-                    <div class="capability-name">Remote Control</div>
-                    <div class="capability-desc">Community members can interact with Bobby via pump.fun interface</div>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>Building Bobby — Funded by pump.fun, built by the community</p>
-        </footer>
+        </div>
     </div>
 </body>
 </html>
-
-
-
