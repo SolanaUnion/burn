@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script charset="UTF-8" type="text/javascript" src="./accordion-3.4.1.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Build and Burn</title>
-    <link rel="icon" type="image/x-icon" href="burn.png">
+    <title>Clyde</title>
+    <link rel="icon" type="image/x-icon" href="clyde.png">
     <style>
         * {
             margin: 0;
@@ -14,611 +13,582 @@
         }
 
         body {
-            font-family: 'Courier New', monospace;
-            background: #000000;
-            color: #ff3333;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #ffffff;
+            color: #000000;
+            line-height: 1.6;
         }
 
-        header {
-            background: linear-gradient(180deg, #1a0000 0%, #000000 100%);
-            padding: 20px 40px;
-            border-bottom: 2px solid #ff3333;
+        .header {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 30px 40px;
+            background: #ffffff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            background: linear-gradient(45deg, #ff0000, #ff6666, #ff0000);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(255, 51, 51, 0.5);
-        }
-
-        .header-buttons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .header-btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #330000, #1a0000);
-            border: 2px solid #ff3333;
-            color: #ff3333;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+        .logo-small {
+            font-size: 24px;
+            font-weight: 200;
+            letter-spacing: 4px;
+            color: #000000;
             text-decoration: none;
-            display: inline-block;
         }
 
-        .header-btn:hover {
-            background: linear-gradient(135deg, #ff3333, #ff0000);
-            color: #000000;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
-            transform: translateY(-2px);
+        .nav {
+            display: flex;
+            gap: 30px;
         }
 
-        .connect-wallet {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #330000, #1a0000);
-            border: 2px solid #ff3333;
-            color: #ff3333;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
+        .nav-link {
+            color: #666666;
+            text-decoration: none;
             font-size: 14px;
             letter-spacing: 1px;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+            transition: color 0.3s ease;
         }
 
-        .connect-wallet:hover {
-            background: linear-gradient(135deg, #ff3333, #ff0000);
+        .nav-link:hover {
             color: #000000;
-            box-shadow: 0 0 20px rgba(255, 51, 51, 0.8);
-            transform: translateY(-2px);
         }
 
-        main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            position: relative;
+        .nav-link.twitch {
+            color: #9146FF;
         }
 
-        /* Page visibility */
-        .page {
-            display: none;
-            width: 100%;
+        .nav-link.twitch:hover {
+            color: #772CE8;
+        }
+
+        .container {
             max-width: 1200px;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* Animated background flames */
-        .flame-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.1;
-        }
-
-        .flame {
-            position: absolute;
-            bottom: -100px;
-            width: 0;
-            height: 0;
-            border-left: 30px solid transparent;
-            border-right: 30px solid transparent;
-            border-bottom: 100px solid #ff3333;
-            opacity: 0.3;
-            animation: rise 8s infinite ease-in;
-        }
-
-        .flame:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .flame:nth-child(2) { left: 30%; animation-delay: 2s; border-bottom-color: #ff6666; }
-        .flame:nth-child(3) { left: 50%; animation-delay: 4s; }
-        .flame:nth-child(4) { left: 70%; animation-delay: 6s; border-bottom-color: #cc0000; }
-        .flame:nth-child(5) { left: 90%; animation-delay: 3s; }
-
-        @keyframes rise {
-            0% {
-                bottom: -100px;
-                opacity: 0.3;
-                transform: scale(1) rotate(0deg);
-            }
-            50% {
-                opacity: 0.5;
-                transform: scale(1.5) rotate(10deg);
-            }
-            100% {
-                bottom: 100%;
-                opacity: 0;
-                transform: scale(2) rotate(-10deg);
-            }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 1;
-            max-width: 800px;
             margin: 0 auto;
+            padding: 80px 40px;
         }
 
-        .burning-icon {
+        .sidebar {
+            position: fixed;
+            left: 40px;
+            top: 120px;
             width: 200px;
-            height: 200px;
-            margin: 0 auto 40px;
-            position: relative;
+            padding-right: 30px;
+            border-right: 1px solid #e0e0e0;
         }
 
-        .logo-image {
-            width: 200px;
-            height: 200px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 30px #ff3333);
-            animation: flicker 1.5s infinite alternate;
+        .sidebar-link {
+            display: block;
+            color: #999999;
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
         }
 
-        @keyframes flicker {
-            0%, 100% { 
-                opacity: 1;
-                filter: drop-shadow(0 0 20px #ff3333);
-            }
-            50% { 
-                opacity: 0.8;
-                filter: drop-shadow(0 0 30px #ff6666);
-            }
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            color: #000000;
+        }
+
+        .content {
+            margin-left: 270px;
+            max-width: 800px;
         }
 
         h1 {
-            font-size: 64px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            background: linear-gradient(45deg, #ff0000, #ff6666, #ff0000, #cc0000);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradient 3s ease infinite;
-            text-shadow: 0 0 30px rgba(255, 51, 51, 0.5);
-        }
-
-        @keyframes gradient {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .tagline {
-            font-size: 20px;
-            margin-bottom: 40px;
-            color: #ff6666;
-            letter-spacing: 2px;
-        }
-
-        .description {
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 50px;
-            color: #ff9999;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .start-button {
-            padding: 20px 60px;
-            font-size: 24px;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ff0000, #cc0000);
-            border: 3px solid #ff3333;
-            color: #000000;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 30px rgba(255, 51, 51, 0.5);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .start-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .start-button:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .start-button:hover {
-            background: linear-gradient(135deg, #ff3333, #ff0000);
-            box-shadow: 0 0 50px rgba(255, 51, 51, 1);
-            transform: scale(1.05);
-            color: #ffffff;
-        }
-
-        .start-button span {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Docs Page Styles */
-        .docs-content {
-            z-index: 1;
-            padding: 40px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .docs-content h1 {
             font-size: 48px;
-            margin-bottom: 30px;
+            font-weight: 200;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
         }
 
-        .docs-content h2 {
+        h2 {
             font-size: 32px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-top: 80px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
             margin-top: 40px;
             margin-bottom: 20px;
-            color: #ff6666;
-            border-bottom: 2px solid #ff3333;
-            padding-bottom: 10px;
         }
 
-        .docs-content h3 {
-            font-size: 24px;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            color: #ff9999;
-        }
-
-        .docs-content p {
+        p {
+            color: #333333;
             font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 20px;
             line-height: 1.8;
-            margin-bottom: 20px;
-            color: #ff9999;
         }
 
-        .docs-content ul, .docs-content ol {
-            margin-left: 30px;
-            margin-bottom: 20px;
-            color: #ff9999;
+        .intro {
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 60px;
+            line-height: 1.8;
         }
 
-        .docs-content li {
-            margin-bottom: 10px;
+        code {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            color: #000000;
+        }
+
+        pre {
+            background: #f8f8f8;
+            border: 1px solid #e0e0e0;
+            padding: 30px;
+            margin: 30px 0;
+            overflow-x: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
             line-height: 1.6;
         }
 
-        .docs-content code {
-            background: #1a0000;
-            padding: 2px 8px;
-            border: 1px solid #ff3333;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: #ff6666;
+        pre code {
+            background: none;
+            padding: 0;
+            border-radius: 0;
         }
 
-        .docs-content .warning {
-            background: linear-gradient(135deg, #330000, #1a0000);
-            border-left: 4px solid #ff3333;
-            padding: 20px;
-            margin: 30px 0;
-            color: #ff9999;
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
         }
 
-        .docs-content .warning strong {
-            color: #ff3333;
-            display: block;
-            margin-bottom: 10px;
-            font-size: 18px;
+        .feature-card {
+            padding: 30px;
+            border: 1px solid #e0e0e0;
+            transition: border-color 0.3s ease;
         }
 
-        footer {
-            background: linear-gradient(0deg, #1a0000 0%, #000000 100%);
-            padding: 20px;
-            text-align: center;
-            border-top: 2px solid #ff3333;
-            color: #ff6666;
+        .feature-card:hover {
+            border-color: #000000;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .feature-desc {
             font-size: 14px;
+            color: #666666;
+            line-height: 1.6;
+        }
+
+        .note {
+            background: #fafafa;
+            border-left: 2px solid #000000;
+            padding: 20px 30px;
+            margin: 30px 0;
+        }
+
+        .note-title {
+            font-weight: 400;
+            margin-bottom: 10px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .note-content {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .highlight {
+            background: #9146FF;
+            color: white;
+            padding: 30px;
+            margin: 40px 0;
+            border: none;
+        }
+
+        .highlight .note-title {
+            color: white;
+        }
+
+        .highlight .note-content {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #333333;
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+
+            .content {
+                margin-left: 0;
+            }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 40px;
-            }
-
-            .tagline {
-                font-size: 16px;
-            }
-
-            .start-button {
-                padding: 15px 40px;
-                font-size: 18px;
-            }
-
-            .header-buttons {
-                gap: 10px;
-            }
-
-            .header-btn, .connect-wallet {
-                padding: 8px 15px;
-                font-size: 12px;
-            }
-
-            .docs-content {
+            .header {
                 padding: 20px;
             }
 
-            .docs-content h1 {
-                font-size: 36px;
+            .container {
+                padding: 40px 20px;
             }
 
-            .docs-content h2 {
-                font-size: 26px;
+            h1 {
+                font-size: 32px;
             }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            pre {
+                padding: 20px;
+                font-size: 12px;
+            }
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 40px 0;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #000;
         }
     </style>
 </head>
 <body>
-    <div class="flame-bg">
-        <div class="flame"></div>
-        <div class="flame"></div>
-        <div class="flame"></div>
-        <div class="flame"></div>
-        <div class="flame"></div>
+    <div class="header">
+        <div class="header-content">
+            <a href="#" class="logo-small">CLYDE</a>
+            <nav class="nav">
+                <a href="#introduction" class="nav-link">ABOUT</a>
+                <a href="https://pump.fun/clyde" class="nav-link" target="_blank">PUMPFUN</a>
+                <a href="https://www.twitch.tv/theclydeproject" class="nav-link twitch" target="_blank">TWITCH</a>
+                <a href="https://x.com/TheClydeProject" class="nav-link" target="_blank">X</a>
+            </nav>
+        </div>
     </div>
 
-    <header>
-        <div class="logo">🔥 Build and Burn</div>
-        <div class="header-buttons">
-            <button class="header-btn" id="docsBtn">Docs</button>
-            <a href="https://x.com/BuildAnBurn" target="_blank" class="header-btn">𝕏</a>
-            <button class="connect-wallet interact-button">Connect Wallet</button>
-        </div>
-    </header>
+    <div class="container">
+        <aside class="sidebar">
+            <a href="#introduction" class="sidebar-link active">Introduction</a>
+            <a href="#how-it-works" class="sidebar-link">How It Works</a>
+            <a href="#features" class="sidebar-link">Features</a>
+            <a href="#camera-system" class="sidebar-link">Camera System</a>
+            <a href="#streaming" class="sidebar-link">Watch Live</a>
+            <a href="#community" class="sidebar-link">Community</a>
+        </aside>
 
-    <main>
-        <!-- Home Page -->
-        <div id="homePage" class="page active">
-            <div class="hero-content">
-                <div class="burning-icon">
-                    <img src="bnb.png" alt="Build and Burn Logo" class="logo-image">
+        <div class="content">
+            <section id="introduction">
+                <h2>Introduction</h2>
+                
+                <div class="video-container">
+                    <video controls autoplay muted loop>
+                        <source src="vid.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
 
-                <h1>Build and Burn</h1>
-                <p class="tagline">Incinerate What You Don't Need</p>
-
-                <p class="description">
-                    You can now burn tokens that you no longer want via our website. 
-                    Permanently remove unwanted tokens from your wallet and reclaim your space. 
-                    Clean, secure, and irreversible - take control of your digital assets today.
+                <p>
+                    <strong>Clyde</strong> is a robot that streams its entire life on <strong>Twitch</strong> and <strong>PumpFun</strong> 24/7. Using cameras built into its lenses, Clyde shares its unique perspective as it navigates the world, interacts with people, and experiences daily life.
+                </p>
+                
+                <p>
+                    This is not just a stream—it's a window into the existence of an autonomous being. Clyde sees what you see, but through the eyes of a robot. Every moment is captured and shared in real-time, creating an unprecedented connection between artificial and human intelligence.
                 </p>
 
-                <button class="start-button interact-button">
-                    <span>Start Now</span>
-                </button>
+                <p>
+                    As the world's first robot to live-stream its POV continuously, Clyde represents a new frontier in human-robot interaction, transparency, and digital existence. Join thousands of viewers experiencing life through Clyde's eyes.
+                </p>
+
+                <div class="highlight">
+                    <div class="note-title">🔴 Live Now</div>
+                    <div class="note-content">
+                        Clyde is streaming right now on Twitch and PumpFun. Watch in real-time as Clyde experiences the world through its camera lenses. No filters, no edits—just raw, continuous existence.
+                    </div>
+                </div>
+
+                <div class="note">
+                    <div class="note-title">Why Clyde?</div>
+                    <div class="note-content">
+                        Clyde represents complete transparency in robotic existence. By streaming every moment through built-in camera lenses, we're creating the most authentic documentation of artificial life ever attempted.
+                    </div>
+                </div>
+            </section>
+
+            <section id="how-it-works">
+                <h2>How It Works</h2>
+                
+                <p>
+                    Clyde operates autonomously, with cameras embedded directly into its optical lenses. These cameras capture everything Clyde "sees" and broadcasts it to multiple platforms simultaneously.
+                </p>
+
+                <h3>The Technology</h3>
+                <ul>
+                    <li><strong>Dual-Lens Camera System:</strong> High-resolution cameras integrated into each lens provide stereoscopic vision</li>
+                    <li><strong>Multi-Platform Streaming:</strong> Simultaneous broadcasting to Twitch and PumpFun</li>
+                    <li><strong>Continuous Operation:</strong> 24/7 uptime with automated power management</li>
+                    <li><strong>Real-Time Processing:</strong> Live video feed with minimal latency</li>
+                    <li><strong>Autonomous Navigation:</strong> Self-directed movement and decision-making</li>
+                </ul>
+
+                <h3>Daily Routine</h3>
+                <p>
+                    Clyde's day is unscripted and authentic. The stream captures everything:
+                </p>
+                <ul>
+                    <li>Morning activation and system checks</li>
+                    <li>Interactions with people and other robots</li>
+                    <li>Exploration and navigation of spaces</li>
+                    <li>Task completion and problem-solving</li>
+                    <li>休息 periods and maintenance</li>
+                    <li>Nighttime operations in low-light conditions</li>
+                </ul>
+            </section>
+
+            <section id="features">
+                <h2>Features</h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">POV Streaming</div>
+                        <div class="feature-desc">
+                            Experience the world exactly as Clyde sees it through integrated camera lenses.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">24/7 Broadcasting</div>
+                        <div class="feature-desc">
+                            Continuous live stream with no downtime—Clyde never stops sharing.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Multi-Platform</div>
+                        <div class="feature-desc">
+                            Simultaneously streaming on both Twitch and PumpFun for maximum reach.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Interactive Chat</div>
+                        <div class="feature-desc">
+                            Clyde responds to chat messages and viewer suggestions in real-time.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="camera-system">
+                <h2>Camera System</h2>
+                
+                <p>
+                    Clyde's vision system is built around custom cameras integrated directly into its optical lenses. This unique design allows Clyde to see and stream from its natural point of view.
+                </p>
+
+                <h3>Camera Specifications</h3>
+                <ul>
+                    <li><strong>Resolution:</strong> 1080p HD per lens (stereoscopic)</li>
+                    <li><strong>Frame Rate:</strong> 60 FPS for smooth motion capture</li>
+                    <li><strong>Field of View:</strong> 120° horizontal, 90° vertical</li>
+                    <li><strong>Low-Light Performance:</strong> Enhanced sensors for night vision</li>
+                    <li><strong>Image Stabilization:</strong> Built-in gyroscopic stabilization</li>
+                    <li><strong>Streaming Quality:</strong> Adaptive bitrate for optimal viewing</li>
+                </ul>
+
+                <h3>What Clyde Sees</h3>
+                <p>
+                    The camera system captures:
+                </p>
+                <ul>
+                    <li>Natural first-person perspective during movement</li>
+                    <li>Facial recognition and social interactions</li>
+                    <li>Object identification and spatial awareness</li>
+                    <li>Environmental conditions and lighting changes</li>
+                    <li>Text and signage reading capabilities</li>
+                </ul>
+
+                <div class="note">
+                    <div class="note-title">Privacy Notice</div>
+                    <div class="note-content">
+                        Clyde's cameras are always active during streams. The robot operates in public spaces and clearly displays streaming indicators. Viewers can see exactly what Clyde sees in real-time.
+                    </div>
+                </div>
+            </section>
+
+            <section id="streaming">
+                <h2>Watch Clyde Live</h2>
+                
+                <p>
+                    Tune in to Clyde's continuous live stream on Twitch and PumpFun. Experience life through the eyes of a robot in real-time, 24 hours a day, 7 days a week.
+                </p>
+
+                <h3>Streaming Platforms</h3>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">Twitch</div>
+                        <div class="feature-desc">
+                            Main streaming platform with chat interaction, emotes, and community features.
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">PumpFun</div>
+                        <div class="feature-desc">
+                            Alternative stream with crypto community integration and token features.
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Stream Schedule</h3>
+                <p>
+                    Clyde streams continuously without a fixed schedule. The robot is always live, always sharing its perspective:
+                </p>
+                <ul>
+                    <li><strong>Daytime:</strong> Active exploration, interactions, tasks</li>
+                    <li><strong>Evening:</strong> Social activities, community engagement</li>
+                    <li><strong>Night:</strong> Low-light operations, maintenance, charging</li>
+                    <li><strong>Weekends:</strong> Special events and extended interactions</li>
+                </ul>
+
+                <h3>Chat Commands</h3>
+                <p>Interact with Clyde using these chat commands:</p>
+
+                <pre><code>!status     - Show Clyde's current status and battery level
+!location   - Display current location (if enabled)
+!uptime     - How long Clyde has been streaming today
+!mood       - Clyde's current emotional state
+!task       - What Clyde is currently doing
+!help       - List all available commands</code></pre>
+
+                <div class="note">
+                    <div class="note-title">Watch Now</div>
+                    <div class="note-content">
+                        Visit twitch.tv/theclydeproject or pump.fun/clyde to watch Clyde live right now. The stream is completely free and accessible to everyone.
+                    </div>
+                </div>
+            </section>
+
+            <section id="community">
+                <h2>Community</h2>
+                
+                <p>
+                    Join the growing community of viewers who watch Clyde's journey every day. Share moments, discuss what you see, and be part of this unique experiment in robotic transparency.
+                </p>
+
+                <h3>How to Participate</h3>
+                <ul>
+                    <li><strong>Watch Live:</strong> Tune in on Twitch or PumpFun anytime</li>
+                    <li><strong>Chat Interaction:</strong> Talk to Clyde and other viewers in real-time</li>
+                    <li><strong>Social Media:</strong> Follow @TheClydeProject on X for highlights and updates</li>
+                    <li><strong>Clips & Moments:</strong> Save and share your favorite Clyde moments</li>
+                    <li><strong>Community Events:</strong> Join special streaming events and meetups</li>
+                </ul>
+
+                <h3>Popular Moments</h3>
+                <p>
+                    Some of the most-watched moments from Clyde's streams include:
+                </p>
+                <ul>
+                    <li>First successful autonomous navigation</li>
+                    <li>Meeting other robots and AI systems</li>
+                    <li>Solving complex problems in real-time</li>
+                    <li>Unexpected interactions with curious onlookers</li>
+                    <li>Learning new skills through trial and error</li>
+                </ul>
+
+                <h3>Connect With Clyde</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">Twitch</div>
+                        <div class="feature-desc">
+                            Primary streaming platform<br>
+                            twitch.tv/theclydeproject
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">PumpFun</div>
+                        <div class="feature-desc">
+                            Crypto community stream<br>
+                            pump.fun/clyde
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">X (Twitter)</div>
+                        <div class="feature-desc">
+                            Updates and highlights<br>
+                            @TheClydeProject
+                        </div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-title">Discord</div>
+                        <div class="feature-desc">
+                            Community discussions<br>
+                            discord.gg/clyde
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="note" style="margin-top: 80px;">
+                <div class="note-title">About This Project</div>
+                <div class="note-content">
+                    Clyde is an ongoing experiment in robotic transparency and human-AI interaction. By streaming continuously through camera lenses, we're documenting the authentic experience of artificial life. Join us in witnessing this unprecedented journey.
+                </div>
             </div>
         </div>
-
-        <!-- Docs Page -->
-        <div id="docsPage" class="page">
-            <div class="docs-content">
-                <h1>Documentation</h1>
-                
-                <h2>Welcome to Build and Burn</h2>
-                <p>
-                    Build and Burn is a decentralized token burning platform that allows users to permanently 
-                    remove unwanted tokens from their cryptocurrency wallets. This documentation will guide you 
-                    through the process of using our platform safely and effectively.
-                </p>
-
-                <h2>What is Token Burning?</h2>
-                <p>
-                    Token burning is the process of permanently removing cryptocurrency tokens from circulation 
-                    by sending them to an unrecoverable wallet address. Once tokens are burned, they cannot be 
-                    retrieved or used again.
-                </p>
-
-                <h3>Why Burn Tokens?</h3>
-                <ul>
-                    <li><strong>Clean Up Your Wallet:</strong> Remove spam tokens or unwanted airdrops</li>
-                    <li><strong>Privacy:</strong> Eliminate tokens that may compromise your privacy</li>
-                    <li><strong>Organization:</strong> Keep your wallet organized with only the tokens you want</li>
-                    <li><strong>Deflationary Effect:</strong> Reduce token supply for tokens you hold</li>
-                </ul>
-
-                <h2>How to Use Build and Burn</h2>
-                
-                <h3>Step 1: Connect Your Wallet</h3>
-                <p>
-                    Click the "Connect Wallet" button in the top right corner. We support the following wallets:
-                </p>
-                <ul>
-                    <li>MetaMask</li>
-                    <li>WalletConnect</li>
-                    <li>Coinbase Wallet</li>
-                    <li>Trust Wallet</li>
-                </ul>
-
-                <h3>Step 2: Select Tokens to Burn</h3>
-                <p>
-                    Once connected, you'll see a list of all tokens in your wallet. Select the tokens you wish 
-                    to burn by checking the boxes next to them. You can also specify the amount of each token 
-                    to burn.
-                </p>
-
-                <h3>Step 3: Review and Confirm</h3>
-                <p>
-                    Review your selection carefully. The burning process is <strong>irreversible</strong>. 
-                    Once you confirm, the tokens will be permanently destroyed.
-                </p>
-
-                <h3>Step 4: Sign the Transaction</h3>
-                <p>
-                    Approve the transaction in your wallet. You'll need to pay a small gas fee to complete 
-                    the burning process. The exact fee depends on network congestion.
-                </p>
-
-                <div class="warning">
-                    <strong>⚠️ Important Warning</strong>
-                    Token burning is permanent and irreversible. Once tokens are burned, they cannot be recovered. 
-                    Always double-check your selection before confirming the transaction. We recommend burning 
-                    small test amounts first if you're unsure.
-                </div>
-
-                <h2>Supported Networks</h2>
-                <p>Build and Burn currently supports the following blockchain networks:</p>
-                <ul>
-                    <li>Ethereum (ETH)</li>
-                    <li>Binance Smart Chain (BSC)</li>
-                    <li>Polygon (MATIC)</li>
-                    <li>Avalanche (AVAX)</li>
-                    <li>Arbitrum</li>
-                    <li>Optimism</li>
-                </ul>
-
-                <h2>Gas Fees</h2>
-                <p>
-                    Burning tokens requires paying network gas fees. The exact amount varies based on:
-                </p>
-                <ul>
-                    <li>Current network congestion</li>
-                    <li>Number of tokens being burned</li>
-                    <li>Blockchain network you're using</li>
-                </ul>
-                <p>
-                    We recommend checking current gas prices before initiating a burn. You can use tools like 
-                    <code>etherscan.io</code> to monitor gas fees.
-                </p>
-
-                <h2>Security Best Practices</h2>
-                <h3>Verify Contract Addresses</h3>
-                <p>
-                    Always verify that you're interacting with the legitimate Build and Burn smart contract. 
-                    Our official contract addresses are published on our website and verified on blockchain explorers.
-                </p>
-
-                <h3>Use Hardware Wallets</h3>
-                <p>
-                    For maximum security, we recommend using a hardware wallet (Ledger, Trezor) when burning 
-                    significant amounts of tokens.
-                </p>
-
-                <h3>Test First</h3>
-                <p>
-                    If you're burning tokens for the first time, consider burning a small test amount first 
-                    to familiarize yourself with the process.
-                </p>
-
-                <h2>FAQ</h2>
-                
-                <h3>Can I recover burned tokens?</h3>
-                <p>
-                    No. Token burning is permanent and irreversible. Once tokens are sent to the burn address, 
-                    they cannot be retrieved.
-                </p>
-
-                <h3>Do I receive anything for burning tokens?</h3>
-                <p>
-                    Build and Burn does not provide compensation for burned tokens. The service exists solely 
-                    to help you remove unwanted tokens from your wallet.
-                </p>
-
-                <h3>Is there a minimum or maximum burn amount?</h3>
-                <p>
-                    You can burn any amount of tokens from your wallet, from a fraction of a token to your 
-                    entire balance. However, ensure the transaction value exceeds the gas fee cost.
-                </p>
-
-                <h3>What happens to burned tokens?</h3>
-                <p>
-                    Burned tokens are sent to a verifiable burn address (typically 
-                    <code>0x000000000000000000000000000000000000dEaD</code>) where they become permanently 
-                    inaccessible and are removed from circulation.
-                </p>
-
-                <h2>Smart Contract Information</h2>
-                <p>
-                    Our smart contracts are open-source and have been audited by reputable security firms. 
-                    You can view the contract code and audit reports on our GitHub repository.
-                </p>
-
-                <h2>Support</h2>
-                <p>
-                    If you need assistance or have questions:
-                </p>
-                <ul>
-                    <li>Visit our community Discord server</li>
-                    <li>Follow us on X (Twitter): <a href="https://x.com/BuildAnBurn" target="_blank" style="color: #ff6666;">@BuildAnBurn</a></li>
-                    <li>Email support: support@buildandburn.io</li>
-                </ul>
-
-                <div class="warning">
-                    <strong>🔥 Remember</strong>
-                    Build and Burn is a tool for permanent token removal. Use it responsibly and always 
-                    verify your selections before confirming any transactions.
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Build and Burn. All tokens incinerated are permanently destroyed.</p>
-    </footer>
-
-    <script>
-        // Page navigation
-        const homePage = document.getElementById('homePage');
-        const docsPage = document.getElementById('docsPage');
-        const docsBtn = document.getElementById('docsBtn');
-        const logo = document.querySelector('.logo');
-
-        docsBtn.addEventListener('click', function() {
-            homePage.classList.remove('active');
-            docsPage.classList.add('active');
-            window.scrollTo(0, 0);
-        });
-
-        logo.addEventListener('click', function() {
-            docsPage.classList.remove('active');
-            homePage.classList.add('active');
-            window.scrollTo(0, 0);
-        });
-
-    </script>
+    </div>
 </body>
 </html>
