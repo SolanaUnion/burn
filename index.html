@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RobotWheel</title>
-    <link rel="icon" type="image/x-icon" href="email.png">
+    <title>Wall Street Coin - Official Application</title>
     <style>
         * {
             margin: 0;
@@ -13,631 +12,329 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background: #ffffff;
-            color: #000000;
-            line-height: 1.6;
-        }
-
-        .header {
-            border-bottom: 1px solid #e0e0e0;
-            padding: 30px 40px;
-            background: #ffffff;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-small {
-            font-size: 24px;
-            font-weight: 200;
-            letter-spacing: 4px;
-            color: #000000;
-            text-decoration: none;
-        }
-
-        .nav {
-            display: flex;
-            gap: 30px;
-        }
-
-        .nav-link {
-            color: #666666;
-            text-decoration: none;
-            font-size: 14px;
-            letter-spacing: 1px;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link:hover {
-            color: #000000;
-        }
-
-        .nav-link.pumpfun {
-            color: #9146FF;
-        }
-
-        .nav-link.pumpfun:hover {
-            color: #772CE8;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: white;
+            color: black;
+            min-height: 100vh;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 80px 40px;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: 40px;
-            top: 120px;
-            width: 200px;
-            padding-right: 30px;
-            border-right: 1px solid #e0e0e0;
-        }
-
-        .sidebar-link {
-            display: block;
-            color: #999999;
-            text-decoration: none;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            margin-bottom: 15px;
-            transition: color 0.3s ease;
-        }
-
-        .sidebar-link:hover,
-        .sidebar-link.active {
-            color: #000000;
-        }
-
-        .content {
-            margin-left: 270px;
             max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            border-bottom: 1px solid black;
+            padding-bottom: 30px;
         }
 
         h1 {
-            font-size: 48px;
-            font-weight: 200;
+            font-size: 2.5em;
+            color: black;
+            margin-bottom: 10px;
+            font-weight: 300;
             letter-spacing: 2px;
-            margin-bottom: 20px;
         }
 
-        h2 {
-            font-size: 32px;
+        .subtitle {
+            font-size: 1em;
+            color: black;
             font-weight: 300;
             letter-spacing: 1px;
-            margin-top: 80px;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        h3 {
-            font-size: 20px;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            margin-top: 40px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            color: #333333;
-            font-size: 16px;
-            font-weight: 300;
-            margin-bottom: 20px;
-            line-height: 1.8;
         }
 
         .intro {
-            font-size: 18px;
-            color: #666666;
-            margin-bottom: 60px;
-            line-height: 1.8;
-        }
-
-        code {
-            background: #f5f5f5;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 14px;
-            color: #000000;
-        }
-
-        pre {
-            background: #f8f8f8;
-            border: 1px solid #e0e0e0;
-            padding: 30px;
-            margin: 30px 0;
-            overflow-x: auto;
-            font-family: 'Monaco', 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        pre code {
-            background: none;
             padding: 0;
-            border-radius: 0;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-
-        .feature-card {
-            padding: 30px;
-            border: 1px solid #e0e0e0;
-            transition: border-color 0.3s ease;
-        }
-
-        .feature-card:hover {
-            border-color: #000000;
-        }
-
-        .feature-title {
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-        }
-
-        .feature-desc {
-            font-size: 14px;
-            color: #666666;
-            line-height: 1.6;
-        }
-
-        .note {
-            background: #fafafa;
-            border-left: 2px solid #000000;
-            padding: 20px 30px;
-            margin: 30px 0;
-        }
-
-        .note-title {
-            font-weight: 400;
-            margin-bottom: 10px;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .note-content {
-            font-size: 14px;
-            color: #666666;
-        }
-
-        .highlight {
-            background: #9146FF;
-            color: white;
-            padding: 30px;
-            margin: 40px 0;
-            border: none;
-        }
-
-        .highlight .note-title {
-            color: white;
-        }
-
-        .highlight .note-content {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        ul, ol {
-            margin: 20px 0;
-            padding-left: 30px;
-        }
-
-        li {
-            margin-bottom: 10px;
-            color: #333333;
-            font-size: 16px;
-            font-weight: 300;
-        }
-
-        @media (max-width: 1024px) {
-            .sidebar {
-                display: none;
-            }
-
-            .content {
-                margin-left: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 20px;
-            }
-
-            .container {
-                padding: 40px 20px;
-            }
-
-            h1 {
-                font-size: 32px;
-            }
-
-            h2 {
-                font-size: 24px;
-            }
-
-            .nav {
-                display: none;
-            }
-
-            pre {
-                padding: 20px;
-                font-size: 12px;
-            }
-        }
-
-        .flowchart {
-            background: #f8f8f8;
-            border: 1px solid #e0e0e0;
-            padding: 30px;
-            margin: 30px 0;
+            margin-bottom: 80px;
             text-align: center;
         }
 
-        .flowchart-step {
-            background: white;
-            border: 2px solid #000;
-            padding: 15px;
-            margin: 15px auto;
-            max-width: 400px;
-            font-weight: 400;
+        .intro p {
+            font-size: 1em;
+            line-height: 1.8;
+            color: black;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .flowchart-arrow {
-            font-size: 24px;
-            color: #9146FF;
-            margin: 10px 0;
+        .proof-chain {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .proof-item {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 700px;
+            height: 500px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em;
+            color: black;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .image-text {
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid black;
+            margin: 30px 0;
+        }
+
+        .step-label {
+            background: black;
+            color: white;
+            padding: 6px 18px;
+            font-size: 0.75em;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 1px solid black;
+            color: black;
+            font-size: 0.85em;
+            font-weight: 300;
+        }
+
+        footer p {
+            margin-bottom: 5px;
+        }
+
+        .x-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: black;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .x-button:hover {
+            transform: scale(1.1);
+        }
+
+        .x-button svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .image-container img {
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-container img:hover {
+            opacity: 0.8;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            cursor: zoom-out;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 2001;
+            transition: transform 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            transform: scale(1.2);
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="header-content">
-            <a href="#" class="logo-small">ROBOTWHEEL</a>
-            <nav class="nav">
-                <a href="#introduction" class="nav-link">ABOUT</a>
-                <a href="https://pump.fun/robotwheel" class="nav-link pumpfun" target="_blank">PUMPFUN</a>
-                <a href="https://x.com/TheRobotWheel" class="nav-link" target="_blank">X</a>
-            </nav>
-        </div>
-    </div>
-
+    <a href="https://x.com/wstcoinsol" target="_blank" class="x-button" aria-label="Follow us on X">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+    </a>
     <div class="container">
-        <aside class="sidebar">
-            <a href="#introduction" class="sidebar-link active">Introduction</a>
-            <a href="#how-it-works" class="sidebar-link">How It Works</a>
-            <a href="#features" class="sidebar-link">Features</a>
-            <a href="#flywheel" class="sidebar-link">Flywheel Mechanism</a>
-            <a href="#automation" class="sidebar-link">AI Automation</a>
-            <a href="#community" class="sidebar-link">Community</a>
-        </aside>
+        <header>
+            <h1>WALL STREET COIN</h1>
+            <p class="subtitle">Digital Innovation Meets Financial Excellence</p>
+        </header>
 
-        <div class="content">
-            <section id="introduction">
-                <h2>Introduction</h2>
+        <div class="intro">
+            <p>
+                As Solana has started being seen by Wall Street we decided to try and create a memecoin backed by Wall Street investors.
+                <br><br>
+                So we contacted every major firm until we could and below is emails showing we were successful.
+                <br><br>
+                <em>(Click any image below to view it in fullscreen)</em>
+            </p>
+        </div>
 
-                <p>
-                    <strong>RobotWheel</strong> is a fully autonomous AI-driven cryptocurrency flywheel that operates 24/7 without human intervention. The robot automatically monitors the dev wallet and executes buybacks the moment the balance exceeds $1, creating a perpetual value generation cycle.
-                </p>
-                
-                <p>
-                    This is not just a token—it's an autonomous economic system. RobotWheel represents a new paradigm in decentralized finance where artificial intelligence manages the entire lifecycle of value creation, distribution, and reinvestment without any manual oversight.
-                </p>
-
-                <p>
-                    As the world's first fully automated AI flywheel, RobotWheel demonstrates how autonomous systems can create sustainable, transparent, and predictable economic mechanisms. The robot never sleeps, never makes emotional decisions, and operates with complete transparency.
-                </p>
-
-                <div class="highlight">
-                    <div class="note-title">🤖 Always Active</div>
-                    <div class="note-content">
-                        RobotWheel is monitoring the dev wallet right now. The AI continuously scans the balance and executes buybacks automatically whenever it exceeds $1. No human intervention required—just pure automated efficiency.
-                    </div>
+        <div class="proof-chain">
+            <!-- Proof Item 1 -->
+            <div class="proof-item">
+                <span class="step-label">STEP 1: APPLICATION SUBMISSION</span>
+                <div class="image-container">
+                    <img src="step1-application.jpg" alt="Official Application Document - Wall Street Coin Digital Company Registration">
                 </div>
+            </div>
+            <div class="arrow"></div>
 
-                <div class="note">
-                    <div class="note-title">Why RobotWheel?</div>
-                    <div class="note-content">
-                        RobotWheel represents complete automation in cryptocurrency mechanics. By using AI to monitor and execute buybacks continuously, we're creating the most transparent and reliable token flywheel ever implemented.
-                    </div>
+            <!-- Proof Item 2 -->
+            <div class="proof-item">
+                <span class="step-label">STEP 2: IDENTITY VERIFICATION</span>
+                <div class="image-container">
+                    <img src="step2-application.jpg" alt="Corporate Identity Verification - Digital Certificates & Authentication">
                 </div>
-            </section>
+            </div>
+            <div class="arrow"></div>
 
-            <section id="how-it-works">
-                <h2>How It Works</h2>
-                
-                <p>
-                    RobotWheel operates on a simple yet powerful principle: continuous monitoring and automatic buyback execution. The AI system watches the dev wallet balance 24/7 and triggers buybacks the instant the threshold is met.
-                </p>
-
-                <h3>The Core Mechanism</h3>
-                <ul>
-                    <li><strong>Continuous Monitoring:</strong> AI scans the dev wallet balance every second</li>
-                    <li><strong>Automatic Trigger:</strong> Buyback executes immediately when balance exceeds $1</li>
-                    <li><strong>Zero Human Intervention:</strong> Completely autonomous decision-making</li>
-                    <li><strong>Transparent Operations:</strong> All transactions are publicly visible on-chain</li>
-                    <li><strong>Perpetual Cycle:</strong> The flywheel continues indefinitely without maintenance</li>
-                </ul>
-
-                <div class="flowchart">
-                    <div class="flowchart-step">Dev Wallet Receives Funds</div>
-                    <div class="flowchart-arrow">↓</div>
-                    <div class="flowchart-step">AI Detects Balance > $1</div>
-                    <div class="flowchart-arrow">↓</div>
-                    <div class="flowchart-step">Automatic Buyback Executed</div>
-                    <div class="flowchart-arrow">↓</div>
-                    <div class="flowchart-step">Tokens Added to Treasury</div>
-                    <div class="flowchart-arrow">↓</div>
-                    <div class="flowchart-step">Cycle Repeats Forever</div>
+            <!-- Proof Item 3 -->
+            <div class="proof-item">
+                <span class="step-label">STEP 3: FINANCIAL COMPLIANCE REVIEW</span>
+                <div class="image-container">
+                    <img src="step3-application.jpg" alt="Compliance Documentation - SEC & Financial Regulatory Standards Met">
                 </div>
+            </div>
+            <div class="arrow"></div>
 
-                <h3>Daily Operations</h3>
-                <p>
-                    RobotWheel's operation is completely automated:
-                </p>
-                <ul>
-                    <li>24/7 wallet balance monitoring</li>
-                    <li>Instant buyback execution when threshold met</li>
-                    <li>Automatic transaction logging and reporting</li>
-                    <li>Continuous system health checks</li>
-                    <li>Real-time performance analytics</li>
-                    <li>Zero downtime maintenance</li>
-                </ul>
-            </section>
-
-            <section id="features">
-                <h2>Features</h2>
-
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-title">Autonomous AI</div>
-                        <div class="feature-desc">
-                            Fully automated decision-making with no human intervention required.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">24/7 Monitoring</div>
-                        <div class="feature-desc">
-                            Continuous wallet scanning and instant threshold detection.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Instant Buybacks</div>
-                        <div class="feature-desc">
-                            Automatic token purchases the moment balance exceeds $1.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Complete Transparency</div>
-                        <div class="feature-desc">
-                            All transactions visible on-chain with public audit trail.
-                        </div>
-                    </div>
+            <!-- Proof Item 4 -->
+            <div class="proof-item">
+                <span class="step-label">STEP 4: TECHNICAL INFRASTRUCTURE AUDIT</span>
+                <div class="image-container">
+                    <img src="step4-application.jpg" alt="Blockchain Technology Validation - Security & Infrastructure Assessment Passed">
                 </div>
-            </section>
+            </div>
+            <div class="arrow"></div>
 
-            <section id="flywheel">
-                <h2>Flywheel Mechanism</h2>
-                
-                <p>
-                    The RobotWheel flywheel is a self-sustaining economic cycle powered entirely by artificial intelligence. The mechanism creates continuous value flow through automated buyback execution.
-                </p>
-
-                <h3>How the Flywheel Works</h3>
-                <p>
-                    The flywheel operates in a continuous cycle:
-                </p>
-                <ol>
-                    <li><strong>Value Accumulation:</strong> Dev wallet receives funds from various sources (trading fees, initial sales, etc.)</li>
-                    <li><strong>Threshold Detection:</strong> AI continuously monitors wallet balance for $1+ threshold</li>
-                    <li><strong>Automatic Buyback:</strong> Robot immediately purchases tokens when threshold is met</li>
-                    <li><strong>Treasury Growth:</strong> Bought tokens are added to the project treasury</li>
-                    <li><strong>Cycle Continuation:</strong> Process repeats indefinitely as new funds accumulate</li>
-                </ol>
-
-                <h3>Buyback Specifications</h3>
-                <ul>
-                    <li><strong>Trigger Amount:</strong> Exact threshold of $1.00 USD</li>
-                    <li><strong>Execution Speed:</strong> Immediate (typically within seconds of detection)</li>
-                    <li><strong>Frequency:</strong> Unlimited—as often as threshold is met</li>
-                    <li><strong>Buy Amount:</strong> Entire wallet balance above $1 threshold</li>
-                    <li><strong>Slippage Protection:</strong> Smart contract safeguards prevent unfavorable trades</li>
-                    <li><strong>Gas Optimization:</strong> Automated gas price optimization for efficient execution</li>
-                </ul>
-
-                <h3>Economic Impact</h3>
-                <p>
-                    The flywheel creates several positive effects:
-                </p>
-                <ul>
-                    <li>Continuous buying pressure on the token</li>
-                    <li>Predictable and transparent value accrual</li>
-                    <li>Reduced circulating supply over time</li>
-                    <li>Automated price support mechanism</li>
-                    <li>Self-sustaining economic model</li>
-                </ul>
-
-                <div class="note">
-                    <div class="note-title">Flywheel Status</div>
-                    <div class="note-content">
-                        The RobotWheel flywheel is currently active and executing buybacks automatically. Monitor the dev wallet and transaction history to see the mechanism in real-time action.
-                    </div>
-                </div>
-            </section>
-
-            <section id="automation">
-                <h2>AI Automation</h2>
-                
-                <p>
-                    RobotWheel is powered by advanced artificial intelligence that handles every aspect of the flywheel mechanism without human oversight. The AI system is designed for reliability, efficiency, and complete autonomy.
-                </p>
-
-                <h3>AI Capabilities</h3>
-                <ul>
-                    <li><strong>Real-Time Monitoring:</strong> Continuous scanning of blockchain state and wallet balances</li>
-                    <li><strong>Instant Decision-Making:</strong> Sub-second response time from detection to execution</li>
-                    <li><strong>Smart Contract Interaction:</strong> Autonomous transaction signing and broadcasting</li>
-                    <li><strong>Error Handling:</strong> Self-recovery from failed transactions and network issues</li>
-                    <li><strong>Gas Optimization:</strong> Dynamic gas price calculation for cost efficiency</li>
-                    <li><strong>Security Protocols:</strong> Built-in safeguards against manipulation and exploits</li>
-                </ul>
-
-                <h3>Technical Architecture</h3>
-                <p>
-                    The RobotWheel AI system consists of several integrated components:
-                </p>
-                <ul>
-                    <li>Blockchain monitoring layer for real-time data collection</li>
-                    <li>Decision engine for threshold detection and buyback triggering</li>
-                    <li>Transaction execution layer for smart contract interaction</li>
-                    <li>Logging and analytics system for transparency and auditing</li>
-                    <li>Health monitoring for system reliability</li>
-                </ul>
-
-                <h3>Automation Benefits</h3>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-title">No Emotions</div>
-                        <div class="feature-desc">
-                            AI executes based on pure logic without fear, greed, or hesitation.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Perfect Consistency</div>
-                        <div class="feature-desc">
-                            Same rules applied every time with zero deviation or exceptions.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Zero Downtime</div>
-                        <div class="feature-desc">
-                            Operates continuously without sleep, breaks, or maintenance windows.
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Instant Execution</div>
-                        <div class="feature-desc">
-                            Reacts in milliseconds, far faster than any human operator.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="note">
-                    <div class="note-title">Trust Through Automation</div>
-                    <div class="note-content">
-                        By removing human control, RobotWheel eliminates the possibility of manual manipulation, emotional decision-making, or operational errors. The AI operates according to fixed rules that cannot be changed or overridden.
-                    </div>
-                </div>
-            </section>
-
-            <section id="community">
-                <h2>Community</h2>
-                
-                <p>
-                    Join the growing community of participants who track RobotWheel's autonomous operations every day. Monitor buybacks, analyze patterns, and be part of this unique experiment in automated economic systems.
-                </p>
-
-                <h3>How to Participate</h3>
-                <ul>
-                    <li><strong>Buy on PumpFun:</strong> Acquire RobotWheel tokens and join the flywheel</li>
-                    <li><strong>Monitor Transactions:</strong> Track buyback executions on the blockchain explorer</li>
-                    <li><strong>Social Media:</strong> Follow @TheRobotWheel on X for analytics and updates</li>
-                    <li><strong>Community Analysis:</strong> Share insights and patterns you discover</li>
-                    <li><strong>Developer Contributions:</strong> Propose improvements to the AI system</li>
-                </ul>
-
-                <h3>Notable Milestones</h3>
-                <p>
-                    Track RobotWheel's achievements:
-                </p>
-                <ul>
-                    <li>First automated buyback execution</li>
-                    <li>Total number of autonomous transactions</li>
-                    <li>Total value cycled through the flywheel</li>
-                    <li>Cumulative tokens added to treasury</li>
-                    <li>System uptime and reliability metrics</li>
-                </ul>
-
-                <h3>Connect With RobotWheel</h3>
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <div class="feature-title">PumpFun</div>
-                        <div class="feature-desc">
-                            Buy and trade tokens<br>
-                            pump.fun/robotwheel
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">X (Twitter)</div>
-                        <div class="feature-desc">
-                            Updates and analytics<br>
-                            @TheRobotWheel
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Blockchain Explorer</div>
-                        <div class="feature-desc">
-                            View all transactions<br>
-                            On-chain verification
-                        </div>
-                    </div>
-
-                    <div class="feature-card">
-                        <div class="feature-title">Discord</div>
-                        <div class="feature-desc">
-                            Community discussions<br>
-                            discord.gg/robotwheel
-                        </div>
-                    </div>
-                </div>
-
-                <h3>Monitoring Dashboard</h3>
-                <p>
-                    Track real-time RobotWheel metrics:
-                </p>
-
-                <pre><code>Current Dev Wallet Balance: $X.XX
-Last Buyback: XX minutes ago
-Total Buybacks Today: XX
-Total Tokens Bought: X,XXX,XXX
-Flywheel Status: ACTIVE
-AI System Health: OPERATIONAL</code></pre>
-            </section>
-
-            <div class="note" style="margin-top: 80px;">
-                <div class="note-title">About This Project</div>
-                <div class="note-content">
-                    RobotWheel is an ongoing experiment in fully autonomous economic systems. By using AI to manage the entire flywheel mechanism, we're creating the most transparent and reliable automated token system ever deployed. The robot never stops, never sleeps, and always executes exactly as programmed.
+            <!-- Proof Item 5 -->
+            <div class="proof-item">
+                <span class="step-label">STEP 5: OFFICIAL ACKNOWLEDGMENT</span>
+                <div class="image-container">
+                    <img src="step5-application.jpg" alt="Wall Street Recognition Certificate - Wall Street Coin Approved Digital Company">
                 </div>
             </div>
         </div>
+
+        <footer>
+            <p>&copy; 2025 Wall Street Coin. All rights reserved.</p>
+            <p>Revolutionizing finance through blockchain innovation.</p>
+        </footer>
     </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <img src="" alt="" id="lightbox-img">
+    </div>
+
+    <script>
+        // Get all images in image containers
+        const images = document.querySelectorAll('.image-container img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        // Add click event to each image
+        images.forEach(img => {
+            img.addEventListener('click', function() {
+                lightbox.classList.add('active');
+                lightboxImg.src = this.src;
+                lightboxImg.alt = this.alt;
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        // Close lightbox when clicking the close button
+        lightboxClose.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeLightbox();
+        });
+
+        // Close lightbox when clicking outside the image
+        lightbox.addEventListener('click', function() {
+            closeLightbox();
+        });
+
+        // Prevent closing when clicking on the image itself
+        lightboxImg.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                closeLightbox();
+            }
+        });
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 </body>
 </html>
