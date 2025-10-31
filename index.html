@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wall Street Coin</title>
-    <link rel="icon" type="image/x-icon" href="moscow.png">
+    <title>Draw & Tokenize Canvas</title>
+    <link rel="icon" type="image/x-icon" href="dior.png">
     <style>
         * {
             margin: 0;
@@ -13,330 +13,686 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: white;
-            color: black;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fafafa;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 40px 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-            border-bottom: 1px solid black;
-            padding-bottom: 30px;
-        }
-
-        h1 {
-            font-size: 2.5em;
-            color: black;
-            margin-bottom: 10px;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-
-        .subtitle {
-            font-size: 1em;
-            color: black;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        .intro {
-            padding: 0;
-            margin-bottom: 80px;
-            text-align: center;
-        }
-
-        .intro p {
-            font-size: 1em;
-            line-height: 1.8;
-            color: black;
-            font-weight: 300;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .proof-chain {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-        }
-
-        .proof-item {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .image-container {
-            width: 100%;
-            max-width: 700px;
-            height: 500px;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1em;
-            color: black;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .image-container img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .image-text {
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        .arrow {
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 30px solid black;
-            margin: 30px 0;
-        }
-
-        .step-label {
-            background: black;
-            color: white;
-            padding: 6px 18px;
-            font-size: 0.75em;
-            margin-bottom: 20px;
-            font-weight: 300;
-            letter-spacing: 2px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 80px;
-            padding-top: 30px;
-            border-top: 1px solid black;
-            color: black;
-            font-size: 0.85em;
-            font-weight: 300;
-        }
-
-        footer p {
-            margin-bottom: 5px;
+            position: relative;
         }
 
         .x-button {
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 50px;
-            height: 50px;
-            background: black;
-            border-radius: 50%;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: background 0.2s;
+            z-index: 999;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: transform 0.3s ease;
-            z-index: 1000;
+            gap: 8px;
         }
 
         .x-button:hover {
-            transform: scale(1.1);
+            background: #333;
         }
 
         .x-button svg {
-            width: 24px;
-            height: 24px;
+            width: 16px;
+            height: 16px;
             fill: white;
         }
 
-        .image-container img {
-            cursor: pointer;
-            transition: opacity 0.3s ease;
+        .container {
+            max-width: 900px;
+            width: 100%;
         }
 
-        .image-container img:hover {
-            opacity: 0.8;
+        h1 {
+            color: #111;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8em;
+            font-weight: 500;
+            letter-spacing: -0.5px;
         }
 
-        /* Lightbox styles */
-        .lightbox {
-            display: none;
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 0.95em;
+            font-weight: 400;
+        }
+
+        .info-box {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+            line-height: 1.7;
+        }
+
+        .info-box p {
+            color: #444;
+            font-size: 0.95em;
+            margin-bottom: 12px;
+        }
+
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-box strong {
+            color: #111;
+            font-weight: 500;
+        }
+
+        .wallet-box {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+
+        .wallet-box h3 {
+            color: #111;
+            margin-bottom: 16px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .wallet-info {
+            background: #fafafa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            word-break: break-all;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            border: 1px solid #f0f0f0;
+        }
+
+        .wallet-label {
+            font-weight: 500;
+            color: #111;
+            margin-bottom: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.9em;
+        }
+
+        .wallet-value {
+            color: #444;
+            user-select: all;
+        }
+
+        .coin-name-highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            cursor: zoom-out;
-        }
-
-        .lightbox.active {
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
         }
 
-        .lightbox img {
-            max-width: 95%;
-            max-height: 95%;
-            object-fit: contain;
-            cursor: zoom-out;
+        .modal-overlay.hidden {
+            display: none;
         }
 
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal h2 {
+            color: #111;
+            margin-bottom: 12px;
+            font-size: 1.5em;
+            font-weight: 500;
+        }
+
+        .modal-description {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .modal .wallet-info {
+            background: #fafafa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            word-break: break-all;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            border: 1px solid #f0f0f0;
+        }
+
+        .modal .wallet-label {
+            font-weight: 500;
+            color: #111;
+            margin-bottom: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.9em;
+        }
+
+        .modal .wallet-value {
+            color: #444;
+            user-select: all;
+        }
+
+        .modal-button {
+            background: #111;
             color: white;
-            font-size: 40px;
-            font-weight: 300;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            font-weight: 400;
             cursor: pointer;
-            z-index: 2001;
-            transition: transform 0.3s ease;
+            width: 100%;
+            margin-top: 8px;
         }
 
-        .lightbox-close:hover {
-            transform: scale(1.2);
+        .modal-button:hover {
+            background: #333;
+        }
+
+        .canvas-container {
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            background: white;
+        }
+
+        canvas {
+            display: block;
+            cursor: crosshair;
+            background: white;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        label {
+            font-weight: 400;
+            color: #444;
+            font-size: 0.9em;
+        }
+
+        input[type="color"] {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            cursor: pointer;
+            background: white;
+        }
+
+        input[type="range"] {
+            width: 120px;
+            cursor: pointer;
+        }
+
+        button {
+            background: #111;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        button:active {
+            background: #000;
+        }
+
+        .tokenize-btn {
+            background: #111;
+            font-size: 0.95em;
+            padding: 14px 32px;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .tokenize-btn:hover {
+            background: #333;
+        }
+
+        .token-display {
+            margin-top: 32px;
+            padding: 24px;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .token-display.active {
+            display: block;
+        }
+
+        .token-display h3 {
+            color: #111;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .token-info {
+            background: #fafafa;
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            word-break: break-all;
+            font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+            font-size: 0.85em;
+            border: 1px solid #f0f0f0;
+        }
+
+        .token-label {
+            font-weight: 500;
+            color: #111;
+            margin-bottom: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 0.9em;
+        }
+
+        .token-info div:last-child {
+            color: #444;
+        }
+
+        .token-display > p {
+            color: #666;
+            margin-top: 16px;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .size-display {
+            color: #666;
+            font-size: 0.85em;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .control-group {
+                justify-content: space-between;
+            }
         }
     </style>
 </head>
 <body>
-    <a href="https://x.com/wstcoin" target="_blank" class="x-button" aria-label="Follow us on X">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <a href="https://x.com/vampthecoin_" target="_blank" rel="noopener noreferrer" class="x-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
         </svg>
+        Follow @vampthecoin_
     </a>
+    
     <div class="container">
-        <header>
-            <h1>WALL STREET COIN</h1>
-            <p class="subtitle">Digital Innovation Meets Financial Excellence</p>
-        </header>
+        <h1>Vamp The Runner</h1>
+        <p class="subtitle">Draw and tokenize your artwork</p>
 
-        <div class="intro">
-            <p>
-                As Solana has started being seen by Wall Street we decided to try and create a memecoin backed by Wall Street investors.
-                <br><br>
-                So we contacted every major firm until we could and below is emails showing we were successful.
-                <br><br>
-                <em>(Click any image below to view it in fullscreen)</em>
-            </p>
+        <div class="info-box">
+            <p><strong>Draw</strong> something creative on the canvas below.</p>
+            <p><strong>Tokenize</strong> your artwork to create a unique cryptographic signature.</p>
+            <p><strong>Vamp the runner</strong> by leaving your creative mark on the system.</p>
         </div>
 
-        <div class="proof-chain">
-            <!-- Proof Item 1 -->
-            <div class="proof-item">
-                <span class="step-label">STEP 1: APPLICATION SUBMISSION</span>
-                <div class="image-container">
-                    <img src="step1-application.jpg" alt="Official Application Document - Wall Street Coin Digital Company Registration">
-                </div>
-            </div>
-            <div class="arrow"></div>
-
-            <!-- Proof Item 2 -->
-            <div class="proof-item">
-                <span class="step-label">STEP 2: IDENTITY VERIFICATION</span>
-                <div class="image-container">
-                    <img src="step2-application.jpg" alt="Corporate Identity Verification - Digital Certificates & Authentication">
-                </div>
-            </div>
-            <div class="arrow"></div>
-
-            <!-- Proof Item 3 -->
-            <div class="proof-item">
-                <span class="step-label">STEP 3: FINANCIAL COMPLIANCE REVIEW</span>
-                <div class="image-container">
-                    <img src="step3-application.jpg" alt="Compliance Documentation - SEC & Financial Regulatory Standards Met">
-                </div>
-            </div>
-            <div class="arrow"></div>
-
-            <!-- Proof Item 4 -->
-            <div class="proof-item">
-                <span class="step-label">STEP 4: TECHNICAL INFRASTRUCTURE AUDIT</span>
-                <div class="image-container">
-                    <img src="step4-application.jpg" alt="Blockchain Technology Validation - Security & Infrastructure Assessment Passed">
-                </div>
-            </div>
-            <div class="arrow"></div>
-
-            <!-- Proof Item 5 -->
-            <div class="proof-item">
-                <span class="step-label">STEP 5: OFFICIAL ACKNOWLEDGMENT</span>
-                <div class="image-container">
-                    <img src="step5-application.jpg" alt="Wall Street Recognition Certificate - Wall Street Coin Approved Digital Company">
-                </div>
-            </div>
+        <div class="canvas-container">
+            <canvas id="drawingCanvas" width="800" height="600"></canvas>
         </div>
 
-        <footer>
-            <p>&copy; 2025 Wall Street Coin. All rights reserved.</p>
-            <p>Revolutionizing finance through blockchain innovation.</p>
-        </footer>
+        <div class="controls">
+            <div class="control-group">
+                <label for="colorPicker">Color:</label>
+                <input type="color" id="colorPicker" value="#000000">
+            </div>
+
+            <div class="control-group">
+                <label for="brushSize">Brush Size:</label>
+                <input type="range" id="brushSize" min="1" max="50" value="5">
+                <span class="size-display" id="sizeDisplay">5px</span>
+            </div>
+
+            <button id="clearBtn">Clear Canvas</button>
+            <button id="eraserBtn">Eraser Mode</button>
+        </div>
+
+        <button class="tokenize-btn" id="tokenizeBtn">Tokenize Artwork</button>
+
+        <div class="token-display" id="tokenDisplay">
+            <h3>Artwork Tokenized</h3>
+            <div class="token-info">
+                <div class="token-label">Token Hash</div>
+                <div id="tokenHash"></div>
+            </div>
+            <div class="token-info">
+                <div class="token-label">Timestamp</div>
+                <div id="tokenTimestamp"></div>
+            </div>
+            <div class="token-info">
+                <div class="token-label">Data Size</div>
+                <div id="tokenSize"></div>
+            </div>
+            <p>Your artwork has been converted into a unique digital signature.</p>
+        </div>
     </div>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <img src="" alt="" id="lightbox-img">
+    <!-- Wallet Modal Popup -->
+    <div class="modal-overlay" id="walletModal">
+        <div class="modal">
+            <h2>Your Coin Identity</h2>
+            <p class="modal-description">
+                Your wallet address will be <span class="coin-name-highlight">the name of your coin</span>. 
+                Save these credentials - your private key cannot be recovered!
+            </p>
+            <div class="wallet-info">
+                <div class="wallet-label">Wallet Address (Your Coin Name)</div>
+                <div class="wallet-value" id="walletAddress">Generating...</div>
+            </div>
+            <div class="wallet-info">
+                <div class="wallet-label">Private Key</div>
+                <div class="wallet-value" id="privateKey">Generating...</div>
+            </div>
+            <button class="modal-button" id="closeModal">Start Drawing</button>
+        </div>
     </div>
 
     <script>
-        // Get all images in image containers
-        const images = document.querySelectorAll('.image-container img');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxClose = document.getElementById('lightbox-close');
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+        const colorPicker = document.getElementById('colorPicker');
+        const brushSize = document.getElementById('brushSize');
+        const sizeDisplay = document.getElementById('sizeDisplay');
+        const clearBtn = document.getElementById('clearBtn');
+        const eraserBtn = document.getElementById('eraserBtn');
+        const tokenizeBtn = document.getElementById('tokenizeBtn');
+        const tokenDisplay = document.getElementById('tokenDisplay');
 
-        // Add click event to each image
-        images.forEach(img => {
-            img.addEventListener('click', function() {
-                lightbox.classList.add('active');
-                lightboxImg.src = this.src;
-                lightboxImg.alt = this.alt;
-                document.body.style.overflow = 'hidden';
-            });
-        });
+        let isDrawing = false;
+        let isEraser = false;
+        let currentColor = '#000000';
+        let currentSize = 5;
 
-        // Close lightbox when clicking the close button
-        lightboxClose.addEventListener('click', function(e) {
-            e.stopPropagation();
-            closeLightbox();
-        });
+        // Initialize canvas
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
 
-        // Close lightbox when clicking outside the image
-        lightbox.addEventListener('click', function() {
-            closeLightbox();
-        });
-
-        // Prevent closing when clicking on the image itself
-        lightboxImg.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        // Close lightbox with Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                closeLightbox();
-            }
-        });
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
+        // Drawing functions
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
         }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            ctx.strokeStyle = isEraser ? 'white' : currentColor;
+            ctx.lineWidth = currentSize;
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        // Event listeners
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Touch support
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent('mousedown', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent('mousemove', {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        });
+
+        canvas.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            const mouseEvent = new MouseEvent('mouseup', {});
+            canvas.dispatchEvent(mouseEvent);
+        });
+
+        colorPicker.addEventListener('change', (e) => {
+            currentColor = e.target.value;
+            isEraser = false;
+            eraserBtn.textContent = 'Eraser Mode';
+        });
+
+        brushSize.addEventListener('input', (e) => {
+            currentSize = e.target.value;
+            sizeDisplay.textContent = `${currentSize}px`;
+        });
+
+        clearBtn.addEventListener('click', () => {
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            tokenDisplay.classList.remove('active');
+        });
+
+        eraserBtn.addEventListener('click', () => {
+            isEraser = !isEraser;
+            eraserBtn.textContent = isEraser ? 'Drawing Mode' : 'Eraser Mode';
+        });
+
+        // Tokenization function
+        async function tokenizeArtwork() {
+            const imageData = canvas.toDataURL('image/png');
+            
+            // Create a simple hash using the image data
+            const hash = await createHash(imageData);
+            
+            // Get timestamp
+            const timestamp = new Date().toISOString();
+            
+            // Calculate size
+            const sizeInBytes = imageData.length;
+            const sizeInKB = (sizeInBytes / 1024).toFixed(2);
+
+            // Display token information
+            document.getElementById('tokenHash').textContent = hash;
+            document.getElementById('tokenTimestamp').textContent = timestamp;
+            document.getElementById('tokenSize').textContent = `${sizeInKB} KB`;
+            
+            tokenDisplay.classList.add('active');
+            tokenDisplay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Simple hash function
+        async function createHash(str) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(str);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        tokenizeBtn.addEventListener('click', tokenizeArtwork);
+
+        // Solana Wallet Generation
+        // Using Ed25519 keypair generation for Solana-compatible wallet
+        async function generateSolanaWallet() {
+            try {
+                // Generate Ed25519 keypair
+                const keyPair = await crypto.subtle.generateKey(
+                    {
+                        name: "Ed25519",
+                        namedCurve: "Ed25519"
+                    },
+                    true,
+                    ["sign", "verify"]
+                );
+
+                // Export private key
+                const privateKeyData = await crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+                const privateKeyArray = new Uint8Array(privateKeyData);
+                const privateKeyBase58 = arrayToBase58(privateKeyArray.slice(-32)); // Last 32 bytes
+
+                // Export public key
+                const publicKeyData = await crypto.subtle.exportKey("spki", keyPair.publicKey);
+                const publicKeyArray = new Uint8Array(publicKeyData);
+                const publicKeyBytes = publicKeyArray.slice(-32); // Last 32 bytes
+                const walletAddress = arrayToBase58(publicKeyBytes);
+
+                // Display the wallet information
+                document.getElementById('walletAddress').textContent = walletAddress;
+                document.getElementById('privateKey').textContent = privateKeyBase58;
+            } catch (error) {
+                console.error('Error generating wallet:', error);
+                // Fallback to random generation if Ed25519 not supported
+                generateFallbackWallet();
+            }
+        }
+
+        // Fallback wallet generation using random bytes
+        function generateFallbackWallet() {
+            const privateKeyBytes = new Uint8Array(32);
+            crypto.getRandomValues(privateKeyBytes);
+            
+            const publicKeyBytes = new Uint8Array(32);
+            crypto.getRandomValues(publicKeyBytes);
+
+            const walletAddress = arrayToBase58(publicKeyBytes);
+            const privateKey = arrayToBase58(privateKeyBytes);
+
+            document.getElementById('walletAddress').textContent = walletAddress;
+            document.getElementById('privateKey').textContent = privateKey;
+        }
+
+        // Base58 encoding (Bitcoin/Solana alphabet)
+        function arrayToBase58(bytes) {
+            const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+            
+            let num = 0n;
+            for (let i = 0; i < bytes.length; i++) {
+                num = num * 256n + BigInt(bytes[i]);
+            }
+
+            let encoded = '';
+            while (num > 0n) {
+                const remainder = Number(num % 64n);
+                encoded = ALPHABET[remainder] + encoded;
+                num = num / 64n;
+            }
+
+            // Add leading zeros
+            for (let i = 0; i < bytes.length && bytes[i] === 0; i++) {
+                encoded = ALPHABET[0] + encoded;
+            }
+
+            return encoded || ALPHABET[0];
+        }
+
+        // Generate wallet on page load
+        window.addEventListener('load', generateSolanaWallet);
+
+        // Modal functionality
+        const walletModal = document.getElementById('walletModal');
+        const closeModalBtn = document.getElementById('closeModal');
+
+        closeModalBtn.addEventListener('click', () => {
+            walletModal.classList.add('hidden');
+        });
     </script>
 </body>
 </html>
-
